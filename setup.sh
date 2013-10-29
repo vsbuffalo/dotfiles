@@ -90,3 +90,11 @@ if [ ! -e ~/.Rprofile -a ! -L ~/.Rprofile ]; then
 else
     gecho "[message] ~/.Rprofile found, ignoring..." >&2
 fi
+
+# Create Python setup
+if [ ! -e ~/.pythonrc.py -a ! -L ~/.pythonrc.py ]; then
+    yecho "[message] ~/.pythonrc.py not found, linking..." >&2    
+    ln -s dotfiles/.pythonrc.py ~/.pythonrc.py
+else
+    gecho "[message] ~/.pythonrc.py found, ignoring..." >&2
+fi

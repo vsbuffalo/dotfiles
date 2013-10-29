@@ -50,3 +50,6 @@ export LESS=' -R '
 # emacs daemon
 export ALTERNATE_EDITOR=""
 alias em='emacsclient'
+
+# python startup
+export PYTHONSTARTUP=~/.pythonrc.py

@@ -1,5 +1,9 @@
 # dotfiles
 
+Use the following to install:
+
+    $ zsh setup.sh
+
 My dotfiles install process does the following:
 
  - Installs Git (from Homebrew)
