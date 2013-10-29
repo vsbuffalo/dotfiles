@@ -1,0 +1,7 @@
+[user]
+	name = Vince Buffalo
+	email = vsbuffaloAAAAAA@gmail.com
+[credential]
+	help = osxkeychain
+[push]
+	default = simple
