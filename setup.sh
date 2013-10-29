@@ -1,75 +1,92 @@
 #!/bin/bash
 set -e
 set -u
-set -o pipefail
+
+RCol='\033[0m'
+Gre='\033[0;32m'
+Red='\033[0;31m'
+Yel='\033[0;33m'
+
+function gecho {
+    echo "${Gre}$1${RCol}"
+}
+
+function yecho {
+    echo "${Yel}$1${RCol}"
+}
+
+function recho {
+    echo "${Red}$1${RCol}"
+}
+
 
 # Check for pre-requisites
-(command -v gcc > /dev/null  && echo "[message] GCC found...") || (echo "[error] GCC not found, install via XCode." && exit 1)
-(command -v brew > /dev/null && echo "[message] Homebew found...") || (echo "[error] Homebrew not found, install at http://brew.sh/" && exit 1)
-(command -v git > /dev/null && echo "[message] Git found...") || (echo "[message] Git not found, installing from Homebew" && brew install git)
+(command -v gcc > /dev/null  && gecho "[message] GCC found...") || (recho "[error] GCC not found, install via XCode." && exit 1)
+(command -v brew > /dev/null && gecho "[message] Homebew found...") || (recho "[error] Homebrew not found, install at http://brew.sh/" && exit 1)
+(command -v git > /dev/null && gecho "[message] Git found...") || (yecho "[message] Git not found, installing from Homebew" && brew install git)
 
 # Download oh-my-zsh
 if [ ! -d ~/.oh-my-zsh ]; then
-    echo "[message] ~/.oh-my-zsh not found, installing from Github..." >&2
+    yecho "[message] ~/.oh-my-zsh not found, installing from Github..." >&2
     (cd ~ && curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh 2> /dev/null | sh)
 else
-    echo "[message] ~/.oh-my-zsh found, not installing..." >&2
+    gecho "[message] ~/.oh-my-zsh found, ignoring..." >&2
 fi
 
 # Installing futurama quotes
-if [ ! -f ~/.futurama ]; then
-    echo "[message] ~/.futurama not found, copying from repository..." >&2
-    command -v gshuf || (echo "[message] gshuf not found, installing coreutils from Homebrew..." >&2 && brew install coreutils)
+if [ ! -e ~/.futurama ]; then
+    yecho "[message] ~/.futurama not found, downloading..." >&2
+    command -v gshuf || (yecho "[message] gshuf not found, installing coreutils from Homebrew..." >&2 && brew install coreutils)
     curl -s https://raw.github.com/vsbuffalo/good-news-everyone/master/futurama.txt 2> /dev/null | \
 	awk '{print $0} END{print "total quotes: "NR > "/dev/stderr"}' > ~/.futurama
 else 
-    echo "[message] ~/.futurama found, not creating it..." >&2
+    gecho "[message] ~/.futurama found, ignoring..." >&2
 fi
 
 # Copy over ./zshrc
-if [ ! -f ~/.zshrc ]; then
-    echo "[message] ~/.zshrc not found, copying from repository..." >&2
-    cp ./.zshrc ~/.zshrc
+if [ ! -e ~/.zshrc -a ! -L ~/.zshrc ]; then
+    yecho "[message] ~/.zshrc not found, linking..." >&2
+    ln -s dotfiles/.zshrc ~/.zshrc
 else
-    echo "[message] ~/.zshrc found, not copying from repository..." >&2
+    gecho "[message] ~/.zshrc found, ignoring..." >&2
 fi
 
 # Copy over .gitconfig
-if [ ! -f ~/.gitconfig ]; then
-    echo "[message] ~/.gitconfig not found, copying from repository..." >&2
-    cp .gitconfig ~
+if [ ! -e ~/.gitconfig -a ! -L ~/.gitconfig ]; then
+    yecho "[message] ~/.gitconfig not found, linking..." >&2
+    ln -s dotfiles/.gitconfig ~/.gitconfig
 else
-    echo "[message] ~/.gitconfig found, not copying from repository..." >&2
+    gecho "[message] ~/.gitconfig found, ignoring..." >&2
 fi
 
 # Copy over .tmux.conf
-if [ ! -f ~/.tmux.conf ]; then
-    echo "[message] ~/.tmux.conf not found, copying from repository..." >&2
-    command -v tmux || (echo "[message] tmux not found, installing coreutils from Homebrew..." >&2 && brew install tmux)
-    cp .tmux.conf ~
+if [ ! -e ~/.tmux.conf -a ! -L ~/.tmux.conf ]; then
+    command -v tmux > /dev/null || (yecho "[message] tmux not found, installing coreutils from Homebrew..." >&2 && brew install tmux)
+    ln -s dotfiles/.tmux.conf ~/.tmux.conf
+    yecho "[message] ~/.tmux.conf not found, linking..." >&2
 else
-    echo "[message] ~/.tmux.conf found, not copying from repository..." >&2
+    gecho "[message] ~/.tmux.conf found, ignoring..." >&2
 fi
 
 
 # Create a global Git ignore file
-if [ ! -f ~/.global_ignore ]; then
-    echo "[message] ~/.global_ignore not found, curling from Github..." >&2
+if [ ! -e ~/.global_ignore ]; then
+    yecho "[message] ~/.global_ignore not found, curling from Github..." >&2
     curl https://raw.github.com/github/gitignore/master/Global/Emacs.gitignore \
 	https://raw.github.com/github/gitignore/master/Global/OSX.gitignore > ~/.global_ignore 2> /dev/null
     git config --global core.excludesfile ~/.global_ignore
-    git config --global color.ui true && echo "[message] Turning on Git colors..." >&2
+    git config --global color.ui true && yecho "[message] turning on Git colors..." >&2
 else
-    echo "[message] ~/.global_ignore found, not creating..." >&2
+    gecho "[message] ~/.global_ignore found, ignoring..." >&2
 fi
 
 # Create a Rprofile
-if [ ! -f ~/.Rprofile ]; then
-    echo "[message] ~/.Rprofile not found, copying from repository..." >&2
-    cp ./.Rprofile ~
-    echo "[message] Installing basic R and Bioconductor packages..." >&2
-    Rscript -e "install.packages(c('ggplot2', 'plyr', 'reshape')); source('http://bioconductor.org/biocLite.R');  biocLite(c('GenomicRanges', 'ggbio', 'Gviz', 'GenomicFeatures', 'VariantAnnotation'))"
-else
-    echo "[message] ~/.Rprofile found, not copying from repository..." >&2
-fi
+if [ ! -e ~/.Rprofile -a ! -L ~/.Rprofile ]; then
+    yecho "[message] ~/.Rprofile not found, linking..." >&2
+    ln -s dotfiles/.Rprofile ~/.Rprofile
+    yecho "[message] installing basic R and Bioconductor packages..." >&2
     
+    Rscript -e "install.packages(c('ggplot2', 'plyr', 'reshape')); source('http://bioconductor.org/biocLite.R');  biocLite(c('GenomicRanges', 'ggbio', 'Gviz', 'GenomicFeatures', 'VariantAnnotation'))" || (recho "[error] could not install R packages - is R installed?" && exit 1)
+else
+    gecho "[message] ~/.Rprofile found, ignoring..." >&2
+fi

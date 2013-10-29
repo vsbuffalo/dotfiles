@@ -1,2 +1,2 @@
 ## Minimal .Rprofile
-options("repos"=c(CRAN="http://cran.r-project.org/"))
+options(repos=c("http://cran.cnr.Berkeley.edu","http://cran.stat.ucla.edu"))
