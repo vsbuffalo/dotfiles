@@ -74,8 +74,7 @@ if [ ! -e ~/.global_ignore ]; then
     yecho "[message] ~/.global_ignore not found, curling from Github..." >&2
     curl https://raw.github.com/github/gitignore/master/Global/Emacs.gitignore \
 	https://raw.github.com/github/gitignore/master/Global/OSX.gitignore > ~/.global_ignore 2> /dev/null
-    git config --global core.excludesfile ~/.global_ignore
-    git config --global color.ui true && yecho "[message] turning on Git colors..." >&2
+    git config --global core.excludesfile ~/.global_ignore && yecho "[message] adding ignore file to Git..." >&2
 else
     gecho "[message] ~/.global_ignore found, ignoring..." >&2
 fi
