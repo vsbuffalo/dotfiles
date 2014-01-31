@@ -7,5 +7,6 @@
 	default = simple
 [core]
 	editor = emacs
+	excludesfile = /Users/vinceb/.global_ignore
 [color]
 	ui = true

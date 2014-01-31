@@ -27,3 +27,7 @@ My dotfiles install process does the following:
  - GenomicRanges
  - VariantAnnotation
  
+ ## Vim
+
+ My Vim settings are also stored in these `dotfiles/`. Links to `.vimrc` and
+ `.vim` are made in `~`. 

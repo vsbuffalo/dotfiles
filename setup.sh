@@ -73,6 +73,7 @@ fi
 if [ ! -e ~/.global_ignore ]; then
     yecho "[message] ~/.global_ignore not found, curling from Github..." >&2
     curl https://raw.github.com/github/gitignore/master/Global/Emacs.gitignore \
+    https://raw2.github.com/github/gitignore/master/Global/vim.gitignore \
 	https://raw.github.com/github/gitignore/master/Global/OSX.gitignore > ~/.global_ignore 2> /dev/null
     git config --global core.excludesfile ~/.global_ignore && yecho "[message] adding ignore file to Git..." >&2
 else
@@ -97,3 +98,20 @@ if [ ! -e ~/.pythonrc.py -a ! -L ~/.pythonrc.py ]; then
 else
     gecho "[message] ~/.pythonrc.py found, ignoring..." >&2
 fi
+
+# Link Vim settings
+if [ -e ~/.vimrc ]; then
+  yecho "[message] ~/.vimrc not found, linking" >&2
+  ln -s dotfiles/.vimrc ~/.vimrc
+else
+  gecho "[message] ~/.vimrc found, ignoring..." >&2
+fi
+
+if [ -e ~/.vim ]; then
+  yecho "[message] ~/.vim directory not found, linking" >&2
+  ln -s dotfiles/.vim ~/.vim
+else
+  gecho "[message] ~/.vim found, ignoring..." >&2
+fi
+
+
