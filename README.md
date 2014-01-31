@@ -2,18 +2,19 @@
 
 Use the following to install:
 
-    $ zsh setup.sh
+    $ sh setup.sh
 
-My dotfiles install process does the following:
+My dotfiles install process does the following (if these files/programs don't
+exist):
 
  - Installs Git (from Homebrew)
  - Installs [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)
  - Installs [Futurama quotes](https://github.com/vsbuffalo/good-news-everyone)
  - Installs `~/.zshrc`
- - Copies over `~/.gitconfig`
- - Copies over `~/.tmux.conf`
- - Copies over `~/.global_ignore` and sets up Git colors
- - Copies over `~/.Rprofile` and installs some R packages
+ - Links `~/.gitconfig`
+ - Links `~/.tmux.conf`
+ - Creates `~/.global_ignore` from Github's `.gitignore` files and sets up Git colors
+ - Links `~/.Rprofile` and installs some R packages
 
 ## Installed R and Bioconductor Packages
 
@@ -27,7 +28,7 @@ My dotfiles install process does the following:
  - GenomicRanges
  - VariantAnnotation
  
- ## Vim
+## Vim
 
- My Vim settings are also stored in these `dotfiles/`. Links to `.vimrc` and
+My Vim settings are also stored in `dofiles/`. Links to `.vimrc` and
  `.vim` are made in `~`. 

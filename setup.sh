@@ -100,14 +100,14 @@ else
 fi
 
 # Link Vim settings
-if [ -e ~/.vimrc ]; then
+if [ ! -e ~/.vimrc ]; then
   yecho "[message] ~/.vimrc not found, linking" >&2
   ln -s dotfiles/.vimrc ~/.vimrc
 else
   gecho "[message] ~/.vimrc found, ignoring..." >&2
 fi
 
-if [ -e ~/.vim ]; then
+if [ ! -e ~/.vim ]; then
   yecho "[message] ~/.vim directory not found, linking" >&2
   ln -s dotfiles/.vim ~/.vim
 else
