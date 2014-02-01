@@ -31,4 +31,5 @@ exist):
 ## Vim
 
 My Vim settings are also stored in `dofiles/`. Links to `.vimrc` and
- `.vim` are made in `~`. 
+ `.vim` are made in `~`. [Vundle](https://github.com/gmarik/vundle) is
+ used to manage plugins.

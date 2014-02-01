@@ -1,0 +1,11 @@
+.vim/bundle/vundle
+.vim/bundle/ctrlp.vim
+.vim/bundle/LaTeX-Box
+.vim/bundle/clang_complete
+.vim/bundle/OmniCppComplete/
+.vim/bundle/tlib_vim/
+.vim/bundle/vim-addon-mw-utils/
+.vim/bundle/vim-multiple-cursors/
+.vim/bundle/vim-snipmate/
+.vim/bundle/vim-snippets/
+

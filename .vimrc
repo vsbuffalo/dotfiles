@@ -15,6 +15,19 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'kien/ctrlp.vim'
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
+Bundle 'Rip-Rip/clang_complete'
+Bundle 'terryma/vim-multiple-cursors'
+
+" omnicomplete 
+filetype plugin on 
+set omnifunc=syntaxcomplete#Complete
+" set omnicomplete for C++
+let s:clang_library_path='/Library/Developer/CommandLineTools/usr/lib'
+if isdirectory(s:clang_library_path)
+    let g:clang_library_path=s:clang_library_path
+endif
+" LaTeX-Box
+let g:LatexBox_latexmk_options = "-pvc -bibtex -pdf"
 
 " Tabs and Indents
 set tabstop=2
@@ -45,8 +58,13 @@ set laststatus=2   " Always show the statusline
 
 " Custom keybinding
 " bind command-j and command-k to move between buffers.
-map <D-j> <esc> :bp <enter> 
-map <D-k> <esc> :bn <enter>
+nmap <D-j> :bp <enter> 
+nmap <D-k> :bn <enter>
+" resize current buffer by +/- 5
+nnoremap <M-Right> :vertical resize +5<CR>
+nnoremap <M-Left>  :vertical resize -5<CR>
+nnoremap <M-Up>    :resize -5<CR>
+nnoremap <M-Down>  :resize +5<CR>
 
 " ctlp
 set runtimepath^=~/.vim/bundle/ctrlp.vim
