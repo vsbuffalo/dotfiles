@@ -1,10 +1,20 @@
 " Basic Settings
+set nocompatible
+filetype off
 syntax enable
 set background=dark
 colorscheme solarized
 set number
 set vb " turn off that annoying bell
 set hidden " allow hidden buffers
+set hlsearch
+
+" vundle
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+Bundle 'gmarik/vundle'
+Bundle 'kien/ctrlp.vim'
+Bundle 'LaTeX-Box-Team/LaTeX-Box'
 
 " Tabs and Indents
 set tabstop=2
@@ -43,3 +53,10 @@ set runtimepath^=~/.vim/bundle/ctrlp.vim
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 
+" Spelling
+" Toggle spell checking on and off with `,s`
+let mapleader = ","
+nmap <silent> <leader>s :set spell!<CR>
+set spelllang=en_us
+autocmd BufRead,BufNewFile *.md setlocal spell
+autocmd BufRead,BufNewFile *.txt setlocal spell
