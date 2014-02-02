@@ -24,6 +24,7 @@ function recho {
 (command -v gcc > /dev/null  && gecho "[message] GCC found...") || (recho "[error] GCC not found, install via XCode." && exit 1)
 (command -v brew > /dev/null && gecho "[message] Homebew found...") || (recho "[error] Homebrew not found, install at http://brew.sh/" && exit 1)
 (command -v git > /dev/null && gecho "[message] Git found...") || (yecho "[message] Git not found, installing from Homebew" && brew install git)
+(command -v ag > /dev/null && gecho "[message] Ag found...") || (yecho "[message] Ag not found, installing from Homebew" && brew install the_silver_searcher)
 
 # Download oh-my-zsh
 if [ ! -d ~/.oh-my-zsh ]; then
