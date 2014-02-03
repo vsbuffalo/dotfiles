@@ -11,11 +11,10 @@ set hlsearch
 
 " Editing ~/.vimrc
 " Source the vimrc file after saving it
-if has("autocmd")
-  autocmd bufwritepost .vimrc source $MYVIMRC
-endif
 let mapleader = ","
 nmap <leader>v :tabedit $MYVIMRC<CR>
+" Re-source vimrc
+nnoremap <space>s :so $MYVIMRC<cr>
 
 " Set path
 set path=.,/usr/include/,,./**,/Users/vinceb/Projects/,/Users/vinceb/Dropbox/
@@ -35,6 +34,7 @@ Bundle 'garbas/vim-snipmate'
 Bundle 'honza/vim-snippets'
 Bundle 'rking/ag.vim'
 Bundle 'bronson/vim-trailing-whitespace'
+Bundle 'sjl/gundo.vim'
 
 " omnicomplete
 filetype plugin on
@@ -70,8 +70,16 @@ set ruler
 set title
 set wildmenu
 set wildmode=longest,list,full
+
+" MacVim settings
 if has('gui_running')
   set guifont=Meslo\ LG\ M\ DZ\ for\ Powerline:h11
+  " bind command-j and command-k to move between buffers.
+  " and command-K and command-J to move between tabs.
+  nmap <D-j> :bp <enter>
+  nmap <D-k> :bn <enter>
+  nmap <D-K> :tabnext <enter>
+  nmap <D-J> :tabprevious <enter>
 endif
 
 " Searching
@@ -83,15 +91,9 @@ set incsearch
 set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim/
 set encoding=utf-8 " Necessary to show Unicode glyphs
 let g:Powerline_symbols = 'fancy'
-set nocompatible   " Disable vi-compatibility
 set laststatus=2   " Always show the statusline
 
 " Custom keybinding
-" bind command-j and command-k to move between buffers.
-nmap <D-j> :bp <enter>
-nmap <D-k> :bn <enter>
-nmap <D-K> :tabnext <enter>
-nmap <D-J> :tabprevious <enter>
 " resize current buffer by +/- 5
 nnoremap <M-Right> :vertical resize +5<CR>
 nnoremap <M-Left>  :vertical resize -5<CR>
@@ -101,18 +103,20 @@ nnoremap <M-Down>  :resize +5<CR>
 nnoremap <space>w :w<cr>
 " Run wrapper for :make
 nnoremap <space>m :Make<cr>
-" Re-source vimrc
-nnoremap <space>s :so $MYVIMRC<cr>
 " insert new lines with enter and shift enter.
 nmap <S-Enter> O<Esc>j
 nmap <CR> o<Esc>k
 " autofill magic - make a M-q for Vim
-nmap <space><space> gq}
+nmap <space><space> gwip
 
 " ctlp
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
+
+" Format options
+set nojoinspaces
+autocmd FileType asciidoc setlocal formatoptions+=ta
 
 " Spelling
 " Toggle spell checking on and off with `,s`

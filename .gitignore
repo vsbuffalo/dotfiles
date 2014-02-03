@@ -8,4 +8,8 @@
 .vim/bundle/vim-multiple-cursors/
 .vim/bundle/vim-snipmate/
 .vim/bundle/vim-snippets/
+.vim/bundle/ag.vim/
+.vim/bundle/gundo.vim/
+.vim/bundle/vim-trailing-whitespace/
+
 
