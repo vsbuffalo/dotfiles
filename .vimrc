@@ -125,9 +125,15 @@ nmap <silent> <leader>s :set spell!<CR>
 set spelllang=en_us
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.txt setlocal spell
+" set the spellfile
+set spellfile=~/.vim/spell/en.utf-8.add
 
 " turn off arrow keys - their use is a vim anti-pattern
 noremap <Up> <nop>
 noremap <Down> <nop>
 noremap <Left> <nop>
 noremap <Right> <nop>
+
+" Common mistyped words and abbreviations
+iabbrev het heterozygous
+iabbrev hom homozygous
