@@ -7,7 +7,7 @@ Use the following to install:
 My dotfiles install process does the following (if these files/programs don't
 exist):
 
- - Installs Git (from Homebrew)
+ - Installs Git, Vim, MacVim, Ag, and tmux (from Homebrew, since these are dependencies)
  - Installs [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)
  - Installs [Futurama quotes](https://github.com/vsbuffalo/good-news-everyone)
  - Installs `~/.zshrc`
@@ -15,6 +15,7 @@ exist):
  - Links `~/.tmux.conf`
  - Creates `~/.global_ignore` from Github's `.gitignore` files and sets up Git colors
  - Links `~/.Rprofile` and installs some R packages
+ - Stores and links Vim's files (see below).
 
 ## Installed R and Bioconductor Packages
 
