@@ -23,7 +23,7 @@ function recho {
 # Check for pre-requisites
 (command -v gcc > /dev/null  && gecho "GCC found...") || recho "GCC not found, install via XCode."
 (command -v brew > /dev/null && gecho "Homebrew found...") || recho "Homebrew not found, install at http://brew.sh/"
-(brew doctor > /dev/null && gecho "brew doctor looks good...") || recho "brew doctor returned with non-zero exit status. Run brew doctor and debug."
+#(brew doctor > /dev/null && gecho "brew doctor looks good...") || recho "brew doctor returned with non-zero exit status. Run brew doctor and debug."
 
 # Install Homebrew main programs
 (command -v git > /dev/null && gecho "Git found...") || (yecho "Git not found, installing from Homebrew" && brew install git)
@@ -80,6 +80,9 @@ linkdotfile .vim
 # Create a Rprofile
 linkdotfile .Rprofile
 
+# Create zsh completion
+linkdotfile .zsh-completions
+
 # Create a global Git ignore file
 if [ ! -e ~/.global_ignore ]; then
     yecho "~/.global_ignore not found, curling from Github..." >&2
@@ -93,6 +96,6 @@ fi
 
 # Install some R packages
 gecho "installing basic R and Bioconductor packages..." >&2
-Rscript -e "install.packages(c('ggplot2', 'plyr', 'reshape')); source('http://bioconductor.org/biocLite.R');  biocLite(c('GenomicRanges', 'ggbio', 'Gviz', 'GenomicFeatures', 'VariantAnnotation'))" || recho "[error] could not install R packages - is R installed?"
+Rscript -e "install.packages(c('microbenchmark', 'ggplot2', 'plyr', 'dplyr', 'knitr', 'reshape')); source('http://bioconductor.org/biocLite.R');  biocLite(c('GenomicRanges', 'ggbio', 'Gviz', 'GenomicFeatures', 'VariantAnnotation'))" || recho "[error] could not install R packages - is R installed?"
 
 

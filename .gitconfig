@@ -17,3 +17,5 @@
 	st = status
 	unstage = reset HEAD --
 	last = log -1 HEAD
+[http]
+	postBuffer = 524288000

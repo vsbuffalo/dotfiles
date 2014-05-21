@@ -1,13 +1,16 @@
 " Basic Settings
+"
+set backupdir=~/.vim-backups " create a different backup file directory
+set directory=~/.vim-backups
 set nocompatible
-filetype off
 syntax enable
-set background=dark
-colorscheme solarized
 set number
 set vb " turn off that annoying bell
 set hidden " allow hidden buffers
 set hlsearch
+set wildmenu
+set wildmode=longest,list,full
+" set cursorline
 
 " Editing ~/.vimrc
 " Source the vimrc file after saving it
@@ -15,9 +18,15 @@ let mapleader = ","
 nmap <leader>v :tabedit $MYVIMRC<CR>
 " Re-source vimrc
 nnoremap <space>s :so $MYVIMRC<cr>
+nmap <leader>h :set nohlsearch<CR>
+
+" Fix Vim annoyances
+nnoremap J mzJ`z   " fix Vim from cursor jumping around when using J
+nnoremap Q <nop>   " don't go into ex mode
+set backspace=indent,eol,start  " allow backspace anywhere
 
 " Set path
-set path=.,/usr/include/,,./**,/Users/vinceb/Projects/,/Users/vinceb/Dropbox/
+set path=.,/usr/include/,,./**,/Users/vinceb/Projects/**,/Users/vinceb/Dropbox/**
 
 " vundle
 set rtp+=~/.vim/bundle/vundle/
@@ -25,25 +34,47 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'kien/ctrlp.vim'
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
-Bundle 'vim-scripts/OmniCppComplete'
-Bundle 'Rip-Rip/clang_complete'
+"Bundle 'vim-scripts/OmniCppComplete'
+"Bundle 'Rip-Rip/clang_complete'
 Bundle 'terryma/vim-multiple-cursors'
+Bundle 'garbas/vim-snipmate'
 Bundle 'marcweber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
-Bundle 'garbas/vim-snipmate'
 Bundle 'honza/vim-snippets'
 Bundle 'rking/ag.vim'
 Bundle 'bronson/vim-trailing-whitespace'
 Bundle 'sjl/gundo.vim'
+Bundle 'vim-scripts/Vim-R-plugin'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'mattn/emmet-vim'
+Bundle 'aperezdc/vim-template'
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'vim-scripts/YankRing.vim'
+
+" directories and settings for snippets and templates
+let g:snippets_dir = "~/.vim/snippets"
+imap <C-J> <Plug>snipMateNextOrTrigger
+smap <C-J> <Plug>snipMateNextOrTrigger
+let g:user = "Vince Buffalo"
+let g:license = "BSD"
+let g:email = "vsbuffalo@gmail.com"
+
+" https://github.com/Valloric/YouCompleteMe/issues/814
+set shortmess=a
+let g:ycm_global_ycm_extra_conf = '~/.vim/ycm/ycm_extra_conf.py'
 
 " omnicomplete
-filetype plugin on
-set omnifunc=syntaxcomplete#Complete
+"filetype plugin on
+"set omnifunc=syntaxcomplete#Complete
+
 " set omnicomplete for C++
-let s:clang_library_path='/Library/Developer/CommandLineTools/usr/lib'
-if isdirectory(s:clang_library_path)
-    let g:clang_library_path=s:clang_library_path
-endif
+"let s:clang_library_path='/Library/Developer/CommandLineTools/usr/lib'
+"let g:clang_library_path=s:clang_library_path
+"let g:clang_user_options='|| exit 0'
+"let g:clang_complete_auto=1
+"let g:clang_complete_copen=1
+"let g:clang_hl_errors=1
+
 " LaTeX-Box
 let g:LatexBox_latexmk_options = "-pvc -bibtex -pdf"
 
@@ -51,25 +82,26 @@ let g:LatexBox_latexmk_options = "-pvc -bibtex -pdf"
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
-set expandtab
-set autoindent
+filetype plugin indent on
+"set expandtab
+"set autoindent
 " Make Vim's tab behave like Emacs when indenting
 " from http://smalltalk.gnu.org/blog/bonzinip/emacs-ifying-vims-autoindent
-set cinkeys=0{,0},0),0#,!<Tab>,;,:,o,O,e
-set indentkeys=!<Tab>,o,O
-map <Tab> i<Tab><Esc>^
-filetype indent on
-set cinoptions=:0,(0,u0,W1s
+"set cinkeys=0{,0},0),0#,!<Tab>,;,:,o,O,e
+"set indentkeys=!<Tab>,o,O
+"map <Tab> i<Tab><Esc>^
+"filetype indent on
+"set cinoptions=:0,(0,u0,W1s
 
 " linebreaks and wrapping
 set wrap linebreak nolist
 
 " Visual Settings
-set guifont=Monaco:h11
 set ruler
 set title
-set wildmenu
-set wildmode=longest,list,full
+set background=dark
+let g:solarized_termcolors=256
+colorscheme solarized
 
 " MacVim settings
 if has('gui_running')
@@ -80,10 +112,12 @@ if has('gui_running')
   nmap <D-k> :bn <enter>
   nmap <D-K> :tabnext <enter>
   nmap <D-J> :tabprevious <enter>
+else
+  nmap <C-j> :bp <enter>
+  nmap <C-k> :bn <enter>
 endif
 
 " Searching
-set ignorecase
 set smartcase
 set incsearch
 
@@ -110,17 +144,16 @@ nmap <CR> o<Esc>k
 nmap <space><space> gwip
 
 " ctlp
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
+" set runtimepath^=~/.vim/bundle/ctrlp.vim
+" let g:ctrlp_map = '<c-p>'
+" let g:ctrlp_cmd = 'CtrlP'
 
 " Format options
 set nojoinspaces
-autocmd FileType asciidoc setlocal formatoptions+=ta
+" autocmd FileType asciidoc setlocal formatoptions+=ta
 
 " Spelling
 " Toggle spell checking on and off with `,s`
-let mapleader = ","
 nmap <silent> <leader>s :set spell!<CR>
 set spelllang=en_us
 autocmd BufRead,BufNewFile *.md setlocal spell
@@ -137,3 +170,23 @@ noremap <Right> <nop>
 " Common mistyped words and abbreviations
 iabbrev het heterozygous
 iabbrev hom homozygous
+
+" R script settings
+let maplocalleader = ","
+vmap <Space> <Plug>RDSendSelection
+nmap <Space> <Plug>RDSendLine
+let vimrplugin_applescript=0
+let vimrplugin_vsplit=1
+let rrst_syn_hl_chunk = 1
+let rmd_syn_hl_chunk = 1
+
+" turn off searching include files during autocomplete
+set complete-=i
+
+" emmet: uncomment just for html/css
+"let g:user_emmet_install_global = 0
+" autocmd FileType html,css EmmetInstall
+
+" putting these last seems to help solve issues (silly Vim).
+filetype off
+filetype on

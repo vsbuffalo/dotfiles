@@ -5,6 +5,9 @@
     brew install vim
     brew install macvim --env-std --override-system-vim
 
+Note that to use [YouCompleteMe](https://github.com/Valloric/YouCompleteMe), we
+need to use MacVim, or the Vim binary packaged with MacVim.
+
 ## Installing Vim Plugin Prerequisites
 
 These must be manually installed. First, is

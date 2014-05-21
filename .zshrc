@@ -5,7 +5,7 @@ ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="takashiyoshida"
 
 # Plugins; others in in ~/.oh-my-zsh/plugins/*)
-plugins=(git osx)
+plugins=(git osx tmuxinator ssh-agent)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -22,7 +22,7 @@ Pur='\033[0;35m';     BPur='\033[1;35m';    UPur='\033[4;35m';    IPur='\033[0;9
 Cya='\033[0;36m';     BCya='\033[1;36m';    UCya='\033[4;36m';    ICya='\033[0;96m';    BICya='\033[1;96m';   On_Cya='\033[46m';    On_ICya='\033[0;106m';
 Whi='\033[0;37m';     BWhi='\033[1;37m';    UWhi='\033[4;37m';    IWhi='\033[0;97m';    BIWhi='\033[1;97m';   On_Whi='\033[47m';    On_IWhi='\033[0;107m';
 
-export PATH=/usr/local/bin:/usr/texbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:~/.cabal/bin
+export PATH=/usr/local/bin:/usr/texbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:~/.cabal/bin:/Users/vinceb/.gem/ruby/2.0.0/bin
 alias ll="ls -larth"
 alias -s txt=less
 alias df="df -h"
@@ -33,7 +33,7 @@ myip () { ifconfig | grep "inet " | awk '{ print $2 }' | grep -v "^127" }
 HISTSIZE=100000
 SAVEHIST=100000
 
-export EDITOR=emacs
+export EDITOR=vim
 
 bindkey "\C-w" kill-region
 
@@ -47,13 +47,14 @@ sess () { $1 2>&1 >/dev/null | less }
 export LESSOPEN="| /usr/local/bin/src-hilite-lesspipe.sh %s"
 export LESS=' -R '
 
-# emacs daemon
-export ALTERNATE_EDITOR=""
-alias em='emacsclient'
-alias cmacs=/Applications/Emacs.app/Contents/MacOS/Emacs # for cocoa emacs
-
 # python startup
 export PYTHONSTARTUP=~/.pythonrc.py
 
 # alias make to m (save keystrokes!)
 alias m=make
+
+# turn off auto window naming
+export DISABLE_AUTO_TITLE=true
+
+# get PDFs
+alias getpdf="wget --accept=pdf -nd -r --no-parent "

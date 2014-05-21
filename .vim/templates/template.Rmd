@@ -1,0 +1,11 @@
+---
+title: "%FILE%"
+output:
+pdf_document:
+  toc: false
+  highlight: zenburn
+---
+
+```{r}
+library(rmarkdown)
+```
