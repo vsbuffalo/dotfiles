@@ -21,9 +21,12 @@ nnoremap <space>s :so $MYVIMRC<cr>
 nmap <leader>h :set nohlsearch<CR>
 
 " Fix Vim annoyances
-nnoremap J mzJ`z   " fix Vim from cursor jumping around when using J
-nnoremap Q <nop>   " don't go into ex mode
-set backspace=indent,eol,start  " allow backspace anywhere
+" fix Vim from cursor jumping around when using J
+nnoremap J mzJ`z
+" don't go into ex mode
+nnoremap Q <nop>
+" allow backspace anywhere
+set backspace=indent,eol,start
 
 " Set path
 set path=.,/usr/include/,,./**,/Users/vinceb/Projects/**,/Users/vinceb/Dropbox/**
@@ -49,7 +52,7 @@ Bundle 'altercation/vim-colors-solarized'
 Bundle 'mattn/emmet-vim'
 Bundle 'aperezdc/vim-template'
 Bundle 'Valloric/YouCompleteMe'
-Bundle 'vim-scripts/YankRing.vim'
+"Bundle 'vim-scripts/YankRing.vim'
 
 " directories and settings for snippets and templates
 let g:snippets_dir = "~/.vim/snippets"
@@ -58,6 +61,8 @@ smap <C-J> <Plug>snipMateNextOrTrigger
 let g:user = "Vince Buffalo"
 let g:license = "BSD"
 let g:email = "vsbuffalo@gmail.com"
+" disable auto template; use :Template c
+let g:templates_no_autocmd = 1
 
 " https://github.com/Valloric/YouCompleteMe/issues/814
 set shortmess=a
@@ -184,9 +189,25 @@ let rmd_syn_hl_chunk = 1
 set complete-=i
 
 " emmet: uncomment just for html/css
-"let g:user_emmet_install_global = 0
-" autocmd FileType html,css EmmetInstall
+let g:user_emmet_install_global = 1
+autocmd FileType html,css EmmetInstall
 
 " putting these last seems to help solve issues (silly Vim).
 filetype off
 filetype on
+
+" youcomplete me blacklist
+let g:ycm_filetype_blacklist = {
+      \ 'tagbar' : 1,
+      \ 'qf' : 1,
+      \ 'notes' : 1,
+      \ 'markdown' : 1,
+      \ 'asciidoc' : 1,
+      \ 'unite' : 1,
+      \ 'text' : 1,
+      \ 'vimwiki' : 1,
+      \ 'pandoc' : 1,
+      \ 'infolog' : 1,
+      \ 'mail' : 1
+      \}
+

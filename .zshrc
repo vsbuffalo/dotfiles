@@ -58,3 +58,6 @@ export DISABLE_AUTO_TITLE=true
 
 # get PDFs
 alias getpdf="wget --accept=pdf -nd -r --no-parent "
+
+# alias for Git
+alias g="git"
