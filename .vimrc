@@ -40,10 +40,11 @@ Bundle 'LaTeX-Box-Team/LaTeX-Box'
 "Bundle 'vim-scripts/OmniCppComplete'
 "Bundle 'Rip-Rip/clang_complete'
 Bundle 'terryma/vim-multiple-cursors'
-Bundle 'garbas/vim-snipmate'
+"Bundle 'garbas/vim-snipmate'
+Bundle 'SirVer/ultisnips'
+Bundle 'honza/vim-snippets'
 Bundle 'marcweber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
-Bundle 'honza/vim-snippets'
 Bundle 'rking/ag.vim'
 Bundle 'bronson/vim-trailing-whitespace'
 Bundle 'sjl/gundo.vim'
@@ -53,16 +54,22 @@ Bundle 'mattn/emmet-vim'
 Bundle 'aperezdc/vim-template'
 Bundle 'Valloric/YouCompleteMe'
 "Bundle 'vim-scripts/YankRing.vim'
+Bundle 'junegunn/goyo.vim'
 
 " directories and settings for snippets and templates
-let g:snippets_dir = "~/.vim/snippets"
-imap <C-J> <Plug>snipMateNextOrTrigger
-smap <C-J> <Plug>snipMateNextOrTrigger
+"let g:snippets_dir = "~/.vim/snippets"
+"imap <C-J> <Plug>snipMateNextOrTrigger
+"smap <C-J> <Plug>snipMateNextOrTrigger
 let g:user = "Vince Buffalo"
 let g:license = "BSD"
 let g:email = "vsbuffalo@gmail.com"
 " disable auto template; use :Template c
 let g:templates_no_autocmd = 1
+
+"ultasnip settings
+let g:UltiSnipsExpandTrigger="<c-x>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 " https://github.com/Valloric/YouCompleteMe/issues/814
 set shortmess=a
@@ -88,7 +95,7 @@ set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 filetype plugin indent on
-"set expandtab
+set expandtab
 "set autoindent
 " Make Vim's tab behave like Emacs when indenting
 " from http://smalltalk.gnu.org/blog/bonzinip/emacs-ifying-vims-autoindent
