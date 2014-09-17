@@ -1,5 +1,5 @@
 " Basic Settings
-"
+
 set backupdir=~/.vim-backups " create a different backup file directory
 set directory=~/.vim-backups
 set nocompatible
@@ -11,6 +11,7 @@ set hlsearch
 set wildmenu
 set wildmode=longest,list,full
 " set cursorline
+set autochdir
 
 " Editing ~/.vimrc
 " Source the vimrc file after saving it
@@ -34,27 +35,33 @@ set path=.,/usr/include/,,./**,/Users/vinceb/Projects/**,/Users/vinceb/Dropbox/*
 " vundle
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
-Bundle 'gmarik/vundle'
-Bundle 'kien/ctrlp.vim'
-Bundle 'LaTeX-Box-Team/LaTeX-Box'
-"Bundle 'vim-scripts/OmniCppComplete'
-"Bundle 'Rip-Rip/clang_complete'
-Bundle 'terryma/vim-multiple-cursors'
-"Bundle 'garbas/vim-snipmate'
-Bundle 'SirVer/ultisnips'
-Bundle 'honza/vim-snippets'
-Bundle 'marcweber/vim-addon-mw-utils'
-Bundle 'tomtom/tlib_vim'
-Bundle 'rking/ag.vim'
-Bundle 'bronson/vim-trailing-whitespace'
-Bundle 'sjl/gundo.vim'
-Bundle 'vim-scripts/Vim-R-plugin'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'mattn/emmet-vim'
-Bundle 'aperezdc/vim-template'
-Bundle 'Valloric/YouCompleteMe'
-"Bundle 'vim-scripts/YankRing.vim'
-Bundle 'junegunn/goyo.vim'
+Plugin 'gmarik/vundle'
+"Plugin 'kien/ctrlp.vim'
+Plugin 'Shougo/unite.vim'
+Plugin 'LaTeX-Box-Team/LaTeX-Box'
+"Plugin 'vim-scripts/OmniCppComplete'
+"Plugin 'Rip-Rip/clang_complete'
+Plugin 'terryma/vim-multiple-cursors'
+"Plugin 'garbas/vim-snipmate'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'marcweber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'rking/ag.vim'
+Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'sjl/gundo.vim'
+"Plugin 'jcfaria/Vim-R-plugin'
+Plugin 'vim-scripts/Vim-R-plugin'
+"Plugin 'altercation/vim-colors-solarized'
+Plugin 'nanotech/jellybeans.vim'
+Plugin 'mattn/emmet-vim'
+Plugin 'aperezdc/vim-template'
+Plugin 'Valloric/YouCompleteMe'
+"Plugin 'vim-scripts/YankRing.vim'
+Plugin 'junegunn/goyo.vim'
+
+" Unite
+nnoremap <C-p> :Unite file_rec/async<cr>
 
 " directories and settings for snippets and templates
 "let g:snippets_dir = "~/.vim/snippets"
@@ -62,7 +69,7 @@ Bundle 'junegunn/goyo.vim'
 "smap <C-J> <Plug>snipMateNextOrTrigger
 let g:user = "Vince Buffalo"
 let g:license = "BSD"
-let g:email = "vsbuffalo@gmail.com"
+let g:email = "vsbuffaloAAAAA@gmail.com"
 " disable auto template; use :Template c
 let g:templates_no_autocmd = 1
 
@@ -89,6 +96,9 @@ let g:ycm_global_ycm_extra_conf = '~/.vim/ycm/ycm_extra_conf.py'
 
 " LaTeX-Box
 let g:LatexBox_latexmk_options = "-pvc -bibtex -pdf"
+let g:LatexBox_latexmk_async=1
+"let g:LatexBox_latexmk_preview_continuously=1
+
 
 " General tabs and indents
 set tabstop=2
@@ -114,6 +124,7 @@ set title
 set background=dark
 let g:solarized_termcolors=256
 colorscheme solarized
+"colorscheme jellybeans
 
 " MacVim settings
 if has('gui_running')
