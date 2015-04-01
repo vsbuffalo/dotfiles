@@ -13,6 +13,10 @@ set wildmode=longest,list,full
 " set cursorline
 set autochdir
 
+" remove GUI options
+set guioptions-=T
+set guioptions-=r
+
 " Editing ~/.vimrc
 " Source the vimrc file after saving it
 let mapleader = ","

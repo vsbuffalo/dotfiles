@@ -1,4 +1,5 @@
 #!/bin/bash
+
 set -e
 set -u
 
@@ -97,6 +98,6 @@ fi
 
 # Install some R packages
 gecho "installing basic R and Bioconductor packages..." >&2
-Rscript -e "install.packages(c('microbenchmark', 'ggplot2', 'plyr', 'dplyr', 'knitr', 'reshape')); source('http://bioconductor.org/biocLite.R');  biocLite(c('GenomicRanges', 'ggbio', 'Gviz', 'GenomicFeatures', 'VariantAnnotation'))" || recho "[error] could not install R packages - is R installed?"
+Rscript "./install_rpkgs.R"
 
 
