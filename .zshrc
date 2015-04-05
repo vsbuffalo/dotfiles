@@ -74,3 +74,5 @@ alias nonascii="LC_CTYPE=C ggrep --color='auto' -n -P '[\x80-\xFF]'"
 
 alias dv="Rscript /Users/vinceb/Projects/dvtools/dv.R"
 #alias vcfpeek="awk 'BEGIN{OFS=\"\t\"} {split($8, a, ";"); print $1,$2,$4,$5,$6,a[1],$9,$10}'" #FIXME
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

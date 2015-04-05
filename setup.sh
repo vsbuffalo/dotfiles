@@ -96,6 +96,11 @@ else
     gecho "~/.global_ignore found, ignoring..." >&2
 fi
 
+# Install nosetests and stuff
+pip install nosetests
+pip install rudolf
+linkdotfile .noserc
+
 # Install some R packages
 gecho "installing basic R and Bioconductor packages..." >&2
 Rscript "./install_rpkgs.R"
