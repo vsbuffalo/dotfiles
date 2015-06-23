@@ -78,7 +78,8 @@ alias dv="Rscript /Users/vinceb/Projects/dvtools/dv.R"
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 # should have done this ages ago:
-# (1)
+# (1) ssh into a remote host
+# (2) git pull the supplied directory or pwd if not provided
 rpull() {
     repo_path=$(pwd)
     args=$@
