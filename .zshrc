@@ -81,6 +81,7 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 # (1)
 rpull() {
     repo_path=$(pwd)
+    args=$@
     if [ $#args -lt 1 ]; then
 	echo "error: must specify remote host\nrpull host [path]"
 	return 1
@@ -93,6 +94,7 @@ rpull() {
     fi
     # TODO: would be cool to add branch
     echo "SSHing into "${remote_host}" and pulling ${repo_path}"
+    #echo "command: ssh -A farm \"cd ${repo_path} && git pull\""
     ssh -A farm "cd ${repo_path} && git pull"
     return $?
 }
