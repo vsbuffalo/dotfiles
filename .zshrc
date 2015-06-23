@@ -76,3 +76,23 @@ alias dv="Rscript /Users/vinceb/Projects/dvtools/dv.R"
 #alias vcfpeek="awk 'BEGIN{OFS=\"\t\"} {split($8, a, ";"); print $1,$2,$4,$5,$6,a[1],$9,$10}'" #FIXME
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+# should have done this ages ago:
+# (1)
+rpull() {
+    repo_path=$(pwd)
+    if [ $#args -lt 1 ]; then
+	echo "error: must specify remote host\nrpull host [path]"
+	return 1
+    fi 
+    remote_host=$@[1]
+    if [ $#args -eq 2 ]; then
+	repo_path=$@[2]
+    else
+	[[ "$repo_path" =~ ^"$HOME"(/|$) ]] && repo_path=$(echo $repo_path | sed "s:^$HOME:~:")
+    fi
+    # TODO: would be cool to add branch
+    echo "SSHing into "${remote_host}" and pulling ${repo_path}"
+    ssh -A farm "cd ${repo_path} && git pull"
+    return $?
+}

@@ -1,2 +1,2 @@
 [nosetests]
-with-color=1
+with-yanc=1
