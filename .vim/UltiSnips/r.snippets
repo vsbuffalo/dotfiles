@@ -1,0 +1,18 @@
+global !p
+def get_args(arglist):
+  args = 
+endglobal
+
+
+snippet rcls "setClass with roxygen2 support"
+#' S4 class $1
+#'
+`!p
+args = get_args(t[2])
+`
+#' @exportClass $1
+setClass("${1:ClassName}",
+         representation=representation(${2:slot}),
+				 prototype=prototype($0)
+				 )
+endsnippet
