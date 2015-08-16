@@ -1,4 +1,5 @@
 " Basic Settings
+"
 
 set backupdir=~/.vim-backups " create a different backup file directory
 set directory=~/.vim-backups
@@ -32,6 +33,8 @@ nnoremap J mzJ`z
 nnoremap Q <nop>
 " allow backspace anywhere
 set backspace=indent,eol,start
+" option delete to delete word (doesn't currently work, use C-w)
+imap <A-BS> <C-W>
 
 " Set path
 set path=.,/usr/include/,,./**,/Users/vinceb/Projects/**,/Users/vinceb/Dropbox/**
@@ -39,6 +42,7 @@ set path=.,/usr/include/,,./**,/Users/vinceb/Projects/**,/Users/vinceb/Dropbox/*
 " vundle
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
+Plugin 'scrooloose/nerdtree'
 Plugin 'gmarik/vundle'
 "Plugin 'kien/ctrlp.vim'
 Plugin 'Shougo/unite.vim'
@@ -62,7 +66,8 @@ Plugin 'mattn/emmet-vim'
 Plugin 'aperezdc/vim-template'
 Plugin 'Valloric/YouCompleteMe'
 "Plugin 'vim-scripts/YankRing.vim'
-Plugin 'junegunn/goyo.vim'
+"Plugin 'junegunn/goyo.vim'
+Plugin 'davidhalter/jedi-vim'
 
 " Unite
 nnoremap <C-p> :Unite file_rec/async<cr>
@@ -103,6 +108,9 @@ let g:LatexBox_latexmk_options = "-pvc -bibtex -pdf"
 let g:LatexBox_latexmk_async=1
 "let g:LatexBox_latexmk_preview_continuously=1
 
+" Jedi
+" don't pop up docstring
+autocmd FileType python setlocal completeopt-=preview
 
 " General tabs and indents
 set tabstop=2

@@ -78,6 +78,11 @@ linkdotfile .pythonrc.py
 linkdotfile .vimrc
 linkdotfile .vim
 
+# Link NeoVim settings
+linkdotfile .nvimrc
+linkdotfile .nvim
+
+
 # Create a Rprofile
 linkdotfile .Rprofile
 

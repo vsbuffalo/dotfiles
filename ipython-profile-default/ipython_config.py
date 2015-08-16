@@ -15,6 +15,11 @@ c.InlineBackend.figure_format = 'retina'
 
 c.IPKernelApp.matplotlib = 'inline'
 
+# matplot lib configs
+
+c.InlineBackend.rc = {'figure.figsize': (12.0, 8.0)}
+
+
 
 #------------------------------------------------------------------------------
 # InteractiveShellApp configuration
