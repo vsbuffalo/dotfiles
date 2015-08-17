@@ -22,6 +22,14 @@ Rather than using Bundle/Vundle, I'm trying
     $ curl -fLo ~/.nvim/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
+## Compiling YouCompleteMe
+
+After installing YouCompleteMe you'll need to compile it
+with:
+
+    $ cd ~/.nvim/plugged/YouCompleteMe
+    $ ./install.sh --clang-completer
+
 ## Setup Notes
 
 [Ultisnips](https://github.com/SirVer/ultisnips) provides code snippets, with
