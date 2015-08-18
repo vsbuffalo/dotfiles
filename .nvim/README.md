@@ -1,5 +1,10 @@
 # NeoVim Configuration
 
+## Requirements
+
+You'll need to have the [Powerline fonts](https://github.com/powerline/fonts)
+for some of the pretty icons in the lightline plugin to display correctly.
+
 ## Installation
 
     $ brew tap neovim/neovim
