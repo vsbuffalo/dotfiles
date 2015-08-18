@@ -4,13 +4,16 @@ Plug 'itchyny/lightline.vim'
 Plug 'Valloric/YouCompleteMe'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'scrooloose/nerdtree'
+" Some themes
 Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
+"Plug 'altercation/vim-colors-solarized'
 Plug 'airblade/vim-gitgutter'
 "Plug 'bfredl/nvim-ipy'
 Plug 'klen/python-mode'
 "Plug 'hynek/vim-python-pep8-indent' " change Python's indent to match PEP8
 Plug 'jalvesaq/Nvim-R'
 Plug 'lervag/vimtex'
+"Plug 'LaTeX-Box-Team/LaTeX-Box'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'othree/html5.vim'
 Plug 'tpope/vim-rsi'        " emacs-like insert mode movements
@@ -19,6 +22,9 @@ Plug 'tpope/vim-commentary' " faster commenting code, e.g. gcc to comment line
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired' " faster navigation for quickfix items
 call plug#end()
+
+" -| Color schemes |- 
+colorscheme tomorrow-night-eighties
 
 " -| General configurations |-
 set t_Co=256 " set terminal colors to 256
@@ -88,12 +94,6 @@ function! LightLineFugitive()
   return ''
 endfunction
 
-" -| Color schemes |- 
-set background=dark
-colorscheme Tomorrow-Night
-"let g:solarized_termcolors=256
-"colorscheme solarized
-
 " -| Custom key mappings |- 
 " autofill magic - make a M-q for Vim
 nmap <space><space> gwip
@@ -118,11 +118,18 @@ function! REPLSend(lines)
 endfunction
 
 command! REPLSendLine call REPLSend([getline('.')])
+command! REPLSendLines call REPLSend(getline("'<", "'>"))
 
 nnoremap <c-l> :REPLSendLine<cr>
-inoremap <c-l> :REPLSendLine<cr>
+inoremap <c-l> <c-o>:REPLSendLine<cr>
+vnoremap <c-l> :<c-u>REPLSendLines<cr>
 
+" latex
+let g:vimtex_fold_envs = 0
 
-
-
-
+if !exists('g:ycm_semantic_triggers')
+  let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers.tex = [
+      \ 're!\\[A-Za-z]*(ref|cite)[A-Za-z]*([^]]*])?{([^}]*, ?)*'
+      \ ]
