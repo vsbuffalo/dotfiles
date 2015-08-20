@@ -23,7 +23,11 @@ Plug 'tpope/vim-surround'   " faster edits for surrounding whatever
 Plug 'tpope/vim-commentary' " faster commenting code, e.g. gcc to comment line
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired' " faster navigation for quickfix items
+
+Plug 'terryma/vim-multiple-cursors'
 call plug#end()
+
+nnoremap <leader>pi :PlugInstall<cr>
 
 " -| Color schemes |- 
 colorscheme tomorrow-night-eighties
