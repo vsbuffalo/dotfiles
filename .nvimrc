@@ -27,8 +27,6 @@ Plug 'tpope/vim-unimpaired' " faster navigation for quickfix items
 Plug 'terryma/vim-multiple-cursors'
 call plug#end()
 
-nnoremap <leader>pi :PlugInstall<cr>
-
 " -| Color schemes |- 
 colorscheme tomorrow-night-eighties
 
@@ -118,6 +116,10 @@ endfunction
 " -| Custom key mappings |- 
 " autofill magic - make a M-q for Vim
 nmap <space><space> gwip
+nnoremap <leader>pi :PlugInstall<cr>
+nnoremap <leader>a :Ag
+nnoremap <leader>q :ccl
+nnoremap <leader>h :noh<cr>
 
 " -| UltiSnip configuration |- 
 let g:UltiSnipsExpandTrigger="<c-x>"
@@ -151,7 +153,7 @@ nnoremap <c-l> :REPLSendLine<cr>
 inoremap <c-l> <c-o>:REPLSendLine<cr>
 vnoremap <c-l> :<c-u>REPLSendLines<cr>
 
-" latex
+" -| latex |-
 let g:vimtex_fold_envs = 0
 
 if !exists('g:ycm_semantic_triggers')
@@ -161,14 +163,14 @@ let g:ycm_semantic_triggers.tex = [
       \ 're!\\[A-Za-z]*(ref|cite)[A-Za-z]*([^]]*])?{([^}]*, ?)*'
       \ ]
 
-" TODO finder -- use Ag to find TODO. Use 'q' to exit.
+" -| Todo items as a quickfix |-
 function! TodoHelper(...)
   let a:query = "(TODO|FIXME|XXX)"
   let a:file = "*"
   if a:0 > 0
     let a:file = a:1
   endif
-  let a:ag_todo_cmd = "Ag '" . a:query . "' --silent --nogroup --nocolor " . a:file
+  let a:ag_todo_cmd = "Ag '" . a:query . "' --vimgrep --silent --nogroup --nocolor " . a:file
   execute a:ag_todo_cmd
 endfunction
 
