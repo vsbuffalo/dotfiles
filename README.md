@@ -28,9 +28,16 @@ exist):
  - Gviz
  - GenomicRanges
  - VariantAnnotation
- 
-## Vim
 
-My Vim settings are also stored in `dofiles/`. Links to `.vimrc` and
- `.vim` are made in `~`. [Vundle](https://github.com/gmarik/vundle) is
- used to manage plugins.
+## NeoVim
+
+Annoyed with Emacs running evil-mode (and clashing with packages like polyweb),
+I decided to try [NeoVim](http://neovim.io/). I'm happy to report that it's
+terrific, and likely my permanent text editor. Using the
+[vim-rsi](https://github.com/tpope/vim-rsi) plugin, I can use emacs mappings in
+insert mode (this is a big deal). There's also great support for Ag, Git
+through fugitive, really terrific Python, C/C++ completion through the
+unbeatable [YouCompleteMe](https://github.com/Valloric/YouCompleteMe), and some
+hacky vimscript I wrote to send lines of code to the new, awesom NeoVim
+terminal. You can see all of my configurations in `.nvim*`. I will keep my old
+Vim configurations around too.
