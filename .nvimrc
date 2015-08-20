@@ -4,11 +4,11 @@ Plug 'itchyny/lightline.vim'
 Plug 'Valloric/YouCompleteMe'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 " Some themes
 Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
 "Plug 'altercation/vim-colors-solarized'
 Plug 'airblade/vim-gitgutter'
-"Plug 'bfredl/nvim-ipy'
 Plug 'klen/python-mode'
 "Plug 'hynek/vim-python-pep8-indent' " change Python's indent to match PEP8
 Plug 'jalvesaq/Nvim-R'
@@ -16,6 +16,8 @@ Plug 'lervag/vimtex'
 "Plug 'LaTeX-Box-Team/LaTeX-Box'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'othree/html5.vim'
+Plug 'rking/ag.vim'
+Plug 'ivanov/vim-ipython'
 Plug 'tpope/vim-rsi'        " emacs-like insert mode movements
 Plug 'tpope/vim-surround'   " faster edits for surrounding whatever
 Plug 'tpope/vim-commentary' " faster commenting code, e.g. gcc to comment line
@@ -36,6 +38,8 @@ let mapleader = '\'
 set smartcase
 set hidden " allow hidden buffers
 set autochdir " automatically change the current directory to cd
+let g:quickfix_min_height = 2
+let g:quickfix_max_height = 8
 
 " -| Indentation |-
 set expandtab
@@ -44,6 +48,19 @@ set softtabstop=2
 set smartindent
 " Python-specific indentation
 autocmd FileType python set expandtab shiftwidth=4 softtabstop=4 
+
+" -| Nerdtree |-
+let g:NERDTreeIndicatorMap = {
+            \ "Modified"  : "☀",
+            \ "Staged"    : "+",
+            \ "Untracked" : " ",
+            \ "Renamed"   : "r",
+            \ "Unmerged"  : "═",
+            \ "Deleted"   : "d",
+            \ "Dirty"     : "✗",
+            \ "Clean"     : "✓",
+            \ "Unknown"   : "?"
+            \ }
 
 " -| Better buffer switching |-
 nnoremap <C-k> :bnext<CR>
@@ -75,7 +92,7 @@ let g:lightline = { 'colorscheme': 'wombat',
       \             ['fugitive'], ['readonly', 'filename', 'modified'] ]
       \ },
       \ 'component': {
-      \   'readonly': '%{&readonly?"ro":""}',
+      \   'readonly': '%{&readonly?"⦰":""}',
       \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}'
       \ },
       \ 'component_function': {
@@ -104,8 +121,14 @@ let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 " -| Pymode settings |- 
+" pymode's completion sucks compared to YouCompleteMe; turn it off
+let g:pymode_rope_complete_on_dot = 0
+let g:pymode_rope_completion = 0
+let g:pymode_lint_on_write = 1
 let g:pymode_folding = 0
 let g:pymode_lint_checkers = ['pyflakes', 'pep8']
+let g:pymode_quickfix_maxheight = g:quickfix_max_height
+let g:pymode_quickfix_minheight = g:quickfix_min_height
 
 " -| Sending code to terminal (experimental)  |- 
 augroup Terminal
@@ -133,3 +156,27 @@ endif
 let g:ycm_semantic_triggers.tex = [
       \ 're!\\[A-Za-z]*(ref|cite)[A-Za-z]*([^]]*])?{([^}]*, ?)*'
       \ ]
+
+" TODO finder -- use Ag to find TODO. Use 'q' to exit.
+function! TodoHelper(...)
+  let a:query = "(TODO|FIXME|XXX)"
+  let a:file = "*"
+  if a:0 > 0
+    let a:file = a:1
+  endif
+  let a:ag_todo_cmd = "Ag '" . a:query . "' --silent --nogroup --nocolor " . a:file
+  execute a:ag_todo_cmd
+endfunction
+
+command! TodoBuffer call TodoHelper(bufname("%"))
+command! TodoAll call TodoHelper()
+
+nnoremap <leader>td :TodoBuffer<cr>
+nnoremap <leader>ta :TodoAll<cr>
+
+" adjust quickfix window height
+" http://vim.wikia.com/wiki/Automatically_fitting_a_quickfix_window_height
+au FileType qf call AdjustWindowHeight(g:quickfix_min_height, g:quickfix_max_height)
+function! AdjustWindowHeight(minheight, maxheight)
+  exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
+endfunction
