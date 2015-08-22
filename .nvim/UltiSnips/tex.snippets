@@ -1,0 +1,39 @@
+snippet math "LaTeX mathy article"
+documentclass[11pt]{article}
+\usepackage{fullpage}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{bbm}
+\usepackage{mathrsfs}
+\usepackage[style=authoryear-icomp,maxbibnames=9,maxcitenames=2,backend=biber]{biblatex}
+\usepackage[x11names, rgb]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{snakes,arrows,shapes}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true
+}
+
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\var}{var}
+\DeclareMathOperator{\cov}{cov}
+
+
+\addbibresource{${$3:biblio.bib}}
+
+\title{$1}
+
+\author{${2:Vince Buffalo}}
+
+\begin{document}
+\maketitle
+
+$0
+
+\printbibliography
+
+\end{document}
+endsnippet

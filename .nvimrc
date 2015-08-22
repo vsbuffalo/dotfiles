@@ -16,6 +16,7 @@ Plug 'lervag/vimtex'
 "Plug 'LaTeX-Box-Team/LaTeX-Box'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'othree/html5.vim'
+Plug 'pangloss/vim-javascript'
 Plug 'rking/ag.vim'
 Plug 'ivanov/vim-ipython'
 Plug 'tpope/vim-rsi'        " emacs-like insert mode movements
@@ -42,6 +43,19 @@ set hidden " allow hidden buffers
 set autochdir " automatically change the current directory to cd
 let g:quickfix_min_height = 2
 let g:quickfix_max_height = 8
+autocmd FileType help wincmd L " open help in vsplit
+
+" -| Spell checking |-
+let g:spellfile_URL = 'http://ftp.vim.org/vim/runtime/spell/'
+setlocal spelllang=en_us
+hi clear SpellBad
+hi SpellBad cterm=underline ctermfg=Red
+autocmd BufRead,BufNewFile *.md setlocal spell
+autocmd BufRead,BufNewFile *.tex setlocal spell
+autocmd BufRead,BufNewFile *.txt setlocal spell
+autocmd BufRead,BufNewFile *.Rmd setlocal spell
+" see the bottom for iabbrevs
+
 
 " -| Indentation |-
 set expandtab
@@ -154,6 +168,7 @@ inoremap <c-l> <c-o>:REPLSendLine<cr>
 vnoremap <c-l> :<c-u>REPLSendLines<cr>
 
 " -| latex |-
+let g:tex_flavor='latex'
 let g:vimtex_fold_envs = 0
 
 if !exists('g:ycm_semantic_triggers')
@@ -186,3 +201,7 @@ au FileType qf call AdjustWindowHeight(g:quickfix_min_height, g:quickfix_max_hei
 function! AdjustWindowHeight(minheight, maxheight)
   exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
 endfunction
+
+" |- abbreviations
+" words I may someday learn to type correctly
+iabbrev meosises meioses
