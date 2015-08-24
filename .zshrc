@@ -108,3 +108,7 @@ export FZF_DEFAULT_COMMAND='ag -l -g ""' # don't search .git
 # alias vim to neovim and old vim to shitvim
 alias vim=/usr/local/bin/nvim
 alias shitvim=/usr/local/bin/vim
+harrass() {
+  echo "you're fucking kidding, right?"
+}
+alias emacs=harrass

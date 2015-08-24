@@ -1,5 +1,8 @@
 " -| Plugins |-
 call plug#begin('~/.nvim/plugged')
+Plug 'kien/ctrlp.vim'
+"Plug 'sjl/gundo.vim'         " Gundo has issues with NeoVim it appears
+"Plug 'simnalamburt/vim-mundo' " a Gundo fork
 Plug 'itchyny/lightline.vim'
 Plug 'Valloric/YouCompleteMe'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
@@ -36,9 +39,9 @@ colorscheme tomorrow-night-eighties
 set t_Co=256 " set terminal colors to 256
 set number
 " edit $MYVIMRC with space e v 
-nnoremap <space>ev :vsplit $MYVIMRC<cr>
-nnoremap <space>sv :source $MYVIMRC<cr>
-let mapleader = '\'
+let mapleader = "\<Space>"
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
 set smartcase
 set hidden " allow hidden buffers
 set autochdir " automatically change the current directory to cd
@@ -56,7 +59,6 @@ autocmd BufRead,BufNewFile *.tex setlocal spell
 autocmd BufRead,BufNewFile *.txt setlocal spell
 autocmd BufRead,BufNewFile *.Rmd setlocal spell
 " see the bottom for iabbrevs
-
 
 " -| Indentation |-
 set expandtab
@@ -135,9 +137,27 @@ endfunction
 " autofill magic - make a M-q for Vim
 nmap <space><space> gwip
 nnoremap <leader>pi :PlugInstall<cr>
-nnoremap <leader>a :Ag
-nnoremap <leader>q :ccl
+nnoremap <leader>pc :PlugClean<cr>
+nnoremap <leader>a :Ag<space>
+nnoremap <leader>q :ccl<cr>
 nnoremap <leader>h :noh<cr>
+nnoremap <leader>o :CtrlP<cr>
+nnoremap <leader>w :w
+
+" -| More custom key mappings |-
+"  some tasty hacks from:
+"  http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
+vmap <Leader>y "+y
+vmap <Leader>d "+d
+nmap <Leader>p "+p
+nmap <Leader>P "+P
+vmap <Leader>p "+p
+vmap <Leader>P "+P
+
+" -| Ctrl-P |-
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+set wildignore+=*.pdf,*.docx,*.jpg,*.png,*.jpeg,*.pptx,*.mp3
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 
 " -| UltiSnip configuration |- 
 let g:UltiSnipsExpandTrigger="<c-x>"
