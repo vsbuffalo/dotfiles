@@ -1,8 +1,8 @@
 " -| Plugins |-
 call plug#begin('~/.nvim/plugged')
 Plug 'kien/ctrlp.vim'
-"Plug 'sjl/gundo.vim'         " Gundo has issues with NeoVim it appears
-"Plug 'simnalamburt/vim-mundo' " a Gundo fork
+Plug 'mbbill/undotree'
+Plug 'tpope/vim-vinegar'
 Plug 'itchyny/lightline.vim'
 Plug 'Valloric/YouCompleteMe'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
@@ -143,6 +143,7 @@ nnoremap <leader>q :ccl<cr>
 nnoremap <leader>h :noh<cr>
 nnoremap <leader>o :CtrlP<cr>
 nnoremap <leader>w :w
+nnoremap <leader>u :UndotreeToggle<cr>
 
 " -| More custom key mappings |-
 "  some tasty hacks from:

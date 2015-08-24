@@ -6,7 +6,7 @@
 [push]
 	default = simple
 [core]
-	editor = emacs
+	editor = vim
 	excludesfile = /Users/vinceb/.global_ignore
 [color]
 	ui = true
