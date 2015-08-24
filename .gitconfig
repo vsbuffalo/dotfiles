@@ -27,3 +27,5 @@
 	required = true
 [merge]
 	ff = only
+[github]
+	user = vsbuffalo

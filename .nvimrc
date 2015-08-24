@@ -24,8 +24,9 @@ Plug 'tpope/vim-surround'   " faster edits for surrounding whatever
 Plug 'tpope/vim-commentary' " faster commenting code, e.g. gcc to comment line
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired' " faster navigation for quickfix items
-
+Plug 'keith/investigate.vim'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'mattn/gist-vim'
 call plug#end()
 
 " -| Color schemes |- 
@@ -96,6 +97,9 @@ nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
 tnoremap <M-b> <Esc>b
 tnoremap <M-f> <Esc>f
+
+" -| investigate |-
+nnoremap <leader>i :call investigate#Investigate()<CR>
 
 " -| Lightline |- 
 augroup reload_vimrc
