@@ -35,6 +35,11 @@ with:
     $ cd ~/.nvim/plugged/YouCompleteMe
     $ ./install.sh --clang-completer
 
+## Intalling TernJs
+
+    $ cd ~/.nvim/plugged/tern_for_vim
+    $ node install
+
 ## Setup Notes
 
 [Ultisnips](https://github.com/SirVer/ultisnips) provides code snippets, with

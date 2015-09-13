@@ -112,3 +112,14 @@ harrass() {
   echo "you're fucking kidding, right?"
 }
 alias emacs=harrass
+
+get_colors() {
+  for i in {0..255} ; do
+    printf "\x1b[38;5;${i}mcolour${i}\n"
+  done
+}
+
+export NVM_DIR="/Users/vinceb/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+alias d3me="wget https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"

@@ -13,6 +13,7 @@ Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
 "Plug 'altercation/vim-colors-solarized'
 Plug 'airblade/vim-gitgutter'
 Plug 'klen/python-mode'
+"Plug 'scrooloose/syntastic'
 "Plug 'hynek/vim-python-pep8-indent' " change Python's indent to match PEP8
 Plug 'jalvesaq/Nvim-R'
 Plug 'lervag/vimtex'
@@ -20,6 +21,8 @@ Plug 'lervag/vimtex'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'othree/html5.vim'
 Plug 'pangloss/vim-javascript'
+Plug 'Shutnik/jshint2.vim'
+Plug 'marijnh/tern_for_vim'
 Plug 'rking/ag.vim'
 Plug 'ivanov/vim-ipython'
 Plug 'tpope/vim-rsi'        " emacs-like insert mode movements
@@ -27,9 +30,12 @@ Plug 'tpope/vim-surround'   " faster edits for surrounding whatever
 Plug 'tpope/vim-commentary' " faster commenting code, e.g. gcc to comment line
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired' " faster navigation for quickfix items
+Plug 'tpope/vim-repeat'
 Plug 'keith/investigate.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'mattn/gist-vim'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
 call plug#end()
 
 " -| Color schemes |- 
@@ -39,7 +45,8 @@ colorscheme tomorrow-night-eighties
 set t_Co=256 " set terminal colors to 256
 set number
 " edit $MYVIMRC with space e v 
-let mapleader = "\<Space>"
+let mapleader = " "
+let maplocalleader = " "
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 set smartcase
@@ -48,6 +55,10 @@ set autochdir " automatically change the current directory to cd
 let g:quickfix_min_height = 2
 let g:quickfix_max_height = 8
 autocmd FileType help wincmd L " open help in vsplit
+set shortmess+=IA " don't open a message when Vim starts
+" don't show that incredibly annoying doc window during ocompletion
+set completeopt-=preview
+
 
 " -| Spell checking |-
 let g:spellfile_URL = 'http://ftp.vim.org/vim/runtime/spell/'
@@ -103,6 +114,12 @@ tnoremap <M-f> <Esc>f
 " -| investigate |-
 nnoremap <leader>i :call investigate#Investigate()<CR>
 
+" -| syntastic |-
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 0
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+
 " -| Lightline |- 
 augroup reload_vimrc
   autocmd!
@@ -142,8 +159,11 @@ nnoremap <leader>a :Ag<space>
 nnoremap <leader>q :ccl<cr>
 nnoremap <leader>h :noh<cr>
 nnoremap <leader>o :CtrlP<cr>
-nnoremap <leader>w :w
+nnoremap <leader>e :e 
+nnoremap <leader>w :w<cr>
 nnoremap <leader>u :UndotreeToggle<cr>
+" delete a buffer without closing a split
+nnoremap <leader>bd :bp\|bd#<cr>
 
 " -| More custom key mappings |-
 "  some tasty hacks from:
@@ -174,6 +194,11 @@ let g:pymode_folding = 0
 let g:pymode_lint_checkers = ['pyflakes', 'pep8']
 let g:pymode_quickfix_maxheight = g:quickfix_max_height
 let g:pymode_quickfix_minheight = g:quickfix_min_height
+
+" - | YouCompleteMe settings |-
+" find the definition/declaration, bring me there, and give me some breathing
+" room
+nnoremap <leader>j :YcmCompleter GoTo<cr>zt<c-y>
 
 " -| Sending code to terminal (experimental)  |- 
 augroup Terminal
