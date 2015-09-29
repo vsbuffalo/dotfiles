@@ -1,26 +1,23 @@
 snippet math "LaTeX mathy article"
-documentclass[11pt]{article}
-\usepackage{fullpage}
-\usepackage{amsmath,amssymb,amsthm}
-\usepackage{graphicx}
-\usepackage{bm}
-\usepackage{bbm}
-\usepackage{mathrsfs}
-\usepackage[style=authoryear-icomp,maxbibnames=9,maxcitenames=2,backend=biber]{biblatex}
-\usepackage[x11names, rgb]{xcolor}
-\usepackage[utf8]{inputenc}
-\usepackage{tikz}
+\documentclass[11pt]{article}
+\RequirePackage[l2tabu, orthodox]{nag}
+\RequirePackage{fullpage}
+\RequirePackage{amsmath,amssymb,amsthm}
+\RequirePackage{graphicx}
+\RequirePackage{bm}
+\RequirePackage{bbm}
+\RequirePackage{mathrsfs}
+\RequirePackage[citestyle=authoryear,maxbibnames=9,maxcitenames=2,backend=biber,natbib=true]{biblatex}
+\RequirePackage[x11names, rgb]{xcolor}
+\RequirePackage{todonotes}
+\RequirePackage{tikz}
 \usetikzlibrary{decorations,arrows,shapes}
-\usepackage{hyperref}
-\hypersetup{
-  colorlinks=true
-}
+\RequirePackage[colorlinks=true]{hyperref}
 
 \renewcommand{\P}{\mathbb{P}}
 \newcommand{\E}{\mathbb{E}}
-\newcommand{\Var}{\mathrm{Var}}
-\newcommand{\Cov}{\mathrm{Cov}}
-
+\DeclareMathOperator{\var}{var}
+\DeclareMathOperator{\cov}{cov}
 
 \addbibresource{${3:biblio.bib}}
 

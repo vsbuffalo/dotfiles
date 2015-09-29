@@ -102,8 +102,8 @@ rpull() {
 
 # add support for fzf (note that this was installed via homebrew)
 # https://github.com/junegunn/fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='ag -l -g ""' # don't search .git
+#[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#export FZF_DEFAULT_COMMAND='ag -l -g ""' # don't search .git
 
 # alias vim to neovim and old vim to shitvim
 alias vim=/usr/local/bin/nvim
