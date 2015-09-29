@@ -68,6 +68,9 @@ linkdotfile .zshrc
 # Link over .gitconfig
 linkdotfile .gitconfig
 
+# Link over .latexmkrc for latexmk settings
+linkdotfile .latexmkrc
+
 # Link over .tmux.conf
 linkdotfile .tmux.conf
 
