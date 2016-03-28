@@ -1,13 +1,13 @@
 # dotfiles
 
-Use the following to install:
+Clone to your `~` directory and use the following to install:
 
     $ sh setup.sh
 
 My dotfiles install process does the following (if these files/programs don't
 exist):
 
- - Installs Git, Vim, MacVim, Ag, and tmux (from Homebrew, since these are dependencies)
+ - Installs Git, NeoVim, Ag, and tmux (from Homebrew, since these are dependencies)
  - Installs [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)
  - Installs [Futurama quotes](https://github.com/vsbuffalo/good-news-everyone)
  - Installs `~/.zshrc`
@@ -15,7 +15,7 @@ exist):
  - Links `~/.tmux.conf`
  - Creates `~/.global_ignore` from Github's `.gitignore` files and sets up Git colors
  - Links `~/.Rprofile` and installs some R packages
- - Stores and links Vim's files (see below).
+ - Stores and links NeoVim's files (see below).
 
 ## Installed R and Bioconductor Packages
 

@@ -30,8 +30,8 @@ function recho {
 (command -v git > /dev/null && gecho "Git found...") || (yecho "Git not found, installing from Homebrew" && brew install git)
 (command -v ag > /dev/null && gecho "Ag found...") || (yecho "Ag not found, installing from Homebrew" && brew install the_silver_searcher)
 (command -v tmux > /dev/null && gecho "tmux found...") || (yecho "tmux not found, installing from Homebrew" && brew install tmux)
-(command -v vim > /dev/null && gecho "Vim found...") || (yecho "Vim not found, installing from Homebrew" && brew install vim)
-(command -v mvim > /dev/null && gecho "MacVim found...") || (yecho "MacVim not found, installing from Homebrew" && brew install macvim --env-std --override-system-vim)
+(command -v nvim > /dev/null && gecho "NeoVim found...") || (yecho "NeoVim not found, installing from Homebrew" && brew tap neovim/neovim && brew install neovim)
+
 
 # function for linking dotfiles
 function linkdotfile {
@@ -43,6 +43,7 @@ function linkdotfile {
       gecho "$file found, ignoring..." >&2
   fi
 }
+
 
 # Download oh-my-zsh
 if [ ! -d ~/.oh-my-zsh ]; then
@@ -77,14 +78,8 @@ linkdotfile .tmux.conf
 # Create Python setup
 linkdotfile .pythonrc.py
 
-# Link Vim settings
-linkdotfile .vimrc
-linkdotfile .vim
-
 # Link NeoVim settings
-linkdotfile .nvimrc
-linkdotfile .nvim
-
+linkdotfile .config
 
 # Create a Rprofile
 linkdotfile .Rprofile
