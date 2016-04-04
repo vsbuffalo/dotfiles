@@ -29,3 +29,5 @@
 	ff = only
 [github]
 	user = vsbuffalo
+[diff "nb2md"]
+	textconv = nb2md

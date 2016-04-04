@@ -123,3 +123,20 @@ export NVM_DIR="/Users/vinceb/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 alias d3me="wget https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"
+
+# Add GHC 7.10.2 to the PATH, via https://ghcformacosx.github.io/
+export GHC_DOT_APP="/Applications/ghc-7.10.2.app"
+if [ -d "$GHC_DOT_APP" ];
+then
+    export PATH="${HOME}/.local/bin:${HOME}/.cabal/bin:${GHC_DOT_APP}/Contents/bin:${PATH}"
+fi
+
+newproj() {
+  mkdir "$1" && touch "$1/README.md"
+}
+
+alias today="date +%F"
+
+nb2md() {
+  jupyter nbconvert --to markdown $1 --stdout --log-level=0
+}

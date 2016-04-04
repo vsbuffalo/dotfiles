@@ -41,3 +41,7 @@ unbeatable [YouCompleteMe](https://github.com/Valloric/YouCompleteMe), and some
 hacky vimscript I wrote to send lines of code to the new, awesom NeoVim
 terminal. You can see all of my configurations in `.nvim*`. I will keep my old
 Vim configurations around too.
+
+## Sane Jupyter Notebook Diffs
+
+From Erick Matsen: https://gist.github.com/matsen/37521f504a14aede644d

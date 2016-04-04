@@ -68,6 +68,7 @@ linkdotfile .zshrc
 
 # Link over .gitconfig
 linkdotfile .gitconfig
+linkdotfile .gitattributes
 
 # Link over .latexmkrc for latexmk settings
 linkdotfile .latexmkrc

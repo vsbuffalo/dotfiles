@@ -220,6 +220,9 @@ vnoremap <c-l> :<c-u>REPLSendLines<cr>
 " -| latex |-
 let g:tex_flavor='latex'
 let g:vimtex_fold_envs = 0
+let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
+let g:vimtex_view_general_options = '-r @line @pdf @tex'
+
 
 if !exists('g:ycm_semantic_triggers')
   let g:ycm_semantic_triggers = {}
@@ -255,3 +258,14 @@ endfunction
 " |- abbreviations
 " words I may someday learn to type correctly
 iabbrev meosises meioses
+
+" |- LaTeX comment hacks
+function! FindLaTeXComments()
+  highlight CommentGC ctermfg=red
+  highlight CommentVB ctermfg=blue
+  call matchadd('CommentGC', '\\gc{\_[^}]*}')
+  call matchadd('CommentVB', '\\vb{\_[^}]*}')
+endfunction
+
+command! GC call FindLaTeXComments()
+nnoremap <leader>gc :GC<cr>
