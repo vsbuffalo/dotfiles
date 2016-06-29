@@ -1,23 +1,25 @@
 snippet math "LaTeX mathy article"
 \documentclass[11pt]{article}
-\RequirePackage[l2tabu, orthodox]{nag}
 \RequirePackage{fullpage}
+\RequirePackage[font=small,labelfont=bf]{caption}
 \RequirePackage{amsmath,amssymb,amsthm}
 \RequirePackage{graphicx}
+\RequirePackage[hidelinks]{hyperref}
+\RequirePackage{subcaption}
+\RequirePackage{wasysym}
+\RequirePackage{authblk}
 \RequirePackage{bm}
 \RequirePackage{bbm}
-\RequirePackage{mathrsfs}
-\RequirePackage[citestyle=authoryear,maxbibnames=9,maxcitenames=2,backend=biber,natbib=true]{biblatex}
-\RequirePackage[x11names, rgb]{xcolor}
-\RequirePackage{todonotes}
-\RequirePackage{tikz}
-\usetikzlibrary{decorations,arrows,shapes}
-\RequirePackage[colorlinks=true]{hyperref}
+% \RequirePackage[osf]{mathpazo}
+\RequirePackage[bibstyle=authoryear,citestyle=authoryear-comp,maxbibnames=9,maxcitenames=1,backend=biber,natbib=true,uniquelist=false,hyperref=true]{biblatex}
+\usepackage{color}
+\usepackage{nicefrac}
 
 \renewcommand{\P}{\mathbb{P}}
 \newcommand{\E}{\mathbb{E}}
-\DeclareMathOperator{\var}{var}
-\DeclareMathOperator{\cov}{cov}
+\newcommand{\V}{\text{V}}
+% \DeclareMathOperator{\var}{var}
+% \DeclareMathOperator{\cov}{cov}
 
 \addbibresource{${3:biblio.bib}}
 
@@ -34,3 +36,4 @@ $0
 
 \end{document}
 endsnippet
+

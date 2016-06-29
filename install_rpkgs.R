@@ -1,6 +1,7 @@
 CRAN_PKGS <- c('devtools', 'microbenchmark', 'ggplot2', 'plyr', 'dplyr',
                'knitr', 'reshape2', 'rstan', 'docopt', 'lubridate', 'testhat',
-               'rmarkdown', 'inline', 'Rcpp', 'RcppEigen')
+               'rmarkdown', 'inline', 'Rcpp', 'RcppEigen', 'purrr', 'tidry',
+               'wesanderson')
 
 BIOC_PKGS <- c('GenomicRanges', 'ggbio', 'Gviz', 'GenomicFeatures',
               'VariantAnnotation', 'rhdf5')

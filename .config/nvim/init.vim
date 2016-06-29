@@ -1,6 +1,7 @@
 " -| Plugins |-
 call plug#begin('~/.nvim/plugged')
 Plug 'kien/ctrlp.vim'
+Plug 'tmhedberg/matchit'
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-vinegar'
 Plug 'itchyny/lightline.vim'
@@ -40,6 +41,9 @@ call plug#end()
 
 " -| Color schemes |- 
 colorscheme tomorrow-night-eighties
+
+" -| Cursor |- 
+let NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 " -| General configurations |-
 set t_Co=256 " set terminal colors to 256
@@ -269,3 +273,4 @@ endfunction
 
 command! GC call FindLaTeXComments()
 nnoremap <leader>gc :GC<cr>
+
