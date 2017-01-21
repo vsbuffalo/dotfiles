@@ -1,0 +1,15 @@
+extends markdown
+extends r
+
+# thanks to https://github.com/jimhester/dotfiles/blob/master/vim/UltiSnips/rmd.snippets<
+snippet rc "RMarkdown chunk"
+\`\`\`\{r ${1:`!v expand("%:t:r")`_${2:Title}}\}
+${0:${VISUAL}}
+\`\`\`
+endsnippet
+
+snippet rp "RMarkdown chunk for plot"
+\`\`\`\{r ${1:`!v expand("%:t:r")`_${2:Title},} dev=${3:'svg'}${4:, warning=${5:FALSE}}\}
+${0:${VISUAL}}
+\`\`\`
+endsnippet

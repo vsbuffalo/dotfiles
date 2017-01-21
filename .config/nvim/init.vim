@@ -36,11 +36,18 @@ Plug 'keith/investigate.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'mattn/gist-vim'
 Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
+" Plug 'plasticboy/vim-markdown'
 call plug#end()
+
+filetype plugin indent on
 
 " -| Color schemes |- 
 colorscheme tomorrow-night-eighties
+
+" -| nvim-R |-
+let R_vsplit=1
+iabb <buffer> _ <-
+let R_rmd_environment = "new.env()"
 
 " -| Cursor |- 
 let NVIM_TUI_ENABLE_CURSOR_SHAPE=1
@@ -183,8 +190,10 @@ vmap <Leader>P "+P
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 set wildignore+=*.pdf,*.docx,*.jpg,*.png,*.jpeg,*.pptx,*.mp3
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o,*.bbl,*.blg,*.fls,*.bcf,*.out,*.log,*.aux,*.dYSM
 
 " -| UltiSnip configuration |- 
+let g:UltiSnipsSnippetsDir = "~/.config/nvim/UltiSnips/"
 let g:UltiSnipsExpandTrigger="<c-x>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"

@@ -145,3 +145,11 @@ mktitle() {
   # make a title from a string
   echo $1 | python -c 'import sys;print "\n".join(sys.stdin.readlines()).title()'
 }
+
+rand () {
+  echo $(head -1 /dev/urandom | od -N 10 | awk '{print $2}')
+}
+
+gsl_rand() {
+  export GSL_RNG_SEED=$(rand)
+}

@@ -25,8 +25,6 @@
 	clean = git hawser clean %f
 	smudge = git hawser smudge %f
 	required = true
-[merge]
-	ff = only
 [github]
 	user = vsbuffalo
 [diff "nb2md"]
