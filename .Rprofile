@@ -9,7 +9,10 @@ options(repos=c("http://cran.cnr.Berkeley.edu","http://cran.stat.ucla.edu"),
         devtools.desc.author="'Vince Buffalo <vsbuffaloAAAAA@gmail.com> [aut, cre]'",
         devtools.desc.license="BSD",
         #browserNLdisabled = TRUE,
-        menu.graphics=FALSE)
+        menu.graphics=FALSE,
+        # warn about partial matching, a Hadley trick.
+        warnPartialMatchArgs = TRUE, warnPartialMatchDollar = TRUE, warnPartialMatchAttr = TRUE)
+
 
 
 .reset <- function() system(sprintf("kill -WINCH %d", Sys.getpid()))

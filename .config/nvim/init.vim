@@ -1,14 +1,15 @@
 " -| Plugins |-
 call plug#begin('~/.nvim/plugged')
 Plug 'kien/ctrlp.vim'
+Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'tmhedberg/matchit'
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-vinegar'
 Plug 'itchyny/lightline.vim'
 Plug 'Valloric/YouCompleteMe'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+" Plug 'scrooloose/nerdtree'
+" Plug 'Xuyuanp/nerdtree-git-plugin'
 " Some themes
 Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
 "Plug 'altercation/vim-colors-solarized'
@@ -91,17 +92,17 @@ set smartindent
 autocmd FileType python set expandtab shiftwidth=4 softtabstop=4 
 
 " -| Nerdtree |-
-let g:NERDTreeIndicatorMap = {
-            \ "Modified"  : "☀",
-            \ "Staged"    : "+",
-            \ "Untracked" : " ",
-            \ "Renamed"   : "r",
-            \ "Unmerged"  : "═",
-            \ "Deleted"   : "d",
-            \ "Dirty"     : "✗",
-            \ "Clean"     : "✓",
-            \ "Unknown"   : "?"
-            \ }
+" let g:NERDTreeIndicatorMap = {
+"             \ "Modified"  : "☀",
+"             \ "Staged"    : "+",
+"             \ "Untracked" : " ",
+"             \ "Renamed"   : "r",
+"             \ "Unmerged"  : "═",
+"             \ "Deleted"   : "d",
+"             \ "Dirty"     : "✗",
+"             \ "Clean"     : "✓",
+"             \ "Unknown"   : "?"
+"             \ }
 
 " -| Better buffer switching |-
 nnoremap <C-k> :bnext<CR>
@@ -204,7 +205,9 @@ let g:pymode_rope_complete_on_dot = 0
 let g:pymode_rope_completion = 0
 let g:pymode_lint_on_write = 1
 let g:pymode_folding = 0
-let g:pymode_lint_checkers = ['pyflakes', 'pep8']
+"let g:pymode_lint_checkers = ['pyflakes', 'pep8']
+let g:pymode_lint_checkers = ['pyflakes']
+let g:pyflakes_use_quickfix = 0
 let g:pymode_quickfix_maxheight = g:quickfix_max_height
 let g:pymode_quickfix_minheight = g:quickfix_min_height
 
