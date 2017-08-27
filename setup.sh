@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 set -u
 
@@ -8,6 +7,7 @@ Gre='\033[0;32m'
 Red='\033[0;31m'
 Yel='\033[0;33m'
 
+## printing functions ##
 function gecho {
   echo "${Gre}[message] $1${RCol}"
 }
@@ -16,42 +16,57 @@ function yecho {
   echo "${Yel}[warning] $1${RCol}"
 }
 
+function wecho {
+  # red, but don't exit 1
+  echo "${Red}[error] $1${RCol}"
+}
+
+
 function recho {
   echo "${Red}[error] $1${RCol}"
   exit 1
 }
 
-# Check for pre-requisites
-(command -v gcc > /dev/null  && gecho "GCC found...") || recho "GCC not found, install via XCode."
-(command -v brew > /dev/null && gecho "Homebrew found...") || recho "Homebrew not found, install at http://brew.sh/"
-#(brew doctor > /dev/null && gecho "brew doctor looks good...") || recho "brew doctor returned with non-zero exit status. Run brew doctor and debug."
+## install functions ##
 
-# Install Homebrew main programs
-(command -v git > /dev/null && gecho "Git found...") || (yecho "Git not found, installing from Homebrew" && brew install git)
-(command -v ag > /dev/null && gecho "Ag found...") || (yecho "Ag not found, installing from Homebrew" && brew install the_silver_searcher)
-(command -v tmux > /dev/null && gecho "tmux found...") || (yecho "tmux not found, installing from Homebrew" && brew install tmux)
-(command -v nvim > /dev/null && gecho "NeoVim found...") || (yecho "NeoVim not found, installing from Homebrew" && brew tap neovim/neovim && brew install neovim)
+# check for pre-req, fail if not found
+function check_preq {
+  (command -v $1 > /dev/null  && gecho "$1 found...") || 
+    recho "$1 not found, install before proceeding."
+}
 
+# look for command line tool, if not install via homebrew
+function install_brew {
+  (command -v $1 > /dev/null  && gecho "$1 found...") || 
+    (yecho "$1 not found, installing via homebrew..." && brew install $1)
+}
 
 # function for linking dotfiles
 function linkdotfile {
   file="$1"
   if [ ! -e ~/$file -a ! -L ~/$file ]; then
       yecho "$file not found, linking..." >&2
-      ln -s dotfiles/$file ~/$file
+      ln -s ~/dotfiles/$file ~/$file
   else
       gecho "$file found, ignoring..." >&2
   fi
 }
 
+# check that the key pre-requisites are met:
+check_preq gcc
+check_preq brew
+check_preq "command -v ~/anaconda/bin/conda"
 
-# Download oh-my-zsh
-if [ ! -d ~/.oh-my-zsh ]; then
-    yecho ".oh-my-zsh not found, installing from Github..." >&2
-    (cd ~ && curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh 2> /dev/null | sh)
-else
-    gecho ".oh-my-zsh found, ignoring..." >&2
-fi
+# install Homebrew main programs
+install_brew ag
+install_brew tmux
+install_brew nvim
+install_brew zsh
+
+yecho "linking prezto files..." >&2
+zsh install_prezto.zsh
+
+exit 1
 
 # Installing futurama quotes
 if [ ! -e ~/.futurama ]; then
@@ -109,5 +124,8 @@ linkdotfile .noserc
 # Install some R packages
 gecho "installing basic R and Bioconductor packages..." >&2
 Rscript "dotfiles/install_rpkgs.R"
+
+yecho "run the following to change shell to zsh... :" >&2
+echo "  chsh -s /bin/zsh "
 
 
