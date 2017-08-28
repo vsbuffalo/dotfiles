@@ -19,7 +19,8 @@ laptops (this will *not* work for Linux).
 
 ## Bootstrapping a new installation
 
-Clone this repository to the `~` directory and use the following to install:
+For a new OS X development environment, clone this repository to the 
+`~` directory and use the following to install:
 
     git clone git@github.com:vsbuffalo/dotfiles.git
     cd dotfiles
@@ -39,6 +40,15 @@ This script does the following:
  - Links `~/.Rprofile` and installs some R packages
  - Stores and links NeoVim's files (see below).
  - Installs [joe](https://github.com/karan/joe), which is a nifty tool for getting gitignore files.
+
+## Linux minimum environment
+
+For Linux, a minimum environment is set up. Since `yum` or `apt-get` may be
+used, this boostraph script does not install anything itself. This expects neovim and zsh 
+to be installed, and copies over the configuration files of both (and creates global git ignore
+files, etc). Run:
+
+    sh min_setup.sh
 
 ## Installed R and Bioconductor Packages
 

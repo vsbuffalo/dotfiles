@@ -3,12 +3,15 @@ if [[ -s "${ZDOTDIR:-$HOME}/dotfiles/prezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/dotfiles/prezto/init.zsh"
 fi
 
-## path
-export PATH=$PATH:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/opt/X13/bin
-# add LaTeX
-export PATH=$PATH:/usr/local/texlive/2016basic/bin/x86_64-darwin/:/usr/texbin
-# add anaconda
-export PATH=$PATH:~/anaconda/bin/
+if [[ "$(uname)" == "Darwin" ]]; then
+    export PATH=$PATH:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/opt/X13/bin
+    # add LaTeX
+    export PATH=$PATH:/usr/local/texlive/2016basic/bin/x86_64-darwin/:/usr/texbin
+    # add anaconda
+    export PATH=~/anaconda/bin/:$PATH
+elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
+    export PATH=/home/vinceb/anaconda3/bin:$PATH
+fi
 
 ## theme ##
 autoload -Uz promptinit
@@ -44,8 +47,8 @@ update_prezto() {
 ## set editors ##
 export EDITOR=vim
 # alias vim to neovim and old vim to shitvim
-alias vim=/usr/local/bin/nvim
-alias shitvim=/usr/local/bin/vim
+alias vim=nvim
+alias shitvim=vim
 harrass() {
   echo "you're fucking kidding, right?"
 }
@@ -65,7 +68,7 @@ futurama() {
   # dose of Futurama
   gshuf -n1 ~/.futurama 
 }
-futurama
+[[ -e "~/.futurama" ]] &&  futurama
 
 # syntax highlighting for less
 LESSOPEN="|/usr/local/bin/lesspipe.sh %s"; export LESSOPEN  #(sh like shells)
