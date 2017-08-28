@@ -38,6 +38,7 @@ This script does the following:
    colors
  - Links `~/.Rprofile` and installs some R packages
  - Stores and links NeoVim's files (see below).
+ - Installs [joe](https://github.com/karan/joe), which is a nifty tool for getting gitignore files.
 
 ## Installed R and Bioconductor Packages
 

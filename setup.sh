@@ -67,6 +67,7 @@ install_brew tmux
 install_brew nvim
 install_brew zsh
 install_brew lesspipe
+install_brew joe
 
 yecho "linking prezto files..." >&2
 zsh install_prezto.zsh
@@ -119,11 +120,12 @@ fi
 # install nosetests and stuff
 pip3 install nose 2> /dev/null
 pip3 install yanc 2> /dev/null
+pip3 install joe 2> /dev/null
 linkdotfile .noserc
 
 # install some R packages
 gecho "installing basic R and Bioconductor packages..." >&2
-Rscript "~/dotfiles/install_rpkgs.r"
+Rscript ~/dotfiles/install_rpkgs.r
 
 yecho "run the following to change shell to zsh... :" >&2
 echo "  chsh -s /bin/zsh "
