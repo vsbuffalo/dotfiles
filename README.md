@@ -7,7 +7,11 @@ laptops (this will *not* work for Linux).
 
 1. Install OS X Command Line Tools. Homebrew will also try to do 
    this automatically.
-2. Install Anaconda. [Download link](https://www.anaconda.com/download/) (I use
+2. Install [homebrew](https://brew.sh), then install git (to clone this repo):
+
+        brew install git
+        
+3. Install Anaconda. [Download link](https://www.anaconda.com/download/) (I use
    the Python 3 version) and [installation
    instructions](https://docs.continuum.io/anaconda/install/mac-os#macos-graphical-install).
    Be sure to install for a single user on OS X only; the system-wide installs
@@ -17,15 +21,17 @@ laptops (this will *not* work for Linux).
 
 Clone this repository to the `~` directory and use the following to install:
 
-    $ sh setup.sh
+    git clone git@github.com:vsbuffalo/dotfiles.git
+    cd dotfiles
+    sh setup.sh
 
 This script does the following:
 
- - Installs Git, NeoVim, Ag, and tmux (from Homebrew, since these are
-   dependencies)
+ - Installs Git, NeoVim, Ag, zsh, lesspipe, and tmux (from Homebrew, since
+   these are dependencies)
  - Installs ~oh-my-zsh~ [pretzo](https://github.com/sorin-ionescu/prezto)
  - Installs [Futurama quotes](https://github.com/vsbuffalo/good-news-everyone)
- - Installs `~/.zshrc`
+ - Links `~/.zshrc` to `dotfiles/zshrc`
  - Links `~/.gitconfig`
  - Links `~/.tmux.conf`
  - Creates `~/.global_ignore` from Github's `.gitignore` files and sets up Git
@@ -60,13 +66,16 @@ hacky vimscript I wrote to send lines of code to the new, awesome NeoVim
 terminal. You can see all of my configurations in `.nvim*`. I will keep my old
 Vim configurations around too.
 
-
 ## Pretzo
 
 Recently, I have migrated from oh-my-zsh to pretzo.
 
     git submodule add https://github.com/sorin-ionescu/prezto.git
     git submodule update --init --recursive
+
+I then link my own `dotfiles/.zshrc` to `~`, not the one included in
+`dotfiles/prezto/runcoms/`. See `install_prezto.zsh` for more info -- this is
+adopted from the pretzo readme.
 
 ## Sane Jupyter Notebook Diffs
 

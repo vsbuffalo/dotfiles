@@ -52,6 +52,10 @@ function linkdotfile {
   fi
 }
 
+# are we in right directory?
+[[ $(basename $(pwd)) == "dotfiles" ]] || 
+  recho "doesn't look like you're in dotfiles/"
+
 # check that the key pre-requisites are met:
 check_preq gcc
 check_preq brew
@@ -62,68 +66,64 @@ install_brew ag
 install_brew tmux
 install_brew nvim
 install_brew zsh
+install_brew lesspipe
 
 yecho "linking prezto files..." >&2
 zsh install_prezto.zsh
 
-exit 1
-
-# Installing futurama quotes
+# installing futurama quotes
 if [ ! -e ~/.futurama ]; then
-    yecho ".futurama not found, downloading..." >&2
-    command -v gshuf || (yecho "gshuf not found, installing coreutils from Homebrew..." >&2 && brew install coreutils)
-    curl -s https://raw.github.com/vsbuffalo/good-news-everyone/master/futurama.txt 2> /dev/null | \
-	awk '{print $0} END{print "total quotes: "NR > "/dev/stderr"}' > ~/.futurama
+  yecho ".futurama not found, downloading..." >&2
+  curl -s https://raw.githubusercontent.com/vsbuffalo/good-news-everyone/master/futurama.txt 2> /dev/null | \
+    awk '{print $0} END{print "total quotes: "NR > "/dev/stderr"}' > ~/.futurama
 else
-    gecho ".futurama found, ignoring..." >&2
+  gecho ".futurama found, ignoring..." >&2
 fi
 
-# Link over .zshrc
-linkdotfile .zshrc
-
-# Link over .gitconfig
+# link over .gitconfig
 linkdotfile .gitconfig
 linkdotfile .gitattributes
 
-# Link over .latexmkrc for latexmk settings
+# link over .latexmkrc for latexmk settings
 linkdotfile .latexmkrc
 
-# Link over .tmux.conf
+# link over .tmux.conf
 linkdotfile .tmux.conf
 
-# Create Python setup
+# create Python setup
 linkdotfile .pythonrc.py
 
-# Link NeoVim settings
+# link NeoVim settings
 linkdotfile .config
 
-# Create a Rprofile
+# create a Rprofile
 linkdotfile .Rprofile
 
-# Create zsh completion
+# create zsh completion
 linkdotfile .zsh-completions
 
-# Create a global Git ignore file
+# create a global Git ignore file
 if [ ! -e ~/.global_ignore ]; then
     yecho "~/.global_ignore not found, curling from Github..." >&2
-    curl https://raw.github.com/github/gitignore/master/Global/Emacs.gitignore \
-    https://raw.githubusercontent.com/github/gitignore/master/Global/Vim.gitignore \
-    https://raw2.github.com/github/gitignore/master/Global/vim.gitignore \
-    https://raw.github.com/github/gitignore/master/Global/OSX.gitignore \
-    https://raw.githubusercontent.com/github/gitignore/master/TeX.gitignore > ~/.global_ignore 2> /dev/null
-    git config --global core.excludesfile ~/.global_ignore && yecho "[message] adding ignore file to Git..." >&2
+    curl \
+      https://raw.githubusercontent.com/github/gitignore/master/Global/Emacs.gitignore \
+      https://raw.githubusercontent.com/github/gitignore/master/Global/Vim.gitignore \
+      https://raw.githubusercontent.com/github/gitignore/master/Global/macOS.gitignore \
+    > ~/.global_ignore 2> /dev/null
+    git config --global core.excludesfile ~/.global_ignore && 
+      yecho "[message] adding ignore file to Git..." >&2
 else
     gecho "~/.global_ignore found, ignoring..." >&2
 fi
 
-# Install nosetests and stuff
-pip install nose 2> /dev/null
-pip install yanc 2> /dev/null
+# install nosetests and stuff
+pip3 install nose 2> /dev/null
+pip3 install yanc 2> /dev/null
 linkdotfile .noserc
 
-# Install some R packages
+# install some R packages
 gecho "installing basic R and Bioconductor packages..." >&2
-Rscript "dotfiles/install_rpkgs.R"
+Rscript "~/dotfiles/install_rpkgs.R"
 
 yecho "run the following to change shell to zsh... :" >&2
 echo "  chsh -s /bin/zsh "
