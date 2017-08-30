@@ -26,12 +26,12 @@ con() {
 }
 
 coff() {
-  echo 'removing anaconda from $PATH...'
+  [[ $1 ]] || echo 'removing anaconda from $PATH...'
   export PATH=$PATH_NO_ANACONDA
 }
 
-# turn off anaconda by default
-coff
+# turn off anaconda by default; don't message
+coff true
 
 ## theme ##
 autoload -Uz promptinit
