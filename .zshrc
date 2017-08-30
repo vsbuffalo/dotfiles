@@ -30,6 +30,9 @@ coff() {
   export PATH=$PATH_NO_ANACONDA
 }
 
+# turn off anaconda by default
+coff
+
 ## theme ##
 autoload -Uz promptinit
 promptinit
