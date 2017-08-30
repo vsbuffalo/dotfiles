@@ -13,6 +13,23 @@ elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
     export PATH=/home/vinceb/anaconda3/bin:$PATH
 fi
 
+ditch_anaconda() {
+  echo $PATH | tr ':' '\n' | grep -v anaconda | xargs | tr ' ' ':'
+}
+
+export PATH_ANACONDA=$PATH
+export PATH_NO_ANACONDA=$(ditch_anaconda)
+
+con() {
+  echo 'adding anaconda to $PATH...'
+  export PATH=$PATH_ANACONDA
+}
+
+coff() {
+  echo 'removing anaconda from $PATH...'
+  export PATH=$PATH_NO_ANACONDA
+}
+
 ## theme ##
 autoload -Uz promptinit
 promptinit
@@ -30,6 +47,9 @@ alias du="du -h"
 alias grep="grep --color"
 alias today="date +%F"
 alias gl="git pull --rebase"
+alias g=git
+alias h=brew
+alias c=conda
 
 # get my IP
 myip () { ifconfig | grep "inet " | awk '{ print $2 }' | grep -v "^127" } 

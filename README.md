@@ -22,9 +22,13 @@ laptops (this will *not* work for Linux).
 For a new OS X development environment, clone this repository to the 
 `~` directory and use the following to install:
 
-    git clone git@github.com:vsbuffalo/dotfiles.git
+    git clone --recursive git@github.com:vsbuffalo/dotfiles.git
     cd dotfiles
     sh setup.sh
+
+If you forget `--recursive` (as I often do), use:
+
+    git submodule update --init --recursive
 
 This script does the following:
 
