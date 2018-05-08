@@ -1,10 +1,11 @@
 CRAN_PKGS <- c('devtools', 'microbenchmark', 'tidyverse',
                'knitr', 'reshape2', 'rstan', 'docopt', 'lubridate', 'testhat',
+               'roxygen2', 'gsl',
                'rmarkdown', 'inline', 'Rcpp', 'RcppEigen', 
-               'wesanderson')
+               'wesanderson', 'viridis', 'latex2exp')
 
 BIOC_PKGS <- c('GenomicRanges', 'ggbio', 'Gviz', 'GenomicFeatures',
-              'VariantAnnotation', 'rhdf5')
+               'VariantAnnotation', 'rhdf5', 'plyranges')
 
 
 install.packages(CRAN_PKGS)
