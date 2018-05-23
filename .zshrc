@@ -53,6 +53,7 @@ alias gl="git pull --rebase"
 alias g=git
 alias h=brew
 alias c=conda
+agr () { ag $1 --ignore="*.html" } 
 
 # get my IP
 myip () { ifconfig | grep "inet " | awk '{ print $2 }' | grep -v "^127" } 
