@@ -100,6 +100,7 @@ From Erick Matsen: https://gist.github.com/matsen/37521f504a14aede644d
 
 I use basic LaTeX, and then install
 
+```
 sudo tlmgr install collection-fontsrecommended
 sudo tlmgr install preprint
 sudo tlmgr install wasysym
@@ -107,4 +108,5 @@ sudo tlmgr install biblatex
 sudo tlmgr install logreq
 sudo tlmgr install xstring
 sudo tlmgr install units  
+```
 
