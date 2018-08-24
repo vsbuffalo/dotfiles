@@ -21,23 +21,23 @@ Plug 'klen/python-mode'
 Plug 'jalvesaq/Nvim-R'
 Plug 'lervag/vimtex'
 "Plug 'LaTeX-Box-Team/LaTeX-Box'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
-Plug 'othree/html5.vim'
-Plug 'pangloss/vim-javascript'
-Plug 'Shutnik/jshint2.vim'
-Plug 'marijnh/tern_for_vim'
-Plug 'rking/ag.vim'
-Plug 'ivanov/vim-ipython'
-Plug 'tpope/vim-rsi'        " emacs-like insert mode movements
-Plug 'tpope/vim-surround'   " faster edits for surrounding whatever
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+"Plug 'othree/html5.vim'
+"Plug 'pangloss/vim-javascript'
+"Plug 'Shutnik/jshint2.vim'
+"Plug 'marijnh/tern_for_vim'
+"Plug 'rking/ag.vim'
+"Plug 'ivanov/vim-ipython'
+"Plug 'tpope/vim-rsi'        " emacs-like insert mode movements
+"Plug 'tpope/vim-surround'   " faster edits for surrounding whatever
 Plug 'tpope/vim-commentary' " faster commenting code, e.g. gcc to comment line
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-unimpaired' " faster navigation for quickfix items
-Plug 'tpope/vim-repeat'
-Plug 'keith/investigate.vim'
+"Plug 'tpope/vim-fugitive'
+"Plug 'tpope/vim-unimpaired' " faster navigation for quickfix items
+"Plug 'tpope/vim-repeat'
+"Plug 'keith/investigate.vim'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'mattn/gist-vim'
-Plug 'godlygeek/tabular'
+"Plug 'mattn/gist-vim'
+"Plug 'godlygeek/tabular'
 " Plug 'plasticboy/vim-markdown'
 call plug#end()
 
@@ -70,7 +70,7 @@ let g:quickfix_max_height = 8
 autocmd FileType help wincmd L " open help in vsplit
 set shortmess+=IA " don't open a message when Vim starts
 " don't show that incredibly annoying doc window during ocompletion
-set completeopt-=preview
+"set completeopt-=preview
 
 
 " -| Spell checking |-
@@ -235,10 +235,13 @@ inoremap <c-l> <c-o>:REPLSendLine<cr>
 vnoremap <c-l> :<c-u>REPLSendLines<cr>
 
 " -| latex |-
+let g:vimtex_compiler_progname = 'nvr'
 let g:tex_flavor='latex'
 let g:vimtex_fold_envs = 0
 let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
 let g:vimtex_view_general_options = '-r @line @pdf @tex'
+let g:vimtex_quickfix_latexlog = {'default' : 0}
+
 
 
 if !exists('g:ycm_semantic_triggers')

@@ -100,3 +100,5 @@ futurama() {
 
 # syntax highlighting for less
 LESSOPEN="|/usr/local/bin/lesspipe.sh %s"; export LESSOPEN  #(sh like shells)
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
