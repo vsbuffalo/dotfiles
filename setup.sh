@@ -68,6 +68,7 @@ install_brew nvim
 install_brew zsh
 install_brew lesspipe
 install_brew joe
+install_brew libgit2
 
 yecho "linking prezto files..." >&2
 zsh install_prezto.zsh

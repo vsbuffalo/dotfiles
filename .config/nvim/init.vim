@@ -8,7 +8,8 @@ Plug 'maverickg/stan.vim'
 Plug 'tpope/vim-vinegar'
 Plug 'itchyny/lightline.vim'
 Plug 'Valloric/YouCompleteMe'
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 " Plug 'scrooloose/nerdtree'
 " Plug 'Xuyuanp/nerdtree-git-plugin'
 " Some themes
@@ -48,7 +49,7 @@ colorscheme tomorrow-night-eighties
 
 " -| nvim-R |-
 let R_vsplit=1
-iabb <buffer> _ <-
+"iabb <buffer> _ <-
 let R_rmd_environment = "new.env()"
 
 " -| Cursor |- 
@@ -234,14 +235,19 @@ nnoremap <c-l> :REPLSendLine<cr>
 inoremap <c-l> <c-o>:REPLSendLine<cr>
 vnoremap <c-l> :<c-u>REPLSendLines<cr>
 
-" -| latex |-
-let g:vimtex_compiler_progname = 'nvr'
-let g:tex_flavor='latex'
+" " -| latex |-
+" let g:vimtex_compiler_progname = 'nvr'
+" let g:tex_flavor='latex'
 let g:vimtex_fold_envs = 0
 let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
 let g:vimtex_view_general_options = '-r @line @pdf @tex'
-let g:vimtex_quickfix_latexlog = {'default' : 0}
-
+" let g:vimtex_quickfix_latexlog = {'default' : 0}
+" " let g:vimtex_compiler_latexmk = {
+"       " \ 'options' : [
+"       " \   '-xetex',
+"       " \ ],
+"       " \ 'build_dir' : 'livepreview',
+"       " \}
 
 
 if !exists('g:ycm_semantic_triggers')
