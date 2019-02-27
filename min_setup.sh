@@ -86,6 +86,8 @@ if [ ! -e ~/.global_ignore ]; then
       https://raw.githubusercontent.com/github/gitignore/master/Global/Emacs.gitignore \
       https://raw.githubusercontent.com/github/gitignore/master/Global/Vim.gitignore \
       https://raw.githubusercontent.com/github/gitignore/master/Global/macOS.gitignore \
+      https://raw.githubusercontent.com/github/gitignore/master/TeX.gitignore \
+      https://raw.githubusercontent.com/github/gitignore/master/Python.gitignore \
     > ~/.global_ignore 2> /dev/null
     git config --global core.excludesfile ~/.global_ignore && 
       yecho "[message] adding ignore file to Git..." >&2

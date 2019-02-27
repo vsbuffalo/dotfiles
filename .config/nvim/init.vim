@@ -1,5 +1,8 @@
+" make sure to use system python so this plays nicely with conda
+let g:ycm_path_to_python_interpreter = '/usr/bin/python'
 " -| Plugins |-
 call plug#begin('~/.nvim/plugged')
+Plug 'vsbuffalo/eidos.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'tmhedberg/matchit'
@@ -87,9 +90,12 @@ autocmd BufRead,BufNewFile *.Rmd setlocal spell
 
 " -| Indentation |-
 set expandtab
+set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set smartindent
+set autoindent    
+
 " Python-specific indentation
 autocmd FileType python set expandtab shiftwidth=4 softtabstop=4 
 
@@ -205,7 +211,7 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " pymode's completion sucks compared to YouCompleteMe; turn it off
 let g:pymode_rope_complete_on_dot = 0
 let g:pymode_rope_completion = 0
-let g:pymode_lint_on_write = 1
+let g:pymode_lint_on_write = 0
 let g:pymode_folding = 0
 "let g:pymode_lint_checkers = ['pyflakes', 'pep8']
 let g:pymode_lint_checkers = ['pyflakes']

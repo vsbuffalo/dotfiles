@@ -8,7 +8,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     # add LaTeX
     export PATH=$PATH:/usr/local/texlive/2016basic/bin/x86_64-darwin/:/usr/texbin
     # add anaconda/miniconda
-    export PATH="$HOME/miniconda3/bin:$PATH"
+# export PATH="$HOME/miniconda3/bin:$PATH"  # commented out by conda initialize
     #export PATH="$HOME/anaconda3/bin/:$PATH"
     CONDA_TYPE=miniconda
 elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
@@ -36,9 +36,6 @@ coff() {
 coff_nomessage() {
   export PATH=$PATH_NO_CONDA
 }
-
-# turn off anaconda by default; don't message
-coff_nomessage
 
 ## theme ##
 autoload -Uz promptinit
@@ -99,7 +96,7 @@ futurama() {
   # dose of Futurama
   gshuf -n1 ~/.futurama 
 }
-[[ -e "~/.futurama" ]] &&  futurama
+[[ -a ~/.futurama ]] && futurama
 
 # syntax highlighting for less
 LESSOPEN="|/usr/local/bin/lesspipe.sh %s"; export LESSOPEN  #(sh like shells)
@@ -112,3 +109,48 @@ nag () {
 
 # shell integration for zsh/iTerm2
 source ~/.iterm2_shell_integration.zsh
+
+# latexdiff two arbitrary commits
+pdfdiff() {
+  rm -f .pdfdiff_diff.tex .pdfdiff_old.tex .pdfdiff_new.tex
+  if [ "$#" -eq 1 ]; then
+    local OLD_COMMIT="HEAD^"
+    local NEW_COMMIT="HEAD"
+    elif [ "$#" -eq 3 ]; then
+  elif [ "$#" -eq 3 ]; then
+    local OLD_COMMIT=$2
+    local NEW_COMMIT=$3
+  else 
+    echo "usage: pdfdiff file.tex [old-commit] [new-commit]\n    by default, old-commit = HEAD^, new-commit = HEAD"
+    exit 1
+  fi
+  local REF="$(git rev-parse --show-prefix)$1" 
+  echo "$OLD_COMMIT:$REF"
+  git show "$OLD_COMMIT:$REF" > .pdfdiff_old.tex
+  git show "$NEW_COMMIT:$REF" > .pdfdiff_new.tex
+  latexdiff .pdfdiff_old.tex .pdfdiff_new.tex > .pdfdiff_diff.tex
+  latexmk -xelatex -pvc .pdfdiff_diff.tex
+}
+
+alias nb=jupyter notebook
+alias ip=ipython
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/vinceb/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/vinceb/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/vinceb/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/vinceb/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+# turn off anaconda by default; don't message
+coff_nomessage
+
+

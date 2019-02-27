@@ -110,3 +110,7 @@ sudo tlmgr install xstring
 sudo tlmgr install units  
 ```
 
+
+## git-latexdiff
+
+git@gitlab.com:git-latexd

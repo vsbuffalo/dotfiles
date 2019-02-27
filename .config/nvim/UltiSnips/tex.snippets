@@ -50,3 +50,91 @@ snippet a "aligned"
   \label{${1:eq:}}
 \end{align}
 endsnippet
+
+snippet art "article template"
+\documentclass[11pt]{article}
+\RequirePackage{fullpage}
+\RequirePackage[font=small,labelfont=bf]{caption}
+\RequirePackage{amsmath,amssymb,amsthm}
+\RequirePackage{mathtools}
+\RequirePackage{graphicx}
+\RequirePackage[normalem]{ulem}
+\RequirePackage[hidelinks]{hyperref}
+\RequirePackage{subcaption}
+\RequirePackage{authblk}
+\RequirePackage{bm}
+\RequirePackage{bbm}
+\RequirePackage{tikz}
+
+% line numbers:
+\RequirePackage{lineno}
+%\modulolinenumbers[5]
+\definecolor{linenogray}{gray}{0.75}
+\renewcommand\linenumberfont{\normalfont\tiny\sffamily\color{linenogray}}
+
+% \RequirePackage[osf]{mathpazo}
+\RequirePackage[bibstyle=authoryear,citestyle=authoryear-comp,
+                date=year,
+                maxbibnames=9,maxnames=5,maxcitenames=2,
+                backend=biber,uniquelist=false,uniquename=false,
+                % style=apa,
+                sorting=nyt,
+                hyperref=true]{biblatex}
+\RequirePackage[colorinlistoftodos]{todonotes}
+\RequirePackage{color}
+\RequirePackage{nicefrac}
+
+%% editing functions
+\newcommand{\gc}[1]{{\it \color{red} #1 }}
+\newcommand{\vb}[1]{{\it \color{blue} #1}}
+\newcommand{\vbout}[1]{{\it \color{blue} \sout{#1}}}
+\newcommand{\graham}[1]{\todo[size=\scriptsize, color=red!50]{#1}}
+\newcommand{\vince}[1]{\todo[size=\scriptsize, color=blue!50]{#1}}
+
+
+%% a /nonumber you can turn on/off
+\newcommand{\nnn}{\nonumber}
+%\newcommand{\nnn}{}
+
+%% expectation/variance and other operators
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\V}{\text{V}}
+\newcommand{\cf}{\emph{cf.} }
+\DeclareMathOperator{\var}{Var}
+\DeclareMathOperator{\cov}{Cov}
+\DeclareMathOperator{\T}{{\mathrm{T}}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+
+\newcommand{\chapquote}[2]{\begin{quotation} \textit{#1} \end{quotation} \begin{flushright} - #2\end{flushright} }
+
+\addbibresource{${3:biblio.bib}}
+
+\title{$1}
+
+\author[$\ast$,$\dag$,$1$]{Vince Buffalo}
+
+% other authors:
+% \author[$\dag$]{}
+\affil[$\ast$]{\footnotesize Population Biology Graduate Group}
+\affil[$\dag$]{\footnotesize Center for Population Biology, Department of Evolution and Ecology, University of California, Davis, CA 95616}
+% TODO XXX: remove the poly-A tail
+\affil[$1$]{\footnotesize Email for correspondence: \href{mailto:vsbuffaloAAAAA@ucdavis.edu}{vsbuffaloAAAAA@ucdavis.edu}}
+
+\begin{document}
+\maketitle
+
+%% RUNNING TITLE
+%% KEYWORDS
+
+\linenumbers
+\begin{abstract}
+
+\end{abstract}
+
+$0
+
+\printbibliography
+
+\end{document}
+endsnippet
