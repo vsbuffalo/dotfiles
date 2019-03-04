@@ -154,3 +154,4 @@ unset __conda_setup
 coff_nomessage
 
 
+alias idea="vim ~/projects/ideas/ideas.md"

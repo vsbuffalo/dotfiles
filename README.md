@@ -16,6 +16,7 @@ laptops (this will *not* work for Linux).
    instructions](https://docs.continuum.io/anaconda/install/mac-os#macos-graphical-install).
    Be sure to install for a single user on OS X only; the system-wide installs
    cause issues with permissions. This cannot be done via the command line.
+   
 
 ## Bootstrapping a new installation
 
@@ -39,11 +40,17 @@ This script does the following:
  - Links `~/.zshrc` to `dotfiles/zshrc`
  - Links `~/.gitconfig`
  - Links `~/.tmux.conf`
+ - Links `~/.ipython/`
  - Creates `~/.global_ignore` from Github's `.gitignore` files and sets up Git
    colors
  - Links `~/.Rprofile` and installs some R packages
  - Stores and links NeoVim's files (see below).
  - Installs [joe](https://github.com/karan/joe), which is a nifty tool for getting gitignore files.
+
+## Things to do manually after a new bootstrap
+
+1. Set up a conda profile (e.g. basesci), install ipython, etc.
+
 
 ## Linux minimum environment
 
@@ -81,6 +88,7 @@ hacky vimscript I wrote to send lines of code to the new, awesome NeoVim
 terminal. You can see all of my configurations in `.nvim*`. I will keep my old
 Vim configurations around too.
 
+
 ## Pretzo
 
 Recently, I have migrated from oh-my-zsh to pretzo.
@@ -92,6 +100,12 @@ I then link my own `dotfiles/.zshrc` to `~`, not the one included in
 `dotfiles/prezto/runcoms/`. See `install_prezto.zsh` for more info -- this is
 adopted from the pretzo readme.
 
+If you need to update Pretzo:
+
+    cd $ZPREZTODIR
+    git pull
+    git submodule update --init --recursive
+    
 ## Sane Jupyter Notebook Diffs
 
 From Erick Matsen: https://gist.github.com/matsen/37521f504a14aede644d

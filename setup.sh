@@ -93,7 +93,8 @@ linkdotfile .latexmkrc
 linkdotfile .tmux.conf
 
 # create Python setup
-linkdotfile .pythonrc.py
+linkdotfile .ipython
+linkdotfile .condarc
 
 # link NeoVim settings
 linkdotfile .config
@@ -118,11 +119,11 @@ else
     gecho "~/.global_ignore found, ignoring..." >&2
 fi
 
-# install nosetests and stuff
-pip3 install nose 2> /dev/null
-pip3 install yanc 2> /dev/null
-pip3 install joe 2> /dev/null
-linkdotfile .noserc
+## install nosetests and stuff
+#pip3 install nose 2> /dev/null
+#pip3 install yanc 2> /dev/null
+#pip3 install joe 2> /dev/null
+#linkdotfile .noserc
 
 # install some R packages
 gecho "installing basic R and Bioconductor packages..." >&2
