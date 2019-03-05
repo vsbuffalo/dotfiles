@@ -94,6 +94,7 @@ linkdotfile .tmux.conf
 
 # create Python setup
 linkdotfile .ipython
+linkdotfile .ptpython
 linkdotfile .condarc
 
 # link NeoVim settings

@@ -128,3 +128,12 @@ sudo tlmgr install units
 ## git-latexdiff
 
 git@gitlab.com:git-latexd
+
+## JupyterLab stuff:
+
+Some good extensions are [listed here](https://github.com/mauhai/awesome-jupyterlab).
+
+    pip install jupyterlab_latex
+    jupyter labextension install jupyterlab_vim
+    jupyter labextension install @jupyter-widgets/jupyterlab-manager
+
