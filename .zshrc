@@ -155,3 +155,11 @@ coff_nomessage
 
 
 alias idea="vim ~/projects/ideas/ideas.md"
+
+app() {
+  /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app="$1"
+}
+
+jlab() {
+  /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app=http://localhost:8890
+}

@@ -88,6 +88,14 @@ hacky vimscript I wrote to send lines of code to the new, awesome NeoVim
 terminal. You can see all of my configurations in `.nvim*`. I will keep my old
 Vim configurations around too.
 
+If YouCompleteMe install isn't working:
+
+```
+xcrun -find c++
+xcrun -find cc
+export CC=`which cc`;export CXX=/Library/Developer/CommandLineTools/usr/bin/c++;./install.py --clang-completer
+```
+
 
 ## Pretzo
 

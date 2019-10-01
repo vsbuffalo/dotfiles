@@ -203,6 +203,7 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o,*.bbl,*.blg,*.fls,*.bcf,*.out,*.log
 
 " -| UltiSnip configuration |- 
 let g:UltiSnipsSnippetsDir = "~/.config/nvim/UltiSnips/"
+"let g:UltiSnipsSnippetDirectories=["~/.config/nvim/UltiSnips/", "/Users/vinceb/.nvim/plugged/vim-snippets/snippets"]
 let g:UltiSnipsExpandTrigger="<c-x>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"

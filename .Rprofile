@@ -4,7 +4,7 @@ if (interactive()) {
     warning("devtools cannot be loaded...")
 }
 
-options(repos=c("http://cran.cnr.Berkeley.edu","http://cran.stat.ucla.edu"),
+options(repos="http://cran.us.r-project.org",
         devtools.name="Vince Buffalo",
         devtools.desc.author="'Vince Buffalo <vsbuffaloAAAAA@gmail.com> [aut, cre]'",
         devtools.desc.license="BSD",

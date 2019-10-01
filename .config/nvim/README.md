@@ -33,7 +33,13 @@ After installing YouCompleteMe you'll need to compile it
 with:
 
     $ cd ~/.nvim/plugged/YouCompleteMe
-    $ ./install.sh --clang-completer
+    $ ./install.py --clang-completer
+
+Note that there are all sorts of issues  with conda and YCM, so be sure to run 
+
+    source deactivate
+
+before the above.
 
 ## Intalling TernJs
 
