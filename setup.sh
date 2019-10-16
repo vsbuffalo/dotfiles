@@ -106,6 +106,9 @@ linkdotfile .Rprofile
 # create zsh completion
 linkdotfile .zsh-completions
 
+# iterm integration
+linkdotfile .iterm2_shell_integration.zsh
+
 # create a global Git ignore file
 if [ ! -e ~/.global_ignore ]; then
     yecho "~/.global_ignore not found, curling from Github..." >&2
