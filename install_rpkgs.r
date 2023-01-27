@@ -10,9 +10,9 @@ BIOC_PKGS <- c('GenomicRanges', 'ggbio', 'Gviz', 'GenomicFeatures',
 
 install.packages(CRAN_PKGS)
 
-# Install Bioconductor Package
-source('http://bioconductor.org/biocLite.R')
-biocLite(BIOC_PKGS)
-biocLite(ask=FALSE)
-
-
+## Install Bioconductor Package
+#source('http://bioconductor.org/biocLite.R')
+#biocLite(BIOC_PKGS)
+#biocLite(ask=FALSE)
+#
+#

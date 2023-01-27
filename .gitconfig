@@ -19,6 +19,7 @@
 	last = log -1 HEAD
   lol = log --graph --decorate --pretty=oneline --abbrev-commit
   lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+	squash-all = "!f(){ git reset $(git commit-tree HEAD^{tree} -m \"${1:-A new start}\");};f"
 [http]
 	postBuffer = 524288000
 [filter "hawser"]

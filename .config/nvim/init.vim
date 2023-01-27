@@ -1,8 +1,9 @@
 " make sure to use system python so this plays nicely with conda
-let g:ycm_path_to_python_interpreter = '/usr/bin/python'
+let g:ycm_path_to_python_interpreter = '/usr/local/opt/python@3.8/bin/python3'
 " -| Plugins |-
 call plug#begin('~/.nvim/plugged')
 Plug 'vsbuffalo/eidos.vim'
+Plug 'github/copilot.vim', {'branch': 'release'}
 Plug 'kien/ctrlp.vim'
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'tmhedberg/matchit'
@@ -10,7 +11,8 @@ Plug 'mbbill/undotree'
 Plug 'maverickg/stan.vim'
 Plug 'tpope/vim-vinegar'
 Plug 'itchyny/lightline.vim'
-Plug 'Valloric/YouCompleteMe'
+"Plug 'Valloric/YouCompleteMe'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 " Plug 'scrooloose/nerdtree'
@@ -22,7 +24,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'klen/python-mode'
 "Plug 'scrooloose/syntastic'
 "Plug 'hynek/vim-python-pep8-indent' " change Python's indent to match PEP8
-Plug 'jalvesaq/Nvim-R'
+"Plug 'jalvesaq/Nvim-R'
 Plug 'lervag/vimtex'
 "Plug 'LaTeX-Box-Team/LaTeX-Box'
 "Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
@@ -204,9 +206,9 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o,*.bbl,*.blg,*.fls,*.bcf,*.out,*.log
 " -| UltiSnip configuration |- 
 let g:UltiSnipsSnippetsDir = "~/.config/nvim/UltiSnips/"
 "let g:UltiSnipsSnippetDirectories=["~/.config/nvim/UltiSnips/", "/Users/vinceb/.nvim/plugged/vim-snippets/snippets"]
-let g:UltiSnipsExpandTrigger="<c-x>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+"let g:UltiSnipsExpandTrigger="<C-x>"
+"let g:UltiSnipsJumpForwardTrigger="<c-j>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 " -| Pymode settings |- 
 " pymode's completion sucks compared to YouCompleteMe; turn it off
@@ -220,10 +222,36 @@ let g:pyflakes_use_quickfix = 0
 let g:pymode_quickfix_maxheight = g:quickfix_max_height
 let g:pymode_quickfix_minheight = g:quickfix_min_height
 
-" - | YouCompleteMe settings |-
-" find the definition/declaration, bring me there, and give me some breathing
-" room
-nnoremap <leader>j :YcmCompleter GoTo<cr>zt<c-y>
+" -- for coc.nvim (f you YCM)
+" use <tab> for trigger completion and navigate to the next complete item
+let g:coc_disable_startup_warning = 1
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+
+" Use <C-l> for trigger snippet expand.
+imap <C-x> <Plug>(coc-snippets-expand)
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+" Use <leader>x for convert visual selected code to snippet
+xmap <leader>x  <Plug>(coc-convert-snippet)
+
 
 " -| Sending code to terminal (experimental)  |- 
 augroup Terminal
@@ -243,18 +271,19 @@ inoremap <c-l> <c-o>:REPLSendLine<cr>
 vnoremap <c-l> :<c-u>REPLSendLines<cr>
 
 " " -| latex |-
-" let g:vimtex_compiler_progname = 'nvr'
-" let g:tex_flavor='latex'
-let g:vimtex_fold_envs = 0
+let g:vimtex_view_method = "skim"
+let g:vimtex_compiler_progname = 'nvr'
 let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
 let g:vimtex_view_general_options = '-r @line @pdf @tex'
+" let g:vimtex_fold_envs = 0
+" let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
 " let g:vimtex_quickfix_latexlog = {'default' : 0}
-" " let g:vimtex_compiler_latexmk = {
-"       " \ 'options' : [
-"       " \   '-xetex',
-"       " \ ],
-"       " \ 'build_dir' : 'livepreview',
-"       " \}
+" let g:vimtex_compiler_latexmk = {
+"       \ 'options' : [
+"       \   '-pdflatex',
+"       \ ],
+"       \ 'build_dir' : 'livepreview',
+"       \}
 
 
 if !exists('g:ycm_semantic_triggers')

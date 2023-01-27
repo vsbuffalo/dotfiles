@@ -11,7 +11,7 @@ options(repos="http://cran.us.r-project.org",
         #browserNLdisabled = TRUE,
         menu.graphics=FALSE,
         # warn about partial matching, a Hadley trick.
-        warnPartialMatchArgs = TRUE, warnPartialMatchDollar = TRUE, warnPartialMatchAttr = TRUE)
+        warnPartialMatchDollar = TRUE)
 
 
 

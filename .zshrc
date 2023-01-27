@@ -163,3 +163,11 @@ app() {
 jlab() {
   /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app=http://localhost:8890
 }
+
+export IUCN_REDLIST_KEY=7de80b818cde5419b9df14729cddf5f89ef62b1146d4d854338736d219bc184f
+
+# SSL library stuff for homebrew
+export PATH="/usr/local/opt/openssl@3/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/openssl@3/lib"
+export CPPFLAGS="-I/usr/local/opt/openssl@3/include"
+export PKG_CONFIG_PATH="/usr/local/opt/openssl@3/lib/pkgconfig"
