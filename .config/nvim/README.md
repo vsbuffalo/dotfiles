@@ -24,5 +24,9 @@ Then in neovim, go to `.config/nvim/lua/vsb/packer.lua` and do
     $ brew update
     $ brew reinstall --HEAD neovim
 
+## Lua Line and Fonts
 
+You may need nerdfonts,
 
+    $ brew tap homebrew/cask-fonts
+    $ brew install font-hack-nerd-font
