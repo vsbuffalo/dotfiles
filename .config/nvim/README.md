@@ -30,3 +30,8 @@ You may need nerdfonts,
 
     $ brew tap homebrew/cask-fonts
     $ brew install font-hack-nerd-font
+
+and then if in iTerm2, go to Preferences (`⌘,`), 
+Profiles, Text, and choose `Hack nerd font` 
+from the drop down fonts menu. I'd also increase 
+the font size.
