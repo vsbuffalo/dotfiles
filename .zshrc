@@ -8,6 +8,10 @@ bindkey -e # emacs bindings
 ## ----------- path stuff ----------- ##
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+# this source bin is for compiled source and/or
+# bootloaders/ recipes
+export PATH=$HOME/src/bin:$PATH
+
 # add LaTeX
 export PATH=$PATH:/usr/local/texlive/2016basic/bin/x86_64-darwin/:/usr/texbin
 
@@ -29,8 +33,9 @@ alias pip=pip3
 alias pythin=python3
 
 export EDITOR=nvim
-# alias vim to neovim and old vim to shitvim
-alias vim=nvim
+
+# alias vim to neovim if possible, warn otherwise
+((command -v nvim && alias vim=nvim) || echo '[warning] nvim not found!')
 
 ## ----------- jupyter stuff ----------- ##
 
