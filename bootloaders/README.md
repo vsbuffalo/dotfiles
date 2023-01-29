@@ -13,8 +13,12 @@ these makefiles copy binaries to. Add it with:
     # bootloaders/ recipes
     export PATH=$HOME/src/bin:$PATH
 
-## Making Bootloaders
+## Making Bootloaders and Running Shell Scripts
 
 Run like:
 
     make -f linux-nvim.make
+
+or for scripts:
+
+    bash packer.sh

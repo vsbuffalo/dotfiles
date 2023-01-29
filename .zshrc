@@ -6,11 +6,14 @@ antigen init ~/.antigenrc
 bindkey -e # emacs bindings
 
 ## ----------- path stuff ----------- ##
-export PATH=$HOME/bin:/usr/local/bin:$PATH
-
+#
 # this source bin is for compiled source and/or
-# bootloaders/ recipes
+# bootloaders/ recipes -- this has priority 
+# since some servers have old stuff
 export PATH=$HOME/src/bin:$PATH
+
+# main paths if they're not there
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # add LaTeX
 export PATH=$PATH:/usr/local/texlive/2016basic/bin/x86_64-darwin/:/usr/texbin
@@ -47,8 +50,19 @@ app() {
 ## ----------- snakemake stuff ----------- ##
 # for snakemake-style log directories, e.g. logs/error logs/out, 
 # get the most recent files
-rlogs() {
-  ((echo "-- error --"; (ls -Art logs/error/ | tail -n 5)); (echo "-- out --"; (ls -Art logs/out/ | tail -n 5)))
+#
+##
+
+get_error_logs() {
+  find logs/error/ -maxdepth 1 -name "*.err" -type f -printf '%f\t%s bytes\t%t\n'
+}
+
+get_out_logs() {
+  find logs/our/ -maxdepth 1 -name "*.out" -type f -printf '%f\t%s bytes\t%t\n'
+}
+
+logs() {
+  ((echo "-- error --"; (get_error_logs | tail -n 5)); (echo "-- out --"; (get_out_logs | tail -n 5)))
 }
 
 # look at the last stderr log in less
@@ -59,6 +73,16 @@ lerr() {
 # look at the last stdout log in less
 lout() {
     less logs/out/$(ls -Art logs/out/ | tail -n 1)
+}
+
+# look at a few stderr files in less
+lserr() {
+	get_error_logs | cut -f1 | sed 's/^/logs\/error\//' | tail -n10 | xargs | xargs less
+}
+
+# look at a few stdout files in less
+lsout() {
+	get_out_logs | cut -f1 | sed 's/^/logs\/out\//' | tail -n10 | xargs | xargs less
 }
 
 
