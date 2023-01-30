@@ -43,3 +43,5 @@ vim.keymap.set("n", "<A-l>", "<C-w>l")
 vim.keymap.set("i", "<M-b>", "<Esc>b")
 vim.keymap.set("i", "<M-f>", "<Esc>f")
 
+-- in terminal mode, leader-Esc gets us out
+vim.keymap.set("t", "<leader><Esc>", "<C-\\><C-n>")

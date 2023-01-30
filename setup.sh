@@ -13,7 +13,7 @@ function gecho {
 }
 
 function yecho {
-  echo "${yellow}[warning] $1${reset}"
+  echo "${yellow}[note] $1${reset}"
 }
 
 function wecho {
@@ -63,7 +63,7 @@ check_preq "command -v ~/anaconda/bin/conda"
 # install Homebrew main programs if on a mac
 if [[ "$(uname)" == "Darwin" ]]; then
 	check_preq brew
-	install_brew ripgrep
+	install_brew rg
 	install_brew tmux
 	install_brew nvim
 fi
@@ -73,6 +73,9 @@ linkdotfile .gitconfig
 
 # link config directory (including NeoVim settings)
 linkdotfile .config
+
+# linkover .condarc 
+linkdotfile .condarc
 
 # link manual zsh
 linkdotfile .zshrc

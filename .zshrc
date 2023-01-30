@@ -15,11 +15,14 @@ export PATH=$HOME/src/bin:$PATH
 # main paths if they're not there
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+# add rust stuff
+export PATH=$HOME/.cargo/bin:$PATH
+
 # add LaTeX
 export PATH=$PATH:/usr/local/texlive/2016basic/bin/x86_64-darwin/:/usr/texbin
 
 # add miniconda 
-export PATH="$HOME/miniconda3/bin:$PATH"  # commented out by conda initialize
+# export PATH="$HOME/miniconda3/bin:$PATH"  # commented out by conda initialize  # commented out by conda initialize
 
 ## ----------- custom aliases ----------- ##
 alias ll="ls -larth"
@@ -38,7 +41,11 @@ alias pythin=python3
 export EDITOR=nvim
 
 # alias vim to neovim if possible, warn otherwise
-((command -v nvim && alias vim=nvim) || echo '[warning] nvim not found!')
+if (( $+commands[nvim] )); then
+  alias vim=nvim
+else
+  echo '[warning] nvim not found!'
+fi
 
 ## ----------- jupyter stuff ----------- ##
 
@@ -106,14 +113,14 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/vsb/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/vsb/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/vsb/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/vsb/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/Users/vsb/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/vsb/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/vsb/miniconda3/bin:$PATH"
+        export PATH="/Users/vsb/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
