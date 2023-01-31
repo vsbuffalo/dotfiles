@@ -47,6 +47,11 @@ else
   echo '[warning] nvim not found!'
 fi
 
+## ----------- making scp commands ----------- ##
+# if you want to get abs file path
+#
+
+#
 ## ----------- jupyter stuff ----------- ##
 
 # this is for opening up jupyter lab instances in chrome
@@ -65,11 +70,12 @@ get_error_logs() {
 }
 
 get_out_logs() {
-  find logs/our/ -maxdepth 1 -name "*.out" -type f -printf '%f\t%s bytes\t%t\n'
+  find logs/out/ -maxdepth 1 -name "*.out" -type f -printf '%f\t%s bytes\t%t\n'
 }
 
+NL=20
 logs() {
-  ((echo "-- error --"; (get_error_logs | tail -n 5)); (echo "-- out --"; (get_out_logs | tail -n 5)))
+  ((echo "-- error --"; (get_error_logs | tail -n $NL)); (echo "-- out --"; (get_out_logs | tail -n $NL)))
 }
 
 # look at the last stderr log in less
