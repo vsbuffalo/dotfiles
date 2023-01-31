@@ -1,10 +1,11 @@
-vim.g.mapleader = " " 
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
 -- movement between adjacent buffers
 vim.keymap.set("n", "<C-j>", vim.cmd.bp)
 vim.keymap.set("n", "<C-k>", vim.cmd.bn)
- 
+
 -- fast save
 vim.keymap.set("n", "<leader> ", vim.cmd.w)
 
