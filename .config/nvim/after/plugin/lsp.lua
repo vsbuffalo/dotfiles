@@ -1,6 +1,8 @@
 local lsp = require('lsp-zero')
 lsp.preset('recommended')
 
+-- don't keep opening/closing that darn flag column
+vim.opt.signcolumn = 'yes'
 
 lsp.ensure_installed({
     'texlab',

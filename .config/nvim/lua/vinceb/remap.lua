@@ -9,6 +9,9 @@ vim.keymap.set("n", "<C-k>", vim.cmd.bn)
 -- fast save
 vim.keymap.set("n", "<leader> ", vim.cmd.w)
 
+-- fast close buffer, preserving the window
+vim.keymap.set("n", "<leader>bd", ":b#|bd#<cr>")
+
 -- fast quit
 vim.keymap.set("n", "<leader>q", vim.cmd.q)
 
@@ -46,3 +49,7 @@ vim.keymap.set("i", "<M-f>", "<Esc>f")
 
 -- in terminal mode, leader-Esc gets us out
 vim.keymap.set("t", "<leader><Esc>", "<C-\\><C-n>")
+
+-- work wrap magic (TODO still slow)
+vim.keymap.set("n", "<leader><space>", "gwip")
+

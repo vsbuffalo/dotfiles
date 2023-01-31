@@ -35,3 +35,14 @@ and then if in iTerm2, go to Preferences (`⌘,`),
 Profiles, Text, and choose `Hack nerd font` 
 from the drop down fonts menu. I'd also increase 
 the font size.
+
+## VimTex
+
+VimTex requires MacTex and Skim. Download
+MacTeX from [their website](https://www.tug.org/mactex/mactex-download.html) 
+and install Skim with
+
+    $ brew install --cask skim
+
+or from their website.
+
