@@ -38,6 +38,9 @@ alias c=conda
 alias pip=pip3
 alias pythin=python3
 
+alias mi="mamba install --yes "
+
+alias n=nvim
 export EDITOR=nvim
 
 # alias vim to neovim if possible, warn otherwise
