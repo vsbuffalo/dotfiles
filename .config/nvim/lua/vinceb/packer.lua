@@ -32,6 +32,8 @@ return require('packer').startup(function(use)
 		end
 	})
 
+    use 'b3nj5m1n/kommentary'
+
 	use ('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
 
 	use ('mbbill/undotree')
