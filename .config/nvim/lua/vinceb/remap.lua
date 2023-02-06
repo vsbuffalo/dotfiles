@@ -31,11 +31,14 @@ vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 
 -- quick access to packer edit ('se') and packer sync ('ss)
-vim.keymap.set("n", "<leader>se", ":e $HOME/.config/nvim/lua/vinceb/packer.lua<CR>")
+vim.keymap.set("n", "<leader>se", ":vs<CR>:e $HOME/.config/nvim/lua/vinceb/packer.lua<CR>")
 vim.keymap.set("n", "<leader>ss", vim.cmd.PackerSync)
 
 -- quick access to remap edit ('re')
-vim.keymap.set("n", "<leader>re", ":e $HOME/.config/nvim/lua/vinceb/remap.lua<CR>")
+vim.keymap.set("n", "<leader>re", ":vs<CR>:e $HOME/.config/nvim/lua/vinceb/remap.lua<CR>")
+
+-- quick access to the plugins config directory
+vim.keymap.set("n", "<leader>pe", ":vs<CR>:e $HOME/.config/nvim/after/plugin/<CR>")
 
 -- navigation hacks to move around split buffers more effectively
 vim.keymap.set("n", "<A-h>", "<C-w>h")
