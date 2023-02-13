@@ -7,13 +7,13 @@ vim.keymap.set("n", "<C-j>", vim.cmd.bp)
 vim.keymap.set("n", "<C-k>", vim.cmd.bn)
 
 -- fast save
-vim.keymap.set("n", "<leader> ", vim.cmd.w)
+vim.keymap.set("n", "<leader> ", ":w<cr>")
 
 -- fast close buffer, preserving the window
 vim.keymap.set("n", "<leader>bd", ":b#|bd#<cr>")
 
 -- fast quit
-vim.keymap.set("n", "<leader>q", vim.cmd.q)
+vim.keymap.set("n", "<leader>q", ":q<cr>")
 
 -- move blocks of text
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
@@ -56,3 +56,5 @@ vim.keymap.set("t", "<leader><Esc>", "<C-\\><C-n>")
 -- work wrap magic (TODO still slow)
 vim.keymap.set("n", "<leader><space>", "gwip")
 
+-- stop hlsearch, until next time
+vim.keymap.set("n", "<leader>h", ":noh<CR>")
