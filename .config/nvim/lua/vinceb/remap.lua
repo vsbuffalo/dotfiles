@@ -2,6 +2,10 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
+-- mimic emacs delete word, I have this set on my keyboard 
+-- as a single button
+vim.keymap.set("i", "<Esc><BS>", "<C-w>")
+
 -- movement between adjacent buffers
 vim.keymap.set("n", "<C-j>", vim.cmd.bp)
 vim.keymap.set("n", "<C-k>", vim.cmd.bn)
