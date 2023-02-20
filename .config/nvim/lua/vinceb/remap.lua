@@ -11,7 +11,7 @@ vim.keymap.set("n", "<C-j>", vim.cmd.bp)
 vim.keymap.set("n", "<C-k>", vim.cmd.bn)
 
 -- fast save
-vim.keymap.set("n", "<leader> ", ":w<cr>")
+vim.keymap.set("n", "<leader>w", ":w<cr>")
 
 -- fast close buffer, preserving the window
 vim.keymap.set("n", "<leader>bd", ":b#|bd#<cr>")
