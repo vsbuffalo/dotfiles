@@ -7,7 +7,6 @@ vim.opt.signcolumn = 'yes'
 lsp.ensure_installed({
     'texlab',
     'pylsp',
-    'sumneko_lua',
     'clangd',
     --'r_language_server'
 })

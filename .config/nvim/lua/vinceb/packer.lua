@@ -33,6 +33,7 @@ return require('packer').startup(function(use)
 	})
 
     use 'b3nj5m1n/kommentary'
+    use 'vsbuffalo/eidos.vim'
 
 	use ('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
 
