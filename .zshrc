@@ -101,6 +101,11 @@ lsout() {
 	get_out_logs | cut -f1 | sed 's/^/logs\/out\//' | tail -n10 | xargs | xargs less
 }
 
+## ----------- bioinformatics + lazy typing ----------- ##
+total_bp() {
+  bioawk -cbed 'BEGIN {a=0} { a+=$end-$start } END {print a}' $1
+}
+
 
 ## ----------- history stuff ----------- ##
 HISTSIZE=10000
