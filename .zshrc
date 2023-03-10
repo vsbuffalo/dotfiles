@@ -106,6 +106,9 @@ total_bp() {
   bioawk -cbed 'BEGIN {a=0} { a+=$end-$start } END {print a}' $1
 }
 
+percent_genome() {
+    bioawk -cbed 'BEGIN{a=0} {a+=$end-$start} END{printf("%g.2%%\n", 100*a/3117275501)}' $1
+}
 
 ## ----------- history stuff ----------- ##
 HISTSIZE=10000
