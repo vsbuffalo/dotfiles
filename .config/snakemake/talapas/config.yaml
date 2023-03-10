@@ -11,7 +11,7 @@ cluster:
     --error=logs/error/{rule}/{rule}-{wildcards}-%j.err
                 --gres=gpu:{resources.gpu}
 default-resources:
-  - partition=kern
+  - partition=kern,kerngpu,preempt
   - time_min=60
   - mem_mb=5000
   - threads=1
