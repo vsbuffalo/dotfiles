@@ -1,16 +1,16 @@
-all: ../../src/bin/nvim
+all: ~/.local/bin/nvim ~/.local/share/nvim
 
-nvim-linux64.tar.gz:
-	wget https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz
+src/nvim-linux64.tar.gz:
+	@mkdir src/
+	wget -P src/ https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz
 
+src/nvim-linux64/bin/nvim: src/nvim-linux64.tar.gz
+	tar -xzvf $< -C src/
 
-nvim-linux64/bin/nvim: nvim-linux64.tar.gz
-	tar xzvf nvim-linux64.tar.gz
+~/.local/bin/nvim: src/nvim-linux64/bin/nvim 
+	mkdir -p ~/.local/bin/
+	cp $< $@
 
-nvim.appimage: 
-	curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-	chmod u+x nvim.appimage
-
-../../src/bin/nvim: nvim.appimage
-	mkdir -p ../../src/bin/
+~/.local/share/nvim: src/nvim-linux64/share/nvim 
+	mkdir -p ~/.local/share/
 	cp $< $@
