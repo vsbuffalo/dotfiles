@@ -44,6 +44,9 @@ vim.keymap.set("n", "<leader>re", ":vs<CR>:e $HOME/.config/nvim/lua/vinceb/remap
 -- quick access to the plugins config directory
 vim.keymap.set("n", "<leader>pe", ":vs<CR>:e $HOME/.config/nvim/after/plugin/<CR>")
 
+-- quick rerun init
+vim.keymap.set("n", "<leader>pp", ":source $HOME/.config/nvim/init.lua<CR>")
+
 -- navigation hacks to move around split buffers more effectively
 vim.keymap.set("n", "<A-h>", "<C-w>h")
 vim.keymap.set("n", "<A-j>", "<C-w>j")

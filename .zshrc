@@ -13,7 +13,7 @@ bindkey -e # emacs bindings
 export PATH=$HOME/src/bin:$PATH
 
 # main paths if they're not there
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:/opt/homebrew/bin/:$PATH
 
 # add rust stuff
 export PATH=$HOME/.cargo/bin:$PATH
@@ -143,3 +143,7 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+
+# -- poetry completion
+fpath+=~/.zfunc
+autoload -Uz compinit && compinit
