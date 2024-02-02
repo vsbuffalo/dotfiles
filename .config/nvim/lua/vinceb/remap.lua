@@ -2,6 +2,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
+
 -- mimic emacs delete word, I have this set on my keyboard 
 -- as a single button
 vim.keymap.set("i", "<Esc><BS>", "<C-w>")
@@ -18,6 +19,12 @@ vim.keymap.set("n", "<leader>bd", ":b#|bd#<cr>")
 
 -- fast quit
 vim.keymap.set("n", "<leader>q", ":q<cr>")
+
+-- fast close window
+vim.keymap.set("n", "<leader>d", "<C-w>q")
+
+-- fast vertical split
+vim.keymap.set("n", "<leader>l", ":vs<cr>")
 
 -- move blocks of text
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
@@ -65,3 +72,13 @@ vim.keymap.set("n", "<leader><space>", "gwip")
 
 -- stop hlsearch, until next time
 vim.keymap.set("n", "<leader>h", ":noh<CR>")
+
+-- Rust shortcut: C-d inserts debug, {:?}
+vim.api.nvim_set_keymap('i', '<C-d>', '{:?}<Left><Left><Left>', {noremap = true, silent = true})
+
+
+
+
+
+
+
