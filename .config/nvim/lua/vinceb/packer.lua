@@ -39,10 +39,10 @@ return require('packer').startup(function(use)
     }
 
     -- autopairs
-    use {
-        "windwp/nvim-autopairs",
-        config = function() require("nvim-autopairs").setup {} end
-    }
+    -- use {
+    --     "windwp/nvim-autopairs",
+    --     config = function() require("nvim-autopairs").setup {} end
+    -- }
 
     -- webapi support (e.g. for rust playground)
     use ('mattn/webapi-vim')
@@ -145,6 +145,9 @@ return require('packer').startup(function(use)
     }
 
     use "rebelot/kanagawa.nvim"
+
+    use { "catppuccin/nvim", as = "catppuccin" }
+
 
 
 end)

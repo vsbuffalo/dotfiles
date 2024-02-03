@@ -1,3 +1,6 @@
+-- Notes: check :nmap before adding!
+-- e.g. :nmap <space>q to check what <leader>q does
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
@@ -21,7 +24,7 @@ vim.keymap.set("n", "<leader>bd", ":b#|bd#<cr>")
 vim.keymap.set("n", "<leader>q", ":q<cr>")
 
 -- fast close window
-vim.keymap.set("n", "<leader>d", "<C-w>q")
+vim.keymap.set("n", "<leader>x", "<C-w>q")
 
 -- fast vertical split
 vim.keymap.set("n", "<leader>l", ":vs<cr>")
@@ -76,9 +79,14 @@ vim.keymap.set("n", "<leader>h", ":noh<CR>")
 -- Rust shortcut: C-d inserts debug, {:?}
 vim.api.nvim_set_keymap('i', '<C-d>', '{:?}<Left><Left><Left>', {noremap = true, silent = true})
 
+-- go to rust tests
+vim.keymap.set("n", "<leader>gt", ":GoToRustTests<cr>")
 
+-- add an unwrap at the end
+vim.keymap.set("n", "<leader>n", ":AddUnwrapBeforeSemicolon<cr>")
 
+-- cycle through my colors tryin' get that sweet look for the moment
+vim.keymap.set("n", "<leader>c", ":CycleColorScheme<cr>", { silent = true })
 
-
-
-
+-- open colors
+vim.keymap.set("n", "<leader>ce", ":vs<CR>:e $HOME/.config/nvim/after/plugin/colors.lua<CR>")
