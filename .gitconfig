@@ -20,6 +20,7 @@
   lol = log --graph --decorate --pretty=oneline --abbrev-commit
   lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
 	squash-all = "!f(){ git reset $(git commit-tree HEAD^{tree} -m \"${1:-A new start}\");};f"
+	staash = stash --all
 [http]
 	postBuffer = 524288000
 [filter "hawser"]
@@ -32,3 +33,10 @@
 	textconv = nb2md
 [init]
 	defaultBranch = main
+[maintenance]
+	repo = /Users/vsb/projects/granges
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

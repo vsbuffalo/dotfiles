@@ -32,17 +32,24 @@ return require('packer').startup(function(use)
         }
     }
 
+    -- multiple cursors
+
+    -- copilot
+    use { "zbirenbaum/copilot.lua" }
+
+    -- use {
+    --     "zbirenbaum/copilot-cmp",
+    --     after = { "copilot.lua" },
+    --     config = function ()
+    --         require("copilot_cmp").setup()
+    --     end
+    -- }
+
     -- telescope 
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.5',
         requires = { {'nvim-lua/plenary.nvim'} }
     }
-
-    -- autopairs
-    -- use {
-    --     "windwp/nvim-autopairs",
-    --     config = function() require("nvim-autopairs").setup {} end
-    -- }
 
     -- webapi support (e.g. for rust playground)
     use ('mattn/webapi-vim')
@@ -74,80 +81,80 @@ return require('packer').startup(function(use)
     -- use ('rust-lang/rust.vim')
     use { 'simrat39/rust-tools.nvim' }
     -- use {
-    --     'mrcjkb/rustaceanvim',
-    --     version = '^4',
-    --     ft = { 'rust' },
-    -- }
+        --     'mrcjkb/rustaceanvim',
+        --     version = '^4',
+        --     ft = { 'rust' },
+        -- }
 
-    -- easy LSP setup
-    use {
-        'VonHeikemen/lsp-zero.nvim',
-        branch = 'v1.x',
-        requires = {
-            -- LSP Support
-            {'neovim/nvim-lspconfig'},             -- Required
-            {'williamboman/mason.nvim'},           -- Optional
-            {'williamboman/mason-lspconfig.nvim'}, -- Optional
+        -- easy LSP setup
+        use {
+            'VonHeikemen/lsp-zero.nvim',
+            branch = 'v1.x',
+            requires = {
+                -- LSP Support
+                {'neovim/nvim-lspconfig'},             -- Required
+                {'williamboman/mason.nvim'},           -- Optional
+                {'williamboman/mason-lspconfig.nvim'}, -- Optional
 
-            -- Autocompletion
-            {'hrsh7th/nvim-cmp'},         -- Required
-            {'hrsh7th/cmp-nvim-lsp'},     -- Required
-            {'hrsh7th/cmp-buffer'},       -- Optional
-            {'hrsh7th/cmp-path'},         -- Optional
-            {'saadparwaiz1/cmp_luasnip'}, -- Optional
-            {'hrsh7th/cmp-nvim-lua'},     -- Optional
+                -- Autocompletion
+                {'hrsh7th/nvim-cmp'},         -- Required
+                {'hrsh7th/cmp-nvim-lsp'},     -- Required
+                {'hrsh7th/cmp-buffer'},       -- Optional
+                {'hrsh7th/cmp-path'},         -- Optional
+                {'saadparwaiz1/cmp_luasnip'}, -- Optional
+                {'hrsh7th/cmp-nvim-lua'},     -- Optional
 
-            -- Snippets
-            {'L3MON4D3/LuaSnip'},             -- Required
-            {'rafamadriz/friendly-snippets'}, -- Optional
+                -- Snippets
+                {'L3MON4D3/LuaSnip'},             -- Required
+                {'rafamadriz/friendly-snippets'}, -- Optional
+            }
         }
-    }
 
-    -- LATeX support
-    use 'lervag/vimtex'
+        -- LATeX support
+        use 'lervag/vimtex'
 
-    -- yank for *macs-yank ring
-    use("gbprod/yanky.nvim") require("yanky").setup({
-        ring = {
-            history_length = 100,
-            storage = "shada",
-            sync_with_numbered_registers = true,
-            cancel_event = "update",
+        -- yank for *macs-yank ring
+        use("gbprod/yanky.nvim") require("yanky").setup({
+            ring = {
+                history_length = 100,
+                storage = "shada",
+                sync_with_numbered_registers = true,
+                cancel_event = "update",
 
-        },
-        highlight = {
-            on_put = true,
-            on_yank = true,
-            timer = 500,
-        },
-    })
+            },
+            highlight = {
+                on_put = true,
+                on_yank = true,
+                timer = 500,
+            },
+        })
 
-    -- Stan syntax highlighting
-    use 'eigenfoo/stan-vim'
+        -- Stan syntax highlighting
+        use 'eigenfoo/stan-vim'
 
-    -- Eidos/SLiM syntax highlighting
-    use 'vsbuffalo/eidos.vim'
+        -- Eidos/SLiM syntax highlighting
+        use 'vsbuffalo/eidos.vim'
 
-    -- colors
-    use({
-        'rose-pine/neovim',
-        as = 'rose-pine',
-        config = function()
-            vim.cmd('colorscheme rose-pine')
-        end
-    })
+        -- colors
+        use({
+            'rose-pine/neovim',
+            as = 'rose-pine',
+            config = function()
+                vim.cmd('colorscheme rose-pine')
+            end
+        })
 
-    use {
-        "folke/tokyonight.nvim",
-        lazy = false,
-        priority = 1000,
-        opts = {},
-    }
+        use {
+            "folke/tokyonight.nvim",
+            lazy = false,
+            priority = 1000,
+            opts = {},
+        }
 
-    use "rebelot/kanagawa.nvim"
+        use "rebelot/kanagawa.nvim"
 
-    use { "catppuccin/nvim", as = "catppuccin" }
-
+        use { "catppuccin/nvim", as = "catppuccin" }
 
 
-end)
+
+    end)

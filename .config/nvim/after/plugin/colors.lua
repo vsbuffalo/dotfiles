@@ -8,8 +8,8 @@ function ColorEverything(color)
 	vim.cmd.colorscheme(color)
 end
 
--- ColorEverything("tokyonight-moon")
--- ColorEverything("kanagawa")
+-- ColorEverything("tokyonight")
+ColorEverything("kanagawa")
 -- ColorEverything("tokyonight-night")
 
 local M = {}

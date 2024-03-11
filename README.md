@@ -8,6 +8,9 @@ This will bootstrap things:
 
     bash setup.sh
 
+## Configurations
+
+ - `.zsh`: antidote for plugins. 
 
 ## Caveats
 

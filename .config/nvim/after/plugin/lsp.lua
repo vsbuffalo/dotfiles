@@ -35,6 +35,16 @@ cmp.setup({
     }
 })
 
+-- Rust-specific settings
+lsp.configure('rust_analyzer', {
+    settings = {
+        ["rust-analyzer"] = {
+            cargo = {
+                allFeatures = true,
+            },
+        },
+    },
+})
 
 lsp.on_attach(function(client, bufnr)
   local opts = {buffer = bufnr, remap = false}

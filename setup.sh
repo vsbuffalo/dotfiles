@@ -80,14 +80,17 @@ linkdotfile .condarc
 # link manual zsh
 linkdotfile .zshrc
 
-# link antigen
-if [ ! -e ~/.antigen.zsh ]; then
-	yecho "~/.antigen not found, downloading..."
-	curl -L git.io/antigen > ~/.antigen.zsh
-else
-	gecho "~/.antigen.zsh found."
-fi
-linkdotfile .antigenrc
+## link antigen
+#if [ ! -e ~/.antigen.zsh ]; then
+#	yecho "~/.antigen not found, downloading..."
+#	curl -L git.io/antigen > ~/.antigen.zsh
+#else
+#	gecho "~/.antigen.zsh found."
+#fi
+#linkdotfile .antigenrc
+
+# get antidote for zsh
+git clone --depth=1 https://github.com/mattmc3/antidote.git ${ZDOTDIR:-~}/.antidote
 
 # create a global Git ignore file
 if [ ! -e ~/.global_ignore ]; then

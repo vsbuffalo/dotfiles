@@ -1,6 +1,10 @@
 ## ----------- antigen ----------- ##
-source "$HOME/.antigen.zsh"
-antigen init ~/.antigenrc
+# source "$HOME/.antigen.zsh"
+# antigen init ~/.antigenrc
+
+## ----------- antidote ----------- ##
+source ${ZDOTDIR:-~}/.antidote/antidote.zsh
+antidote load ${ZDOTDIR:-$HOME}/.zsh_plugins.txt
 
 ## ----------- basic stuff ----------- ##
 bindkey -e # emacs bindings
@@ -128,22 +132,11 @@ autoload -U compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/vsb/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/vsb/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/vsb/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/vsb/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
+## ----------- pyenv etc ----------- ##
 
 # -- poetry completion
 fpath+=~/.zfunc
 autoload -Uz compinit && compinit
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
