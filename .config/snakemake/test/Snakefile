@@ -1,0 +1,11 @@
+
+
+rule test_rule:
+  output: "results/{letter}.txt"
+  shell:
+     """
+     echo {wildcards.letter} > {output}
+     """
+
+rule all:
+  input: expand("results/{letter}.txt", letter="ABCDF")
