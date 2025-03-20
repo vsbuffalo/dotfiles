@@ -12,12 +12,12 @@ bindkey -e # emacs bindings
 ## ----------- path stuff ----------- ##
 #
 # this source bin is for compiled source and/or
-# bootloaders/ recipes -- this has priority 
+# bootloaders/ recipes -- this has priority
 # since some servers have old stuff
 export PATH=$HOME/src/bin:$PATH
 
 # main paths if they're not there
-export PATH=$HOME/bin:/usr/local/bin:/opt/homebrew/bin/:$PATH
+export PATH=$HOME/bin:/usr/local/bin:/opt/homebrew/bin/:~/.local/bin/:$PATH
 
 # add rust stuff
 export PATH=$HOME/.cargo/bin:$PATH
@@ -25,24 +25,19 @@ export PATH=$HOME/.cargo/bin:$PATH
 # add LaTeX
 export PATH=$PATH:/usr/local/texlive/2016basic/bin/x86_64-darwin/:/usr/texbin
 
-# add miniconda 
-# export PATH="$HOME/miniconda3/bin:$PATH"  # commented out by conda initialize  # commented out by conda initialize
-
 ## ----------- custom aliases ----------- ##
-alias ll="ls -larth"
+function cdp() {
+    cd ~/projects/$1
+}
+alias ll="ls -larth --color"
 alias df="df -h"
 alias du="du -h"
 alias grep="grep --color"
 alias today="date +%F"
+alias now="date -u +'%Y-%m-%dT%H:%M:%SZ'"
 alias gl="git pull --rebase"
 alias g=git
 alias h=brew
-alias c=conda
-
-alias pip=pip3
-alias pythin=python3
-
-alias mi="mamba install --yes "
 
 alias n=nvim
 export EDITOR=nvim
@@ -58,8 +53,23 @@ fi
 # if you want to get abs file path
 #
 
+## ----------- jupyter stuff ----------- ##
+excel() {
+    if [[ $1 == *.csv || $1 == *.xlsx || $1 == *.xls || $1 == *.xlsm || $1 == *.xltx || $1 == *.xltm ]]; then
+        open -a "/Applications/Microsoft Excel.app" "$1"
+    else
+        echo "Please provide a valid Excel file (csv, xlsx, xls, xlsm, xltx, xltm)"
+    fi
+}
+
 #
 ## ----------- jupyter stuff ----------- ##
+
+# look at a few stderr files in less
+cdnv() {
+    cd ~/.config/nvim/
+}
+
 
 # this is for opening up jupyter lab instances in chrome
 app() {
@@ -67,7 +77,7 @@ app() {
 }
 
 ## ----------- snakemake stuff ----------- ##
-# for snakemake-style log directories, e.g. logs/error logs/out, 
+# for snakemake-style log directories, e.g. logs/error logs/out,
 # get the most recent files
 #
 ##
@@ -131,12 +141,7 @@ setopt hist_find_no_dups
 autoload -U compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
+. "$HOME/.cargo/env"
 
-## ----------- pyenv etc ----------- ##
+. "$HOME/.local/bin/env"
 
-# -- poetry completion
-fpath+=~/.zfunc
-autoload -Uz compinit && compinit
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"

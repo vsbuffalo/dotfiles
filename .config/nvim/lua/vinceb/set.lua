@@ -24,3 +24,11 @@ vim.opt.relativenumber = true
 -- spell check
 vim.opt.spell = true
 vim.opt.spelllang = "en_us"
+
+
+-- Netrw settings
+-- Tell netrw to use SSH config file (hosts, keys, settings in ~/.ssh/config)
+vim.g.netrw_ssh_cmd = "ssh -F " .. os.getenv("HOME") .. "/.ssh/config"
+vim.g.netrw_scp_cmd = "scp -F " .. os.getenv("HOME") .. "/.ssh/config"
+vim.g.netrw_silent = 1
+vim.g.netrw_keepdir = 0

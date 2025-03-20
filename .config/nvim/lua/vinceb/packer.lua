@@ -20,6 +20,13 @@ return require('packer').startup(function(use)
 	-- packer can manage itself
 	use 'wbthomason/packer.nvim'
 
+    use {
+        "stevearc/conform.nvim",
+        config = function()
+            require("conform").setup()
+        end,
+    }
+
 	-- fonts for lualine and lualine
 	use 'nvim-tree/nvim-web-devicons'
 
@@ -49,6 +56,12 @@ return require('packer').startup(function(use)
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.5',
         requires = { {'nvim-lua/plenary.nvim'} }
+    }
+    -- Snakemake
+    use {
+        'snakemake/snakemake',
+        rtp = 'misc/vim/',
+        ft = {'snakemake'}
     }
 
     -- webapi support (e.g. for rust playground)
