@@ -13,13 +13,18 @@ We also need to install some Python components,
 
 and Packer, e.g. with,
 
-    $ sh ../bootloaders/packer.sh
+    $ sh bootloaders/packer.sh
 
-Then in neovim, go to `.config/nvim/lua/vsb/packer.lua` and do
+Then in neovim, go to `.config/nvim/lua/vinceb/packer.lua` and do
 
      :so
      :PackerInstall
      :PackerSync
+
+You may need to quit neovim, and do this once or twice, as some errors 
+due to uninstalled packages may occur the first time. Also, if for some 
+reason stuff isn't working, it's possible a `~/.config/` already existed,
+preventing the `setup.sh` from linking the proper one in `dotfiles`.
 
 ### Updating
 
@@ -30,7 +35,6 @@ Then in neovim, go to `.config/nvim/lua/vsb/packer.lua` and do
 
 You may need nerdfonts,
 
-    $ brew tap homebrew/cask-fonts
     $ brew install font-hack-nerd-font
 
 and then if in iTerm2, go to Preferences (`⌘,`),

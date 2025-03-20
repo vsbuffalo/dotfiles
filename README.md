@@ -14,6 +14,21 @@ This will bootstrap things:
 
     bash setup.sh
 
+Note that if you have an existing `~/.config/` directory, it will not be
+overwritten. However, this will mean none of the configurations in `dotfiles2`
+will be linked, so it is generally advised you remove or merge in the existing
+`.config/` after running `setup.sh`.
+
+For NeoVim-specific setup instructions, see the [NeoVim
+configuration](https://github.com/vsbuffalo/dotfiles2/tree/main/.config/nvim)
+documentation.
+
+To have Apple's Keychain manage your SSH key's password, do the following:
+
+```
+$ ssh-add --apple-use-keychain ~/.ssh/[your-private-key]
+```
+
 ## Configurations
 
  - `.zsh`: antidote for plugins.

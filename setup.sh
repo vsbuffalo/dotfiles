@@ -65,7 +65,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
 	check_preq brew
 	install_brew rg
 	install_brew tmux
-	install_brew nvim
+	install_brew tree
 fi
 
 # link over git stuff

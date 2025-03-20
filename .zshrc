@@ -141,7 +141,4 @@ setopt hist_find_no_dups
 autoload -U compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
-. "$HOME/.cargo/env"
-
-. "$HOME/.local/bin/env"
 
