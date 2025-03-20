@@ -31,13 +31,13 @@ function recho {
 
 # look for command line tool, if not install via homebrew
 function install_brew {
-  (command -v $1 > /dev/null  && gecho "$1 found...") || 
+  (command -v $1 > /dev/null  && gecho "$1 found...") ||
     (yecho "$1 not found, installing via homebrew..." && brew install $1)
 }
 
 # check for pre-req, fail if not found
 function check_preq {
-  (command -v $1 > /dev/null  && gecho "$1 found...") || 
+  (command -v $1 > /dev/null  && gecho "$1 found...") ||
     recho "$1 not found, install before proceeding."
 }
 
@@ -53,7 +53,7 @@ function linkdotfile {
 }
 
 # are we in right directory?
-[[ $(basename $(pwd)) == "dotfiles2" ]] || 
+[[ $(basename $(pwd)) == "dotfiles2" ]] ||
   recho "doesn't look like you're in dotfiles2/"
 
 # check that the key pre-requisites are met:
@@ -74,11 +74,12 @@ linkdotfile .gitconfig
 # link config directory (including NeoVim settings)
 linkdotfile .config
 
-# linkover .condarc 
+# linkover .condarc
 linkdotfile .condarc
 
 # link manual zsh
 linkdotfile .zshrc
+linkdotfile .zsh_plugins.txt
 
 ## link antigen
 #if [ ! -e ~/.antigen.zsh ]; then
@@ -99,7 +100,7 @@ if [ ! -e ~/.global_ignore ]; then
       https://raw.githubusercontent.com/github/gitignore/master/Global/Vim.gitignore \
       https://raw.githubusercontent.com/github/gitignore/master/Global/macOS.gitignore \
     > ~/.global_ignore 2> /dev/null
-    git config --global core.excludesfile ~/.global_ignore && 
+    git config --global core.excludesfile ~/.global_ignore &&
       yecho "[message] adding ignore file to Git..." >&2
 else
     gecho "~/.global_ignore found, ignoring..." >&2

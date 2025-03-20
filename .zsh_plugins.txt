@@ -1,6 +1,5 @@
-
-# jump around quickly
 agkozak/zsh-z
-
-# simple prompt
 sindresorhus/pure
+zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-history-substring-search
