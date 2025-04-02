@@ -66,6 +66,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
 	install_brew rg
 	install_brew tmux
 	install_brew tree
+	install_brew direnv
 fi
 
 # link over git stuff

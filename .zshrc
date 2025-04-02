@@ -25,11 +25,30 @@ export PATH=$HOME/.cargo/bin:$PATH
 # add LaTeX
 export PATH=$PATH:/usr/local/texlive/2016basic/bin/x86_64-darwin/:/usr/texbin
 
+# LLVM config (installed from homebrew)
+export LLVM_CONFIG="/opt/homebrew/opt/llvm/bin/llvm-config"
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+# Set compiler flags
+export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
+
+# Add my helper scripts
+export PATH=$HOME/projects/helpers/bin/:$PATH
+
+export PATH="$HOME/.azure-helpers/bin:$PATH"
+
+# Initiate direnv
+# see: https://direnv.net/
+eval "$(direnv hook zsh)"
+
 ## ----------- custom aliases ----------- ##
 function cdp() {
     cd ~/projects/$1
 }
 alias ll="ls -larth --color"
+alias ct="exa --tree --git-ignore \
+  --ignore-glob='*.pyc|*.pyo|__pycache__|*.egg-info|.mypy_cache|.venv|.tox|target|Cargo.lock|*.rs.bk|*.rmeta|*.dSYM|node_modules|.DS_Store|*.log' \
+  --icons"
 alias df="df -h"
 alias du="du -h"
 alias grep="grep --color"
@@ -142,3 +161,5 @@ autoload -U compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 
+
+. "$HOME/.local/bin/env"

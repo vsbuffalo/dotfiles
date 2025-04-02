@@ -1,76 +1,76 @@
 local ensure_packer = function()
 	local fn = vim.fn
-	local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+	local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 	if fn.empty(fn.glob(install_path)) > 0 then
-		fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+		fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
 		vim.cmd [[packadd packer.nvim]]
 		return true
 	end
 	return false
 end
 
---- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
 
--- bootstrap a packer install, e.g. if on a server
 local packer_bootstrap = ensure_packer()
 
 return require('packer').startup(function(use)
-
-	-- packer can manage itself
 	use 'wbthomason/packer.nvim'
 
+    -- conform.nvim manages and apply code formatting configurations 
+    -- for various programming languages.
+	use {
+		"stevearc/conform.nvim",
+		config = function()
+			require("conform").setup()
+		end,
+	}
+
+    -- nvim-autopairs automatically closes brackets, quotes, and other pairs.
+	use 'nvim-tree/nvim-web-devicons'
+
+    -- lualine.nvim is a fast and easy-to-configure statusline plugin for Neovim.
+	use {
+		'nvim-lualine/lualine.nvim',
+		requires = { 'nvim-tree/nvim-web-devicons' },
+		config = function()
+			require('lualine').setup({ options = { theme = 'tokyonight' } })
+		end,
+	}
+
+    -- copilot.lua is a Neovim plugin that provides GitHub Copilot support.
+    use { 'zbirenbaum/copilot.lua' }
+
+    -- copilot-cmp is a Neovim plugin that integrates GitHub Copilot 
+    -- with nvim-cmp, the completion engine for Neovim.
     use {
-        "stevearc/conform.nvim",
+        'zbirenbaum/copilot-cmp',
+        after = { 'copilot.lua' },
         config = function()
-            require("conform").setup()
+            require('copilot_cmp').setup()
         end,
     }
 
-	-- fonts for lualine and lualine
-	use 'nvim-tree/nvim-web-devicons'
-
-    -- lualine
-	use {
-        'nvim-lualine/lualine.nvim',
-        requires = { 'kyazdani42/nvim-web-devicons', opt = true },
-        options = {
-            theme = 'tokyonight'
-        }
-    }
-
-    -- multiple cursors
-
-    -- copilot
-    use { "zbirenbaum/copilot.lua" }
-
-    -- use {
-    --     "zbirenbaum/copilot-cmp",
-    --     after = { "copilot.lua" },
-    --     config = function ()
-    --         require("copilot_cmp").setup()
-    --     end
-    -- }
-
-    -- telescope 
+    -- telescope.nvim is a fuzzy finder for Neovim.
     use {
-        'nvim-telescope/telescope.nvim', tag = '0.1.5',
-        requires = { {'nvim-lua/plenary.nvim'} }
+        'nvim-telescope/telescope.nvim',
+        tag = '0.1.5',
+        requires = { { 'nvim-lua/plenary.nvim' } }
     }
-    -- Snakemake
+
+    -- snakemake.nvim is a Neovim plugin for Snakemake, a workflow management system.
     use {
         'snakemake/snakemake',
         rtp = 'misc/vim/',
-        ft = {'snakemake'}
+        ft = { 'snakemake' }
     }
 
-    -- webapi support (e.g. for rust playground)
-    use ('mattn/webapi-vim')
+    -- webapi-vim is a Neovim plugin for web API testing.
+    use 'mattn/webapi-vim'
 
-    -- R support
-    use ('jalvesaq/Nvim-R')
+    -- nvim-r is a Neovim plugin for R language support.
+    use 'jalvesaq/Nvim-R'
 
-    -- code commenting
+    -- comment.nvim is a Neovim plugin for easy commenting of code.
     use {
         'numToStr/Comment.nvim',
         config = function()
@@ -78,96 +78,90 @@ return require('packer').startup(function(use)
         end
     }
 
-    -- tree sitter for syntax highlighting, etc.
+    -- treesitter.nvim is a Neovim plugin for syntax highlighting and code parsing.
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate'
     }
 
-    -- undo tree 
-    -- use ('mbbill/undotree')
+    -- fugitive.vim is a Git wrapper for Neovim.
+    use 'tpope/vim-fugitive'
 
-    -- Git support
-    use ('tpope/vim-fugitive')
-
-    -- rust support
-    -- use ('rust-lang/rust.vim')
+    -- rust-tools.nvim is a Neovim plugin for Rust development.
     use { 'simrat39/rust-tools.nvim' }
-    -- use {
-        --     'mrcjkb/rustaceanvim',
-        --     version = '^4',
-        --     ft = { 'rust' },
-        -- }
 
-        -- easy LSP setup
-        use {
-            'VonHeikemen/lsp-zero.nvim',
-            branch = 'v1.x',
-            requires = {
-                -- LSP Support
-                {'neovim/nvim-lspconfig'},             -- Required
-                {'williamboman/mason.nvim'},           -- Optional
-                {'williamboman/mason-lspconfig.nvim'}, -- Optional
-
-                -- Autocompletion
-                {'hrsh7th/nvim-cmp'},         -- Required
-                {'hrsh7th/cmp-nvim-lsp'},     -- Required
-                {'hrsh7th/cmp-buffer'},       -- Optional
-                {'hrsh7th/cmp-path'},         -- Optional
-                {'saadparwaiz1/cmp_luasnip'}, -- Optional
-                {'hrsh7th/cmp-nvim-lua'},     -- Optional
-
-                -- Snippets
-                {'L3MON4D3/LuaSnip'},             -- Required
-                {'rafamadriz/friendly-snippets'}, -- Optional
-            }
+    --lsp-zero.nvim is a Neovim plugin for configuring LSP (Language Server Protocol) clients.
+    use {
+        'VonHeikemen/lsp-zero.nvim',
+        branch = 'v1.x',
+        requires = {
+            { 'neovim/nvim-lspconfig' },
+            { 'williamboman/mason.nvim' },
+            { 'williamboman/mason-lspconfig.nvim' },
+            { 'hrsh7th/nvim-cmp' },
+            { 'hrsh7th/cmp-nvim-lsp' },
+            { 'hrsh7th/cmp-buffer' },
+            { 'hrsh7th/cmp-path' },
+            { 'saadparwaiz1/cmp_luasnip' },
+            { 'hrsh7th/cmp-nvim-lua' },
+            { 'L3MON4D3/LuaSnip' },
+            { 'rafamadriz/friendly-snippets' },
         }
+    }
 
-        -- LATeX support
-        use 'lervag/vimtex'
+    -- vimtex is a Neovim plugin for LaTeX editing.
+    use 'lervag/vimtex'
 
-        -- yank for *macs-yank ring
-        use("gbprod/yanky.nvim") require("yanky").setup({
-            ring = {
-                history_length = 100,
-                storage = "shada",
-                sync_with_numbered_registers = true,
-                cancel_event = "update",
+    -- yanky.nvim is a Neovim plugin for managing the yank history.
+    use {
+        'gbprod/yanky.nvim',
+        config = function()
+            require("yanky").setup({
+                ring = {
+                    history_length = 100,
+                    storage = "shada",
+                    sync_with_numbered_registers = true,
+                    cancel_event = "update",
+                },
+                highlight = {
+                    on_put = true,
+                    on_yank = true,
+                    timer = 500,
+                },
+            })
+        end,
+    }
 
-            },
-            highlight = {
-                on_put = true,
-                on_yank = true,
-                timer = 500,
-            },
-        })
+    -- stan-vim is a Neovim plugin for Stan language support.
+    use 'eigenfoo/stan-vim'
 
-        -- Stan syntax highlighting
-        use 'eigenfoo/stan-vim'
+    -- eidos.vim is a Neovim plugin for Eidos, a tool for creating and managing Eidos models.
+    use 'vsbuffalo/eidos.vim'
 
-        -- Eidos/SLiM syntax highlighting
-        use 'vsbuffalo/eidos.vim'
+    -- rose-pine is a Neovim color scheme.
+    use {
+        'rose-pine/neovim',
+        as = 'rose-pine',
+        config = function()
+            vim.cmd('colorscheme rose-pine')
+        end
+    }
 
-        -- colors
-        use({
-            'rose-pine/neovim',
-            as = 'rose-pine',
-            config = function()
-                vim.cmd('colorscheme rose-pine')
-            end
-        })
+    -- tokyonight.nvim is a Neovim color scheme.
+    use {
+        "folke/tokyonight.nvim",
+        lazy = false,
+        priority = 1000,
+    }
 
-        use {
-            "folke/tokyonight.nvim",
-            lazy = false,
-            priority = 1000,
-            opts = {},
-        }
+    -- kanagawa.nvim is a Neovim color scheme.
+    use "rebelot/kanagawa.nvim"
 
-        use "rebelot/kanagawa.nvim"
+    -- catppuccin.nvim is a Neovim color scheme.
+    use { "catppuccin/nvim", as = "catppuccin" }
 
-        use { "catppuccin/nvim", as = "catppuccin" }
+    if packer_bootstrap then
+        require('packer').sync()
+    end
+end)
 
-
-
-    end)

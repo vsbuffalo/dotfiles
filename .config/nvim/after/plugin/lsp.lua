@@ -5,51 +5,49 @@
 -- Additionally, using opts = {buffer = bufnr, remap = false, noremap = true} ensures
 -- the mapping won't be overridden or misinterpreted by other configurations.
 
-
 local lsp = require('lsp-zero')
 lsp.preset('recommended')
 
--- don't keep opening/closing that darn flag column
+-- Skip pylsp, use ruff
+lsp.skip_server_setup({ "pylsp" })
+
+-- Keep the sign column open
 vim.opt.signcolumn = 'yes'
 
+-- Install language servers
 lsp.ensure_installed({
     'texlab',
-    'pylsp',
     'clangd',
     'rust_analyzer',
-    --'r_language_server'
+    'pyright',  -- for type checking and hover
 })
 
--- Configure rust-analyzer specifically
-local rust_lsp = {
+-- Rust-specific config
+lsp.configure('rust_analyzer', {
     settings = {
         ['rust-analyzer'] = {
-            cargo = {
-                allFeatures = true,
-            },
-            checkOnSave = {
-                allFeatures = true,
-            },
-            procMacro = {
-                enable = true
-            },
+            cargo = { allFeatures = true },
+            checkOnSave = { allFeatures = true },
+            procMacro = { enable = true },
         }
     }
-}
+})
 
-lsp.configure('rust_analyzer', rust_lsp)
-lsp.nvim_workspace()
+-- Common on_attach for all LSPs
+local function my_on_attach(client, bufnr)
+    if client.name == "ruff" then
+        client.server_capabilities.hoverProvider = false
+    end
 
-lsp.on_attach(function(client, bufnr)
-    local opts = {buffer = bufnr, remap = false, noremap = true}
-    
-    vim.keymap.set("n", "<leader>vd", function() 
+    local opts = { buffer = bufnr, noremap = true, silent = true }
+
+    vim.keymap.set("n", "<leader>vd", function()
         vim.diagnostic.open_float(nil, { focus = false, scope = "line" })
     end, opts)
-    
+
     vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
-    vim.keymap.set("n", 'gD', vim.lsp.buf.declaration, opts)
-    vim.keymap.set("n", 'gi', vim.lsp.buf.implementation, opts)
+    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
     vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
     vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
     vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
@@ -58,9 +56,88 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
     vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-end)
+end
 
+-- Hook our custom on_attach
+lsp.on_attach(my_on_attach)
+
+-- Set up workspace for lua
+lsp.nvim_workspace()
+
+-- Setup lsp-zero
 lsp.setup()
+
+-- Global fallback for diagnostic popup (in case LSP doesn't attach)
+vim.keymap.set("n", "<leader>vd", function()
+    vim.diagnostic.open_float(nil, { focus = false, scope = "line" })
+end, { noremap = true, silent = true })
+
+
+-- Ruff LSP setup
+local util = require("lspconfig.util")
+local root_dir = util.root_pattern("pyproject.toml", "setup.cfg", "requirements.txt", ".git")
+
+local function get_ruff_cmd()
+  local venv = os.getenv("VIRTUAL_ENV")
+  if venv then
+    return { venv .. "/bin/ruff", "server" }
+  end
+
+  local project_venv = root_dir(vim.fn.getcwd()) .. "/.venv/bin/ruff"
+  if vim.fn.executable(project_venv) == 1 then
+    return { project_venv, "server" }
+  end
+
+  return { "ruff", "server" }
+end
+
+require('lspconfig').ruff.setup({
+    cmd = get_ruff_cmd(),
+    filetypes = { "python" },
+    root_dir = root_dir,
+    init_options = {
+        settings = {
+            args = {},
+        },
+    },
+    on_attach = my_on_attach,
+})
+
+local function get_python_path()
+  local cwd = vim.fn.getcwd()
+  local venv_python = cwd .. "/.venv/bin/python"
+  if vim.fn.executable(venv_python) == 1 then
+    return venv_python
+  end
+  return "python"
+end
+
+local function get_python_path()
+  local cwd = vim.fn.getcwd()
+  local venv_python = cwd .. "/.venv/bin/python"
+  if vim.fn.executable(venv_python) == 1 then
+    return venv_python
+  end
+  return "python"
+end
+
+-- Force update pyright config after setup
+require('lspconfig').pyright.setup({
+  on_attach = my_on_attach,
+  root_dir = root_dir,
+  settings = {
+    python = {
+      pythonPath = get_python_path(),
+      analysis = {
+        typeCheckingMode = "basic",
+        reportUnusedImport = false,
+        autoSearchPaths = true,
+        useLibraryCodeForTypes = true,
+        diagnosticMode = "workspace", -- ✅ override
+      }
+    }
+  }
+})
 
 local cmp = require('cmp')
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
