@@ -6,7 +6,7 @@ vim.g.maplocalleader = " "
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
 
--- mimic emacs delete word, I have this set on my keyboard 
+-- mimic emacs delete word, I have this set on my keyboard
 -- as a single button
 vim.keymap.set("i", "<Esc><BS>", "<C-w>")
 
@@ -41,7 +41,7 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
 -- paste into system clipboad, from asbjornHaland
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 
 -- quick access to packer edit ('se') and packer sync ('ss)
@@ -77,7 +77,7 @@ vim.keymap.set("n", "<leader><space>", "gwip")
 vim.keymap.set("n", "<leader>h", ":noh<CR>")
 
 -- Rust shortcut: C-d inserts debug, {:?}
-vim.api.nvim_set_keymap('i', '<C-d>', '{:?}<Left><Left><Left>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('i', '<C-d>', '{:?}<Left><Left><Left>', { noremap = true, silent = true })
 
 -- go to rust tests
 vim.keymap.set("n", "<leader>gt", ":GoToRustTests<cr>")
@@ -90,3 +90,8 @@ vim.keymap.set("n", "<leader>c", ":CycleColorScheme<cr>", { silent = true })
 
 -- open colors
 vim.keymap.set("n", "<leader>ce", ":vs<CR>:e $HOME/.config/nvim/after/plugin/colors.lua<CR>")
+
+-- format with Ruff (via conform)
+vim.keymap.set("n", "<leader>f", function()
+	require("conform").format({ async = true })
+end, { desc = "Format with Ruff (via conform)" })

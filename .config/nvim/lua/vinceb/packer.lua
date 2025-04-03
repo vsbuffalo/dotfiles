@@ -1,12 +1,12 @@
 local ensure_packer = function()
-	local fn = vim.fn
-	local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-	if fn.empty(fn.glob(install_path)) > 0 then
-		fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
-		vim.cmd [[packadd packer.nvim]]
-		return true
-	end
-	return false
+    local fn = vim.fn
+    local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+    if fn.empty(fn.glob(install_path)) > 0 then
+        fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+        vim.cmd [[packadd packer.nvim]]
+        return true
+    end
+    return false
 end
 
 vim.cmd [[packadd packer.nvim]]
@@ -14,33 +14,35 @@ vim.cmd [[packadd packer.nvim]]
 local packer_bootstrap = ensure_packer()
 
 return require('packer').startup(function(use)
-	use 'wbthomason/packer.nvim'
+    -- Packer can manage itself
+    use 'wbthomason/packer.nvim'
 
-    -- conform.nvim manages and apply code formatting configurations 
+    -- conform.nvim manages and apply code formatting configurations
     -- for various programming languages.
-	use {
-		"stevearc/conform.nvim",
-		config = function()
-			require("conform").setup()
-		end,
-	}
+    use "stevearc/conform.nvim"
 
-    -- nvim-autopairs automatically closes brackets, quotes, and other pairs.
-	use 'nvim-tree/nvim-web-devicons'
+    -- nvim-tree is a file explorer for Neovim.
+    use 'nvim-tree/nvim-web-devicons'
+    use {
+        'nvim-tree/nvim-tree.lua',
+        requires = {
+            'nvim-tree/nvim-web-devicons', -- optional
+        },
+    }
 
     -- lualine.nvim is a fast and easy-to-configure statusline plugin for Neovim.
-	use {
-		'nvim-lualine/lualine.nvim',
-		requires = { 'nvim-tree/nvim-web-devicons' },
-		config = function()
-			require('lualine').setup({ options = { theme = 'tokyonight' } })
-		end,
-	}
+    use {
+        'nvim-lualine/lualine.nvim',
+        requires = { 'nvim-tree/nvim-web-devicons' },
+        config = function()
+            require('lualine').setup({ options = { theme = 'tokyonight' } })
+        end,
+    }
 
     -- copilot.lua is a Neovim plugin that provides GitHub Copilot support.
     use { 'zbirenbaum/copilot.lua' }
 
-    -- copilot-cmp is a Neovim plugin that integrates GitHub Copilot 
+    -- copilot-cmp is a Neovim plugin that integrates GitHub Copilot
     -- with nvim-cmp, the completion engine for Neovim.
     use {
         'zbirenbaum/copilot-cmp',
@@ -55,6 +57,18 @@ return require('packer').startup(function(use)
         'nvim-telescope/telescope.nvim',
         tag = '0.1.5',
         requires = { { 'nvim-lua/plenary.nvim' } }
+    }
+
+    -- neotest is a Neovim plugin for running and managing tests.
+    use {
+        "nvim-neotest/neotest",
+        requires = {
+            "nvim-neotest/nvim-nio",
+            "nvim-lua/plenary.nvim",
+            "antoinemadec/FixCursorHold.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            "nvim-neotest/neotest-python",
+        }
     }
 
     -- snakemake.nvim is a Neovim plugin for Snakemake, a workflow management system.
@@ -164,4 +178,3 @@ return require('packer').startup(function(use)
         require('packer').sync()
     end
 end)
-

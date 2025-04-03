@@ -45,6 +45,12 @@ eval "$(direnv hook zsh)"
 function cdp() {
     cd ~/projects/$1
 }
+function cdw() {
+    cd ~/projects/work/$1
+}
+function cdm() {
+    cd ~/projects/personal/$1
+}
 alias ll="ls -larth --color"
 alias ct="exa --tree --git-ignore \
   --ignore-glob='*.pyc|*.pyo|__pycache__|*.egg-info|.mypy_cache|.venv|.tox|target|Cargo.lock|*.rs.bk|*.rmeta|*.dSYM|node_modules|.DS_Store|*.log' \
@@ -57,6 +63,15 @@ alias now="date -u +'%Y-%m-%dT%H:%M:%SZ'"
 alias gl="git pull --rebase"
 alias g=git
 alias h=brew
+alias git-whoami='
+  if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+    echo "📧 $(git config user.email)"
+    echo "📝 from: $(git config --show-origin user.email | cut -f1)"
+  else
+    echo "❌ Not inside a Git repository." >&2
+    return 1
+  fi
+'
 
 alias n=nvim
 export EDITOR=nvim

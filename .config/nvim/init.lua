@@ -24,20 +24,12 @@ end
 
 vim.api.nvim_create_user_command('AddUnwrapBeforeSemicolon', AddUnwrapBeforeSemicolon, {})
 
--- add a command to list all active LSP clients
-vim.api.nvim_create_user_command("LspClients", function()
-  local buf = vim.api.nvim_create_buf(true, true)
-  vim.api.nvim_set_current_buf(buf)
-  vim.api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(vim.inspect(vim.lsp.get_active_clients()), "\n"))
-end, {})
-
--- copy LSP client info to clipboard
+-- copy LSP client info to clipboard, e.g. for debugging an LSP with LLMs
 function CopyLspClientDebug()
-  local clients = vim.lsp.get_active_clients()
-  local debug_output = vim.inspect(clients)
-  vim.fn.system('pbcopy', debug_output)
-  vim.notify("✅ LSP client info copied to clipboard", vim.log.levels.INFO, { title = "LSP Debug" })
+    local clients = vim.lsp.get_clients({ bufnr = 0 })
+    local debug_output = vim.inspect(clients)
+    vim.fn.system('pbcopy', debug_output)
+    vim.notify("✅ LSP client info copied to clipboard", vim.log.levels.INFO, { title = "LSP Debug" })
 end
-vim.keymap.set("n", "<leader>vc", CopyLspClientDebug, { noremap = true, silent = true, desc = "Copy LSP client info to clipboard" })
 
-
+vim.keymap.set("n", "<leader>vc", CopyLspClientDebug, { desc = "Copy LSP info" })

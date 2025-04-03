@@ -1,10 +1,16 @@
-[user]
-	name = Vince Buffalo
-	email = vsbuffalo@gmail.com
+[includeIf "gitdir:/Users/vsb/projects/work/**"]
+    path = ~/.config/git/work.gitconfig
+
+[includeIf "gitdir:/Users/vsb/projects/personal/**"]
+    path = ~/.config/git/personal.gitconfig
+
+[includeIf "gitdir:/Users/vsb/projects/academic/**"]
+    path = ~/.config/git/personal.gitconfig
+
 [credential]
 	help = osxkeychain
 [push]
-	default = simple
+	default = current
 [core]
 	editor = vim
 	excludesfile = /Users/vsb/.global_ignore
@@ -40,3 +46,5 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[user]
+    useConfigOnly = true  # enforce identity per-repo
