@@ -2,7 +2,7 @@
 -- e.g. :nmap <space>q to check what <leader>q does
 
 vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+vim.g.maplocalleader = ","
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
 
@@ -93,5 +93,5 @@ vim.keymap.set("n", "<leader>ce", ":vs<CR>:e $HOME/.config/nvim/after/plugin/col
 
 -- format with Ruff (via conform)
 vim.keymap.set("n", "<leader>f", function()
-	require("conform").format({ async = true })
+    require("conform").format({ async = true })
 end, { desc = "Format with Ruff (via conform)" })

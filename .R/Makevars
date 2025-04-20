@@ -1,0 +1,7 @@
+# ~/.R/Makevars — for Homebrew LLVM compatibility
+CC = /opt/homebrew/opt/llvm/bin/clang
+CXX = /opt/homebrew/opt/llvm/bin/clang++
+
+CFLAGS += -fopenmp -I/opt/homebrew/opt/llvm/include -I/opt/homebrew/include
+CXXFLAGS += -fopenmp -I/opt/homebrew/opt/llvm/include -I/opt/homebrew/include
+LDFLAGS += -L/opt/homebrew/opt/llvm/lib -L/opt/homebrew/lib -lomp

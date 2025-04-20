@@ -83,6 +83,29 @@ else
   echo '[warning] nvim not found!'
 fi
 
+## ----------- dark mode ----------- ##
+# Function to toggle between dark and light mode
+toggle_dark_mode() {
+  # Check current appearance mode
+  current_mode=$(defaults read -g AppleInterfaceStyle 2>/dev/null)
+  
+  if [[ $current_mode == "Dark" ]]; then
+    # Switch to light mode
+    osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to false'
+    echo "Switched to Light Mode"
+  else
+    # Switch to dark mode
+    osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to true'
+    echo "Switched to Dark Mode"
+  fi
+}
+
+# Alias for the toggle_dark_mode function
+alias darkmode=toggle_dark_mode
+
+## ----------- weather stuff ----------- ##
+alias weather="curl wttr.in/Seattle"
+
 ## ----------- making scp commands ----------- ##
 # if you want to get abs file path
 #

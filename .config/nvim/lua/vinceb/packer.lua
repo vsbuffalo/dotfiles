@@ -82,7 +82,33 @@ return require('packer').startup(function(use)
     use 'mattn/webapi-vim'
 
     -- nvim-r is a Neovim plugin for R language support.
-    use 'jalvesaq/Nvim-R'
+    -- use 'jalvesaq/Nvim-R'
+    use {
+        "R-nvim/R.nvim",
+        config = function()
+            require("r").setup({
+                R_args = { "--quiet", "--no-save" },
+                hook = {
+                    on_filetype = function()
+                        vim.api.nvim_buf_set_keymap(0, "n", "<Enter>", "<Plug>RDSendLine", {})
+                        vim.api.nvim_buf_set_keymap(0, "v", "<Enter>", "<Plug>RSendSelection", {})
+                    end,
+                },
+            })
+        end,
+    }
+
+    use {
+        "R-nvim/cmp-r",
+        {
+            "hrsh7th/nvim-cmp",
+            config = function()
+                require("cmp").setup({ sources = { { name = "cmp_r" } } })
+                require("cmp_r").setup({})
+            end,
+        },
+    }
+
 
     -- comment.nvim is a Neovim plugin for easy commenting of code.
     use {

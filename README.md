@@ -33,8 +33,39 @@ $ ssh-add --apple-use-keychain ~/.ssh/[your-private-key]
 
  - `.zsh`: antidote for plugins.
 
+## 🪑 Ergonomic Desk Setup – Personal Reference
+
+I have the following sit-stand desk, which I love: [Duo Standing
+Desk](https://www.branchfurniture.com/products/duo-standing-desk?) (Walnut,
+Sage legs), desk Size: 36 inches x 24 inches. After some initial configuration
+and chatting with ChatGPT, these are the settings I have arrived at.
+
+### 📏 Key Measurements
+
+Guesstimates base don 
+
+- **Height**: 6'1.5" (187 cm)
+- **Seated Elbow Height**: `27.8"` → Ideal seated desk height
+- **Standing Elbow Height**: `44.1"` → Ideal standing desk height
+- **Chair Height**: ~20" from floor (measured when seated)
+
+### ✅ Desk Height Guidelines
+
+- **Sitting Mode**: Set desk to ~`28.2"` (±0.5")  
+  Ensure feet are supported (meditation cushion works well). Knees and elbows at 90°, shoulders relaxed.
+
+- **Standing Mode**: Set desk to ~`44.1"` (or slightly higher if looking down too much)  
+  Use a footrest or bar to shift weight occasionally. Monitor should be slightly above eye level, especially for terminal-heavy work.
+
+### 🖥️ Monitor Ergonomics
+
+- Raise monitor so that the **center is ~2–3" above eye level**
+- Slight backward tilt (~10–15°) helps reduce neck strain
+- For terminal-heavy or code workflows, prioritize visibility in the top ⅓ of the screen
+
 ## Caveats
 
 So far only tested on OS X.
+
 
 

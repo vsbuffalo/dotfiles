@@ -67,6 +67,19 @@ if [[ "$(uname)" == "Darwin" ]]; then
 	install_brew tmux
 	install_brew tree
 	install_brew direnv
+    # Stuff needed for various R packages
+    install_brew libgit2
+    install_brew libomp
+    install_brew harfbuzz
+    install_brew fribidi
+    install_brew freetype
+    install_brew cairo
+    install_brew glib
+    install_brew graphite2
+    install_brew libpng
+    install_brew libtiff
+    install_brew jpeg
+    install_brew pkg-config
 fi
 
 # link over git stuff
@@ -82,14 +95,21 @@ linkdotfile .condarc
 linkdotfile .zshrc
 linkdotfile .zsh_plugins.txt
 
-## link antigen
-#if [ ! -e ~/.antigen.zsh ]; then
-#	yecho "~/.antigen not found, downloading..."
-#	curl -L git.io/antigen > ~/.antigen.zsh
-#else
-#	gecho "~/.antigen.zsh found."
-#fi
-#linkdotfile .antigenrc
+# link R stuff
+linkdotfile .Rprofile
+
+# Create ~/.R/Makevars with OpenMP flags — but only on macOS
+if [[ "$(uname)" == "Darwin" ]]; then
+  makevars_path="$HOME/.R/Makevars"
+  if [[ ! -f "$makevars_path" ]]; then
+      yecho "macOS detected — linking ~/.R (which includes Makevars)..." >&2
+    linkdotfile .R
+  else
+    gecho "~/.R found, not modifying..."
+  fi
+else
+  yecho "Non-macOS system detected — skipping ~/.R/Makevars setup."
+fi
 
 # get antidote for zsh
 git clone --depth=1 https://github.com/mattmc3/antidote.git ${ZDOTDIR:-~}/.antidote
