@@ -41,9 +41,21 @@ return require('packer').startup(function(use)
 
     -- copilot.lua is a Neovim plugin that provides GitHub Copilot support.
     use { 'zbirenbaum/copilot.lua' }
+    use { "neovim/nvim-lspconfig" }
+
+
+    -- nvim-cmp is a completion engine for Neovim.
+    use { "hrsh7th/nvim-cmp" }
+    use { "hrsh7th/cmp-nvim-lsp" }
+    use { "L3MON4D3/LuaSnip" }
+    use { "saadparwaiz1/cmp_luasnip" }
+
+    use { "williamboman/mason.nvim" }
+    use { "williamboman/mason-lspconfig.nvim" }
+
 
     -- copilot-cmp is a Neovim plugin that integrates GitHub Copilot
-    -- with nvim-cmp, the completion engine for Neovim.
+    -- with nvim-cmp
     use {
         'zbirenbaum/copilot-cmp',
         after = { 'copilot.lua' },
@@ -81,12 +93,11 @@ return require('packer').startup(function(use)
     -- webapi-vim is a Neovim plugin for web API testing.
     use 'mattn/webapi-vim'
 
-    -- nvim-r is a Neovim plugin for R language support.
-    -- use 'jalvesaq/Nvim-R'
+    -- R language support
     use {
         "R-nvim/R.nvim",
         config = function()
-            require("r").setup({
+            require("R").setup({
                 R_args = { "--quiet", "--no-save" },
                 hook = {
                     on_filetype = function()
@@ -100,15 +111,18 @@ return require('packer').startup(function(use)
 
     use {
         "R-nvim/cmp-r",
-        {
-            "hrsh7th/nvim-cmp",
-            config = function()
-                require("cmp").setup({ sources = { { name = "cmp_r" } } })
-                require("cmp_r").setup({})
-            end,
-        },
+        config = function()
+            require("cmp").setup({
+                sources = {
+                    { name = "cmp_r" },
+                    { name = "nvim_lsp" },
+                    { name = "buffer" },
+                    { name = "path" },
+                }
+            })
+            require("cmp_r").setup({})
+        end,
     }
-
 
     -- comment.nvim is a Neovim plugin for easy commenting of code.
     use {
@@ -130,24 +144,6 @@ return require('packer').startup(function(use)
     -- rust-tools.nvim is a Neovim plugin for Rust development.
     use { 'simrat39/rust-tools.nvim' }
 
-    --lsp-zero.nvim is a Neovim plugin for configuring LSP (Language Server Protocol) clients.
-    use {
-        'VonHeikemen/lsp-zero.nvim',
-        branch = 'v1.x',
-        requires = {
-            { 'neovim/nvim-lspconfig' },
-            { 'williamboman/mason.nvim' },
-            { 'williamboman/mason-lspconfig.nvim' },
-            { 'hrsh7th/nvim-cmp' },
-            { 'hrsh7th/cmp-nvim-lsp' },
-            { 'hrsh7th/cmp-buffer' },
-            { 'hrsh7th/cmp-path' },
-            { 'saadparwaiz1/cmp_luasnip' },
-            { 'hrsh7th/cmp-nvim-lua' },
-            { 'L3MON4D3/LuaSnip' },
-            { 'rafamadriz/friendly-snippets' },
-        }
-    }
 
     -- vimtex is a Neovim plugin for LaTeX editing.
     use 'lervag/vimtex'

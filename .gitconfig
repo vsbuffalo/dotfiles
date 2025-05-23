@@ -15,11 +15,12 @@
 [core]
 	editor = vim
 	excludesfile = /Users/vsb/.global_ignore
+	pager = delta
 [color]
 	ui = true
 [alias]
 	co = checkout
-	br = branch
+	br = branch -vv
 	ci = commit
 	st = status
 	unstage = reset HEAD --
@@ -49,3 +50,9 @@
 	required = true
 [user]
     useConfigOnly = true  # enforce identity per-repo
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+[merge]
+	conflictStyle = zdiff3

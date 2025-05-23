@@ -51,7 +51,7 @@ Guesstimates base don
 
 ### ✅ Desk Height Guidelines
 
-- **Sitting Mode**: Set desk to ~`28.2"` (±0.5")  
+- **Sitting Mode**: Set desk to ~`27.9"` (±0.5")  
   Ensure feet are supported (meditation cushion works well). Knees and elbows at 90°, shoulders relaxed.
 
 - **Standing Mode**: Set desk to ~`44.1"` (or slightly higher if looking down too much)  
