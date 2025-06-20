@@ -1,4 +1,4 @@
 require("vinceb.remap")
-require("vinceb.packer")
 require("vinceb.set")
+require("vinceb.lazy")
 require("vinceb.filetypes")

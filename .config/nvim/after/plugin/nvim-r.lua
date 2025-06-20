@@ -1,6 +1,19 @@
 -- Nvim-R plugin configuration
 
-require("R").setup({
+-- Only configure if R.nvim is available
+local status_ok, r = pcall(require, "R")
+if not status_ok then
+    return
+end
+
+r.setup({
+    R_args = { "--quiet", "--no-save" },
+    hook = {
+        on_filetype = function()
+            vim.api.nvim_buf_set_keymap(0, "n", "<Enter>", "<Plug>RDSendLine", {})
+            vim.api.nvim_buf_set_keymap(0, "v", "<Enter>", "<Plug>RSendSelection", {})
+        end,
+    },
     -- these are causing issues with neovim
     -- shiftwidth = 2,
     -- tabstop = 2,

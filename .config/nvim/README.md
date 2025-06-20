@@ -96,6 +96,18 @@ or from their website.
 - `<leader>gt` - go to tests
 - `<leader>n` - add unwrap before semicolon
 
+### Debugging (DAP)
+- `<leader>db` - toggle breakpoint on current line
+- `<leader>dc` - continue/start debugging (choose "Launch file")
+- `<leader>di` - step into function
+- `<leader>do` - step over line
+- `<leader>dO` - step out of function
+- `<leader>du` - toggle debug UI panels
+- `<leader>de` - evaluate expression under cursor
+- `<leader>dx` - stop/terminate debugging
+
+**Setup**: Install debugpy with `pip install debugpy` (or in your venv)
+
 ## Directory Structure
 
 Here's how it's organized:
