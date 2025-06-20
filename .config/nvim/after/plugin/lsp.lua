@@ -35,26 +35,35 @@ local function my_on_attach(client, bufnr)
     vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
     vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+
+    if client.name == "ruff" then
+        print("✅ Ruff attached with config from: " .. client.config.root_dir)
+    end
+end
+
+-- Prefer .venv binaries over system/Mason
+local venv = vim.fn.getcwd() .. "/.venv/bin"
+if vim.fn.isdirectory(venv) == 1 then
+    vim.env.PATH = venv .. ":" .. vim.env.PATH
 end
 
 -- Mason + LSP config
 require("mason").setup()
+
 require("mason-lspconfig").setup({
-    ensure_installed = {
-        "pyright",
-        "ruff",
-        "rust_analyzer",
-        "clangd",
-        "texlab",
-    },
-    handlers = {
-        function(server_name)
-            require("lspconfig")[server_name].setup({
-                on_attach = my_on_attach,
-            })
-        end,
-    },
+    ensure_installed = { "pyright", "ruff", "rust_analyzer", "clangd", "texlab" },
+    automatic_enable = false, -- ⛔ turn off the new auto-start feature
 })
+
+-- now MANUALLY enable only what you want
+local on = { on_attach = my_on_attach }
+
+require("lspconfig").pyright.setup(on)
+require("lspconfig").ruff.setup(on)
+require("lspconfig").rust_analyzer.setup(on)
+require("lspconfig").clangd.setup(on)
+require("lspconfig").texlab.setup(on)
+
 
 -- Custom Ruff setup
 local util = require("lspconfig.util")
@@ -75,7 +84,7 @@ local function get_ruff_cmd()
 end
 
 require('lspconfig').ruff.setup({
-    cmd = get_ruff_cmd(),
+    --cmd = get_ruff_cmd(),
     filetypes = { "python" },
     root_dir = root_dir,
     init_options = {

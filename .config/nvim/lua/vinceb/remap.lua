@@ -44,9 +44,9 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 
--- quick access to packer edit ('se') and packer sync ('ss)
-vim.keymap.set("n", "<leader>se", ":vs<CR>:e $HOME/.config/nvim/lua/vinceb/packer.lua<CR>")
-vim.keymap.set("n", "<leader>ss", vim.cmd.PackerSync)
+-- quick access to lazy plugin config ('se') and lazy sync ('ss)
+vim.keymap.set("n", "<leader>se", ":vs<CR>:e $HOME/.config/nvim/lua/vinceb/lazy.lua<CR>")
+vim.keymap.set("n", "<leader>ss", ":Lazy sync<CR>")
 
 -- quick access to remap edit ('re')
 vim.keymap.set("n", "<leader>re", ":vs<CR>:e $HOME/.config/nvim/lua/vinceb/remap.lua<CR>")

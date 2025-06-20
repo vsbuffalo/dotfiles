@@ -83,6 +83,19 @@ return require('packer').startup(function(use)
         }
     }
 
+    -- mini.align for aligning blocks of text
+    use {
+        'echasnovski/mini.align',
+        branch = 'stable',               -- pin to the stable tag; omit if you track main
+        config = function()
+            require('mini.align').setup()  -- default settings are perfect for 99 % of cases
+
+    -- Key-mappings in Primeagen style: ga (no preview), gA (live preview)
+    vim.keymap.set({ 'n', 'x' }, 'ga', '<Plug>(minialign-start)')
+    vim.keymap.set({ 'n', 'x' }, 'gA', '<Plug>(minialign-start-with-preview)')
+  end,
+}
+
     -- snakemake.nvim is a Neovim plugin for Snakemake, a workflow management system.
     use {
         'snakemake/snakemake',
@@ -139,7 +152,28 @@ return require('packer').startup(function(use)
     }
 
     -- fugitive.vim is a Git wrapper for Neovim.
-    use 'tpope/vim-fugitive'
+    -- use 'tpope/vim-fugitive'
+
+    use {
+        'lewis6991/gitsigns.nvim',
+        requires = { 'nvim-lua/plenary.nvim' },
+        config = function()
+            require('gitsigns').setup {
+                current_line_blame = true,
+                current_line_blame_opts = {
+                    delay = 250,
+                    virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+                },
+                current_line_blame_formatter = ' <author>, <author_time:%Y-%m-%d> - <summary>',
+            }
+
+            -- optional keymap to toggle inline blame
+            vim.keymap.set('n', '<leader>bb', function()
+                require('gitsigns').toggle_current_line_blame()
+            end, { desc = ' Toggle git blame for current line' })
+        end
+    }
+
 
     -- rust-tools.nvim is a Neovim plugin for Rust development.
     use { 'simrat39/rust-tools.nvim' }
@@ -195,6 +229,18 @@ return require('packer').startup(function(use)
 
     -- catppuccin.nvim is a Neovim color scheme.
     use { "catppuccin/nvim", as = "catppuccin" }
+
+    -- nvim-dap is a Debug Adapter Protocol client for Neovim
+    use { 'mfussenegger/nvim-dap' }
+    
+    -- nvim-dap-ui provides a UI for nvim-dap
+    use { 
+        "rcarriga/nvim-dap-ui", 
+        requires = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"}
+    }
+    
+    -- nvim-dap-python is a Python adapter for nvim-dap
+    use { 'mfussenegger/nvim-dap-python' }
 
     if packer_bootstrap then
         require('packer').sync()
