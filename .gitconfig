@@ -7,6 +7,9 @@
 [includeIf "gitdir:/Users/vsb/projects/academic/**"]
     path = ~/.config/git/personal.gitconfig
 
+[includeIf "gitdir:/Users/vsb/dotfiles2/"]
+    path = ~/.config/git/personal.gitconfig
+
 [credential]
 	help = osxkeychain
 [push]

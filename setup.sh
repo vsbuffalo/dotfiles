@@ -70,6 +70,8 @@ if [[ "$(uname)" == "Darwin" ]]; then
 	install_brew fzf
 	install_brew rg
 	install_brew tmux
+	install_brew awscli
+	install_brew postgresql
 	install_brew tree
 	install_brew direnv
     # Stuff needed for various R packages
@@ -85,6 +87,10 @@ if [[ "$(uname)" == "Darwin" ]]; then
     install_brew libtiff
     install_brew jpeg
     install_brew pkg-config
+    install_brew htop
+    install_brew font-hack-nerd-font
+    install_brew node
+    install_brew duckdb
 fi
 
 # link over git stuff

@@ -219,10 +219,6 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 . "$HOME/.local/bin/env"
 
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-#export PATH="/Users/vsb/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
-
 
 # BEGIN opam configuration
 # This is useful if you're using opam as it adds:
