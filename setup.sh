@@ -63,6 +63,11 @@ check_preq "command -v ~/anaconda/bin/conda"
 # install Homebrew main programs if on a mac
 if [[ "$(uname)" == "Darwin" ]]; then
 	check_preq brew
+	install_brew yazi
+	install_brew duckdb
+	install_brew eza
+	install_brew yq
+	install_brew fzf
 	install_brew rg
 	install_brew tmux
 	install_brew tree

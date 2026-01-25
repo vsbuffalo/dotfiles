@@ -2,6 +2,11 @@
 # source "$HOME/.antigen.zsh"
 # antigen init ~/.antigenrc
 
+# Disable Claude Code from adding git markers
+# I like AI markers but these are too much and pollute 
+# git history.
+export CLAUDE_NO_GIT_MARKERS=1
+
 ## ----------- antidote ----------- ##
 source ${ZDOTDIR:-~}/.antidote/antidote.zsh
 antidote load ${ZDOTDIR:-$HOME}/.zsh_plugins.txt
@@ -51,8 +56,13 @@ function cdw() {
 function cdm() {
     cd ~/projects/personal/$1
 }
-alias ll="ls -larth --color"
-alias ct="exa --tree --git-ignore \
+alias less="bat"
+alias la="eza  -la --icons --sort date"
+alias ll="eza  -l --icons --sort date"
+alias ld="eza  -l --icons --sort date ~/Downloads"
+alias sz="source ~/.zshrc"
+alias oo="open ."
+alias ct="eza --tree --git-ignore \
   --ignore-glob='*.pyc|*.pyo|__pycache__|*.egg-info|.mypy_cache|.venv|.tox|target|Cargo.lock|*.rs.bk|*.rmeta|*.dSYM|node_modules|.DS_Store|*.log' \
   --icons"
 alias df="df -h"
@@ -72,6 +82,14 @@ alias git-whoami='
     return 1
   fi
 '
+
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
 
 alias n=nvim
 export EDITOR=nvim
@@ -104,7 +122,7 @@ toggle_dark_mode() {
 alias darkmode=toggle_dark_mode
 
 ## ----------- weather stuff ----------- ##
-alias weather="curl wttr.in/Seattle"
+alias weather="curl wttr.in/Seattle?u"
 
 ## ----------- making scp commands ----------- ##
 # if you want to get abs file path
@@ -199,5 +217,17 @@ autoload -U compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 
-
 . "$HOME/.local/bin/env"
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+#export PATH="/Users/vsb/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+
+
+# BEGIN opam configuration
+# This is useful if you're using opam as it adds:
+#   - the correct directories to the PATH
+#   - auto-completion for the opam binary
+# This section can be safely removed at any time if needed.
+[[ ! -r '/Users/vsb/.opam/opam-init/init.zsh' ]] || source '/Users/vsb/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
+# END opam configuration

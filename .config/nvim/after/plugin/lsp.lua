@@ -24,7 +24,7 @@ local function my_on_attach(client, bufnr)
     vim.keymap.set("n", "<leader>vd", function()
         vim.diagnostic.open_float(nil, { focus = false, scope = "line" })
     end, opts)
-    vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
+    vim.keymap.set("n", "gd", function() require('telescope.builtin').lsp_definitions() end, opts)
     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
     vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
@@ -52,22 +52,28 @@ require("mason").setup()
 
 require("mason-lspconfig").setup({
     ensure_installed = { "pyright", "ruff", "rust_analyzer", "clangd", "texlab" },
-    automatic_enable = false, -- ⛔ turn off the new auto-start feature
 })
 
--- now MANUALLY enable only what you want
-local on = { on_attach = my_on_attach }
+-- Helper function for finding project root
+local function root_pattern(...)
+    local patterns = {...}
+    return function(fname)
+        fname = fname or vim.fn.getcwd()
+        for _, pattern in ipairs(patterns) do
+            local match = vim.fs.find(pattern, {
+                path = fname,
+                upward = true,
+                stop = vim.env.HOME,
+            })[1]
+            if match then
+                return vim.fn.fnamemodify(match, ':h')
+            end
+        end
+        return vim.fn.getcwd()
+    end
+end
 
-require("lspconfig").pyright.setup(on)
-require("lspconfig").ruff.setup(on)
-require("lspconfig").rust_analyzer.setup(on)
-require("lspconfig").clangd.setup(on)
-require("lspconfig").texlab.setup(on)
-
-
--- Custom Ruff setup
-local util = require("lspconfig.util")
-local root_dir = util.root_pattern("pyproject.toml", "setup.cfg", "requirements.txt", ".git")
+local root_dir = root_pattern("pyproject.toml", "setup.cfg", "requirements.txt", ".git")
 
 local function get_ruff_cmd()
     local venv = os.getenv("VIRTUAL_ENV")
@@ -83,18 +89,6 @@ local function get_ruff_cmd()
     return { "ruff", "server" }
 end
 
-require('lspconfig').ruff.setup({
-    --cmd = get_ruff_cmd(),
-    filetypes = { "python" },
-    root_dir = root_dir,
-    init_options = {
-        settings = {
-            args = {},
-        },
-    },
-    on_attach = my_on_attach,
-})
-
 -- Custom Pyright setup
 local function get_python_path()
     local cwd = vim.fn.getcwd()
@@ -105,9 +99,12 @@ local function get_python_path()
     return "python"
 end
 
-require('lspconfig').pyright.setup({
+-- Configure LSP servers using Neovim 0.11's native API
+vim.lsp.config('pyright', {
+    cmd = { 'pyright-langserver', '--stdio' },
+    filetypes = { 'python' },
+    root_markers = { "pyproject.toml", "setup.cfg", "requirements.txt", ".git" },
     on_attach = my_on_attach,
-    root_dir = root_dir,
     settings = {
         python = {
             pythonPath = get_python_path(),
@@ -121,6 +118,42 @@ require('lspconfig').pyright.setup({
         }
     }
 })
+
+vim.lsp.config('ruff', {
+    cmd = get_ruff_cmd(),
+    filetypes = { "python" },
+    root_markers = { "pyproject.toml", "setup.cfg", "requirements.txt", ".git" },
+    on_attach = my_on_attach,
+    init_options = {
+        settings = {
+            args = {},
+        },
+    },
+})
+
+vim.lsp.config('rust_analyzer', {
+    cmd = { 'rust-analyzer' },
+    filetypes = { 'rust' },
+    root_markers = { 'Cargo.toml', 'rust-project.json' },
+    on_attach = my_on_attach,
+})
+
+vim.lsp.config('clangd', {
+    cmd = { 'clangd' },
+    filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
+    root_markers = { '.clangd', '.clang-tidy', '.clang-format', 'compile_commands.json', 'compile_flags.txt' },
+    on_attach = my_on_attach,
+})
+
+vim.lsp.config('texlab', {
+    cmd = { 'texlab' },
+    filetypes = { 'tex', 'plaintex', 'bib' },
+    root_markers = { '.latexmkrc', '.texlabroot', 'texlabroot', 'Tectonic.toml' },
+    on_attach = my_on_attach,
+})
+
+-- Enable all configured LSP servers
+vim.lsp.enable({ 'pyright', 'ruff', 'rust_analyzer', 'clangd', 'texlab' })
 
 -- Autocompletion with nvim-cmp
 local cmp = require('cmp')
@@ -139,7 +172,9 @@ cmp.setup({
         ['<C-Space>'] = cmp.mapping.complete(),
     }),
     sources = {
+        { name = 'copilot' },
         { name = 'nvim_lsp' },
+        { name = 'luasnip' },
         { name = 'path' },
         { name = 'buffer' },
     }

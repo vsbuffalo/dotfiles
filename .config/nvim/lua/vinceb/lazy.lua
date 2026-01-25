@@ -10,6 +10,22 @@ local plugins = {
         dependencies = { "nvim-tree/nvim-web-devicons" },
     },
 
+    {
+        "terrastruct/d2-vim",
+        ft = "d2",
+        config = function()
+            -- Override the problematic function
+            vim.cmd([[
+            function! d2#syntax_post() abort
+            if !exists('b:included_syntaxes')
+                let b:included_syntaxes = []
+                endif
+                " Rest of the function will run normally
+                endfunction
+                ]])
+            end,
+        },
+
     -- lualine statusline
     {
         "nvim-lualine/lualine.nvim",
@@ -21,6 +37,7 @@ local plugins = {
 
     -- GitHub Copilot
     { "zbirenbaum/copilot.lua" },
+    { "zbirenbaum/copilot-cmp" },
     { "neovim/nvim-lspconfig" },
 
     -- Completion
