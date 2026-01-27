@@ -109,6 +109,9 @@ linkdotfile .zsh_plugins.txt
 # link R stuff
 linkdotfile .Rprofile
 
+# link Claude Code settings
+linkdotfile .claude
+
 # Create ~/.R/Makevars with OpenMP flags — but only on macOS
 if [[ "$(uname)" == "Darwin" ]]; then
   makevars_path="$HOME/.R/Makevars"
