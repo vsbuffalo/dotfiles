@@ -3,7 +3,7 @@ require 'nvim-treesitter.configs'.setup {
     -- be installed)
     ensure_installed = { "c", "lua", "vim", "vimdoc", "python", "r",
         "latex", "csv",
-        "markdown", "rnoweb", "yaml" },
+        "markdown", "rnoweb", "yaml", "ocaml" },
 
     -- Install parsers synchronously (only applied to `ensure_installed`)
     sync_install = false,

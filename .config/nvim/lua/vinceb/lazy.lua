@@ -155,8 +155,12 @@ local plugins = {
         end
     },
 
-    -- Rust tools
-    { "simrat39/rust-tools.nvim" },
+    -- Rust tools (rustaceanvim manages rust-analyzer LSP itself)
+    {
+        "mrcjkb/rustaceanvim",
+        version = "^5",
+        lazy = false,
+    },
 
     -- LaTeX support
     "lervag/vimtex",

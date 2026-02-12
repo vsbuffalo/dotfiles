@@ -91,6 +91,8 @@ if [[ "$(uname)" == "Darwin" ]]; then
     install_brew font-hack-nerd-font
     install_brew node
     install_brew duckdb
+    install_brew dprint
+    install_brew opam
 fi
 
 # link over git stuff
@@ -123,6 +125,21 @@ if [[ "$(uname)" == "Darwin" ]]; then
   fi
 else
   yecho "Non-macOS system detected — skipping ~/.R/Makevars setup."
+fi
+
+# install OCaml toolchain
+if command -v opam > /dev/null; then
+    if [ ! -d ~/.opam ]; then
+        yecho "opam not initialized, running 'opam init'..."
+        opam init -y --bare
+    else
+        gecho "opam already initialized..."
+    fi
+    gecho "installing OCaml LSP and formatter via opam..."
+    eval $(opam env)
+    opam install -y ocaml-lsp-server ocamlformat
+else
+    yecho "opam not found, skipping OCaml toolchain..."
 fi
 
 # get antidote for zsh

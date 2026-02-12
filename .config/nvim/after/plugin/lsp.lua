@@ -51,7 +51,7 @@ end
 require("mason").setup()
 
 require("mason-lspconfig").setup({
-    ensure_installed = { "pyright", "ruff", "rust_analyzer", "clangd", "texlab" },
+    ensure_installed = { "pyright", "ruff", "clangd", "texlab" },
 })
 
 -- Helper function for finding project root
@@ -131,12 +131,7 @@ vim.lsp.config('ruff', {
     },
 })
 
-vim.lsp.config('rust_analyzer', {
-    cmd = { 'rust-analyzer' },
-    filetypes = { 'rust' },
-    root_markers = { 'Cargo.toml', 'rust-project.json' },
-    on_attach = my_on_attach,
-})
+-- rust_analyzer is managed by rustaceanvim — do not configure here
 
 vim.lsp.config('clangd', {
     cmd = { 'clangd' },
@@ -152,8 +147,15 @@ vim.lsp.config('texlab', {
     on_attach = my_on_attach,
 })
 
+vim.lsp.config('ocamllsp', {
+    cmd = { 'ocamllsp' },
+    filetypes = { 'ocaml', 'ocaml.interface', 'ocaml.menhir', 'ocaml.ocamllex' },
+    root_markers = { 'dune-project', 'dune-workspace', '*.opam', '.git' },
+    on_attach = my_on_attach,
+})
+
 -- Enable all configured LSP servers
-vim.lsp.enable({ 'pyright', 'ruff', 'rust_analyzer', 'clangd', 'texlab' })
+vim.lsp.enable({ 'pyright', 'ruff', 'clangd', 'texlab', 'ocamllsp' })
 
 -- Autocompletion with nvim-cmp
 local cmp = require('cmp')
