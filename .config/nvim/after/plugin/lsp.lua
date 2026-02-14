@@ -147,9 +147,10 @@ vim.lsp.config('texlab', {
     on_attach = my_on_attach,
 })
 
+-- OCaml LSP (use opam exec to respect active switch)
 vim.lsp.config('ocamllsp', {
-    cmd = { 'ocamllsp' },
-    filetypes = { 'ocaml', 'ocaml.interface', 'ocaml.menhir', 'ocaml.ocamllex' },
+    cmd = { 'opam', 'exec', '--', 'ocamllsp' },
+    filetypes = { 'ocaml', 'ocaml.interface', 'ocaml.menhir', 'ocaml.ocamllex', 'reason', 'dune' },
     root_markers = { 'dune-project', 'dune-workspace', '*.opam', '.git' },
     on_attach = my_on_attach,
 })

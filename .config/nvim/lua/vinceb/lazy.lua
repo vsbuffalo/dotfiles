@@ -110,18 +110,6 @@ local plugins = {
         end,
     },
 
-    {
-        "R-nvim/cmp-r",
-        dependencies = { "hrsh7th/nvim-cmp" },
-        config = function()
-            -- CMP configuration is handled in after/plugin/lsp.lua
-            local status_ok, cmp_r = pcall(require, "cmp_r")
-            if status_ok then
-                cmp_r.setup({})
-            end
-        end,
-    },
-
     -- Comment plugin
     {
         "numToStr/Comment.nvim",
@@ -130,10 +118,31 @@ local plugins = {
         end
     },
 
-    -- Treesitter
+    -- Treesitter (use master branch for stable API)
     {
         "nvim-treesitter/nvim-treesitter",
-        build = ":TSUpdate"
+        branch = "master",
+        build = ":TSUpdate",
+        config = function()
+            require('nvim-treesitter.configs').setup {
+                ensure_installed = { "c", "lua", "vim", "vimdoc", "python", "r",
+                    "latex", "csv", "markdown", "rnoweb", "yaml", "ocaml" },
+                sync_install = false,
+                auto_install = true,
+                ignore_install = { "javascript" },
+                highlight = {
+                    enable = true,
+                    disable = function(lang, buf)
+                        local max_filesize = 100 * 1024 -- 100 KB
+                        local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
+                        if ok and stats and stats.size > max_filesize then
+                            return true
+                        end
+                    end,
+                    additional_vim_regex_highlighting = false,
+                },
+            }
+        end,
     },
 
     -- Git signs

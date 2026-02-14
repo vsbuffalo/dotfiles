@@ -29,10 +29,13 @@ function recho {
 
 ## install functions ##
 
-# look for command line tool, if not install via homebrew
+# install via homebrew if not already installed (checks brew list, not command)
 function install_brew {
-  (command -v $1 > /dev/null  && gecho "$1 found...") ||
-    (yecho "$1 not found, installing via homebrew..." && brew install $1)
+  if brew list "$1" &>/dev/null; then
+    gecho "$1 found..."
+  else
+    yecho "$1 not found, installing via homebrew..." && brew install "$1"
+  fi
 }
 
 # check for pre-req, fail if not found
@@ -90,7 +93,6 @@ function link_into_dir {
 
 # check that the key pre-requisites are met:
 check_preq gcc
-check_preq "command -v ~/anaconda/bin/conda"
 
 # install Homebrew main programs if on a mac
 if [[ "$(uname)" == "Darwin" ]]; then
@@ -112,6 +114,8 @@ if [[ "$(uname)" == "Darwin" ]]; then
     install_brew harfbuzz
     install_brew fribidi
     install_brew freetype
+    install_brew delta
+    install_brew opam
     install_brew cairo
     install_brew glib
     install_brew graphite2
@@ -122,9 +126,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     install_brew htop
     install_brew font-hack-nerd-font
     install_brew node
-    install_brew duckdb
     install_brew dprint
-    install_brew opam
 fi
 
 # link over git stuff
@@ -133,8 +135,8 @@ linkdotfile .gitconfig
 # link config directory (including NeoVim settings)
 linkdotfile .config
 
-# linkover .condarc
-linkdotfile .condarc
+# linkover .condarc (commented out - using uv/pixi instead)
+# linkdotfile .condarc
 
 # link manual zsh
 linkdotfile .zshrc
@@ -164,23 +166,13 @@ else
   yecho "Non-macOS system detected — skipping ~/.R/Makevars setup."
 fi
 
-# install OCaml toolchain
-if command -v opam > /dev/null; then
-    if [ ! -d ~/.opam ]; then
-        yecho "opam not initialized, running 'opam init'..."
-        opam init -y --bare
-    else
-        gecho "opam already initialized..."
-    fi
-    gecho "installing OCaml LSP and formatter via opam..."
-    eval $(opam env)
-    opam install -y ocaml-lsp-server ocamlformat
-else
-    yecho "opam not found, skipping OCaml toolchain..."
-fi
-
 # get antidote for zsh
-git clone --depth=1 https://github.com/mattmc3/antidote.git ${ZDOTDIR:-~}/.antidote
+if [[ -d "${ZDOTDIR:-$HOME}/.antidote" ]]; then
+  gecho "antidote already installed..."
+else
+  yecho "Installing antidote..."
+  git clone --depth=1 https://github.com/mattmc3/antidote.git "${ZDOTDIR:-$HOME}/.antidote"
+fi
 
 # create a global Git ignore file
 if [ ! -e ~/.global_ignore ]; then
@@ -194,5 +186,33 @@ if [ ! -e ~/.global_ignore ]; then
 else
     gecho "~/.global_ignore found, ignoring..." >&2
 fi
+
+# OCaml setup via opam
+if command -v opam > /dev/null; then
+    gecho "Setting up OCaml via opam..."
+    # Initialize opam if not already done
+    if [[ ! -d "$HOME/.opam" ]]; then
+        yecho "Initializing opam..."
+        opam init --auto-setup --yes
+    else
+        gecho "opam already initialized..."
+    fi
+    eval "$(opam env)"
+    opam update
+    # Create default switch with OCaml 5.4.0 (skip if exists)
+    if opam switch list | grep -q "default"; then
+        gecho "default switch exists..."
+        opam switch set default
+    else
+        yecho "Creating default switch with OCaml 5.4.0..."
+        opam switch create default 5.4.0 --yes
+    fi
+    eval "$(opam env)"
+    # Core dev tools (no merlin needed with LSP)
+    opam install dune ocaml-lsp-server ocamlformat utop odoc --yes
+else
+    wecho "opam not found, skipping OCaml setup"
+fi
+
 
 

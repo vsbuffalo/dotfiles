@@ -15,6 +15,9 @@
       "Bash(git add --all*)",
       "Read(./.env)",
       "Read(./.env.*)"
+    ],
+    "allow": [
+      "Bash(git merge:*)"
     ]
   },
   "hooks": {
