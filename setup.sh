@@ -52,6 +52,38 @@ function linkdotfile {
   fi
 }
 
+# Selectively symlink files from source_dir into an existing target_dir.
+# Unlike linkdotfile, this works when the target dir already exists.
+function link_into_dir {
+  local source_dir="$1"
+  local target_dir="$2"
+  shift 2
+
+  mkdir -p "$target_dir"
+
+  for item in "$@"; do
+    local src="$source_dir/$item"
+    local tgt="$target_dir/$item"
+
+    if [ ! -e "$src" ]; then
+      wecho "$src not found, skipping..."
+      continue
+    fi
+
+    if [ -L "$tgt" ]; then
+      gecho "$item already linked..."
+    elif [ -e "$tgt" ]; then
+      yecho "$item exists (not a symlink), backing up to ${tgt}.bak..."
+      mv "$tgt" "${tgt}.bak"
+      ln -s "$src" "$tgt"
+      gecho "$item linked (old version saved as ${item}.bak)"
+    else
+      yecho "Linking $item..."
+      ln -s "$src" "$tgt"
+    fi
+  done
+}
+
 # are we in right directory?
 [[ $(basename $(pwd)) == "dotfiles2" ]] ||
   recho "doesn't look like you're in dotfiles2/"
@@ -111,8 +143,13 @@ linkdotfile .zsh_plugins.txt
 # link R stuff
 linkdotfile .Rprofile
 
-# link Claude Code settings
-linkdotfile .claude
+# Link Claude Code settings (selective — skip runtime data)
+link_into_dir ~/dotfiles2/.claude ~/.claude \
+  settings.json \
+  settings.local.json \
+  skills \
+  commands \
+  agents
 
 # Create ~/.R/Makevars with OpenMP flags — but only on macOS
 if [[ "$(uname)" == "Darwin" ]]; then

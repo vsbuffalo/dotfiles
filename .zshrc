@@ -2,11 +2,6 @@
 # source "$HOME/.antigen.zsh"
 # antigen init ~/.antigenrc
 
-# Disable Claude Code from adding git markers
-# I like AI markers but these are too much and pollute 
-# git history.
-export CLAUDE_NO_GIT_MARKERS=1
-
 ## ----------- antidote ----------- ##
 source ${ZDOTDIR:-~}/.antidote/antidote.zsh
 antidote load ${ZDOTDIR:-$HOME}/.zsh_plugins.txt
@@ -91,6 +86,7 @@ function y() {
 	rm -f -- "$tmp"
 }
 
+alias mdfmt='dprint fmt --config-discovery=global'
 alias n=nvim
 export EDITOR=nvim
 

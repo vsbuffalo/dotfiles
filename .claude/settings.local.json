@@ -1,7 +1,16 @@
 {
   "permissions": {
+    "allow": [
+      "Bash(git -C /Users/vsb/dotfiles2 status --short)",
+      "Bash(find:*)",
+      "Bash(git -C /Users/vsb/dotfiles2 ls-tree:*)",
+      "Bash(test:*)",
+      "WebSearch",
+      "WebFetch(domain:howborisusesclaudecode.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(gh api:*)"
+    ],
     "deny": [
-      "Bash(*git add -A*)",
       "Bash(*git add -A*)",
       "Bash(git add --all*)",
       "Read(./.env)",
