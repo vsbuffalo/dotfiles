@@ -1,8 +1,10 @@
 {
   "includeCoAuthoredBy": false,
+  "model": "opus",
   "enabledPlugins": {
     "pyright-lsp@claude-plugins-official": true,
-    "ralph-wiggum@claude-code-plugins": true
+    "ralph-wiggum@claude-code-plugins": true,
+    "rust-analyzer-lsp@claude-plugins-official": true
   },
-  "model": "opus"
+  "skipDangerousModePermissionPrompt": true
 }
