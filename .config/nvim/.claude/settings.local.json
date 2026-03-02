@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C /Users/vsb/dotfiles diff)",
+      "Bash(git -C /Users/vsb/dotfiles st:*)",
+      "Bash(git -C /Users/vsb/dotfiles status)",
+      "WebSearch",
+      "WebFetch(domain:support.apple.com)"
+    ]
+  }
+}

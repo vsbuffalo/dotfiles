@@ -16,7 +16,7 @@
 	default = current
 	autoSetupRemote = true
 [core]
-	editor = vim
+	editor = nvim --clean -u NONE
 	excludesfile = /Users/vsb/.global_ignore
 	pager = delta
 [color]
@@ -34,18 +34,18 @@
 	staash = stash --all
 [http]
 	postBuffer = 524288000
-[filter "hawser"]
-	clean = git hawser clean %f
-	smudge = git hawser smudge %f
-	required = true
 [github]
 	user = vsbuffalo
 [diff "nb2md"]
 	textconv = nb2md
 [init]
 	defaultBranch = main
-[maintenance]
-	repo = /Users/vsb/projects/granges
+[pull]
+	rebase = true
+[fetch]
+	prune = true
+[rebase]
+	autosquash = true
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f

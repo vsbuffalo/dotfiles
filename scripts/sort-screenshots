@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# sort-screenshots — move screenshot files into YYYY/MM-Mon/ subfolders
+#
+# Usage:
+#   sort-screenshots              # sort ~/Pictures/Screenshots
+#   sort-screenshots ~/Desktop    # sort a specific source dir
+#   sort-screenshots --dry-run    # preview without moving anything
+
+DEST="$HOME/Pictures/Screenshots"
+MONTHS=(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec)
+
+src="$DEST"
+dry_run=false
+
+for arg in "$@"; do
+    case "$arg" in
+        --dry-run) dry_run=true ;;
+        *)         src="$arg" ;;
+    esac
+done
+
+moved=0
+skipped=0
+
+for f in "$src"/Screen\ Shot*.png \
+         "$src"/Screen\ Shot*.jpg \
+         "$src"/Screenshot*.png \
+         "$src"/Screenshot*.jpg \
+         "$src"/Screen\ Recording*.mov \
+         "$src"/Screen\ Recording*.mp4; do
+
+    [[ -e "$f" ]] || continue
+
+    name="$(basename "$f")"
+
+    # extract YYYY-MM-DD from filename
+    if [[ "$name" =~ ([0-9]{4})-([0-9]{2})-[0-9]{2} ]]; then
+        year="${BASH_REMATCH[1]}"
+        month="${BASH_REMATCH[2]}"
+    else
+        echo "skip (no date): $name"
+        ((++skipped))
+        continue
+    fi
+
+    mon="${MONTHS[$((10#$month - 1))]}"
+    dest_dir="$DEST/$year/$month-$mon"
+
+    if $dry_run; then
+        echo "$name -> $dest_dir/"
+    else
+        mkdir -p "$dest_dir"
+        mv -n "$f" "$dest_dir/"
+    fi
+    ((++moved))
+done
+
+echo "done: $moved moved, $skipped skipped"

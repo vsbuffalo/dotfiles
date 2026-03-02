@@ -8,7 +8,6 @@
       "Grep",
       "WebSearch",
       "WebFetch(*)",
-
       "Bash(git status:*)",
       "Bash(git diff:*)",
       "Bash(git log:*)",
@@ -26,7 +25,6 @@
       "Bash(git rev-parse:*)",
       "Bash(git -C:*)",
       "Bash(gh:*)",
-
       "Bash(ls:*)",
       "Bash(find:*)",
       "Bash(test:*)",
@@ -41,7 +39,6 @@
       "Bash(tail:*)",
       "Bash(cat:*)",
       "Bash(tput:*)",
-
       "Bash(cargo build:*)",
       "Bash(cargo test:*)",
       "Bash(cargo check:*)",
@@ -52,7 +49,6 @@
       "Bash(cargo bench:*)",
       "Bash(rustup show:*)",
       "Bash(rustup which:*)",
-
       "Bash(dune build:*)",
       "Bash(dune test:*)",
       "Bash(dune exec:*)",
@@ -60,7 +56,6 @@
       "Bash(dune clean:*)",
       "Bash(opam list:*)",
       "Bash(opam show:*)",
-
       "Bash(npm run:*)",
       "Bash(npm test:*)",
       "Bash(npm ls:*)",
@@ -71,11 +66,14 @@
       "Bash(uv sync:*)",
       "Bash(uv lock:*)",
       "Bash(uv tree:*)",
-
       "Bash(make:*)",
       "Bash(dprint:*)",
       "Bash(brew list:*)",
-      "Bash(brew info:*)"
+      "Bash(brew info:*)",
+      "Bash(curl:*)",
+      "Bash(tar xf:*)",
+      "Bash(tmux show-options:*)",
+      "Bash(tmux display-message:*)"
     ],
     "deny": [
       "Bash(*git add -A*)",
@@ -85,7 +83,6 @@
       "Bash(git reset --hard*)",
       "Bash(git clean -f*)",
       "Bash(rm -rf *)",
-
       "Read(./.env)",
       "Read(./.env.*)"
     ]

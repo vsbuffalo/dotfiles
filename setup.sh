@@ -49,7 +49,7 @@ function linkdotfile {
   file="$1"
   if [ ! -e ~/$file -a ! -L ~/$file ]; then
       yecho "$file not found, linking..." >&2
-      ln -s ~/dotfiles2/$file ~/$file
+      ln -s ~/dotfiles/$file ~/$file
   else
       gecho "$file found, ignoring..." >&2
   fi
@@ -88,8 +88,8 @@ function link_into_dir {
 }
 
 # are we in right directory?
-[[ $(basename $(pwd)) == "dotfiles2" ]] ||
-  recho "doesn't look like you're in dotfiles2/"
+[[ $(basename $(pwd)) == "dotfiles" ]] ||
+  recho "doesn't look like you're in dotfiles/"
 
 # check that the key pre-requisites are met:
 check_preq gcc
@@ -97,6 +97,7 @@ check_preq gcc
 # install Homebrew main programs if on a mac
 if [[ "$(uname)" == "Darwin" ]]; then
 	check_preq brew
+	install_brew fd
 	install_brew yazi
 	install_brew duckdb
 	install_brew eza
@@ -132,11 +133,11 @@ fi
 # link over git stuff
 linkdotfile .gitconfig
 
+# link tmux config
+linkdotfile .tmux.conf
+
 # link config directory (including NeoVim settings)
 linkdotfile .config
-
-# linkover .condarc (commented out - using uv/pixi instead)
-# linkdotfile .condarc
 
 # link manual zsh
 linkdotfile .zshrc
@@ -146,7 +147,7 @@ linkdotfile .zsh_plugins.txt
 linkdotfile .Rprofile
 
 # Link Claude Code settings (selective — skip runtime data)
-link_into_dir ~/dotfiles2/.claude ~/.claude \
+link_into_dir ~/dotfiles/.claude ~/.claude \
   settings.json \
   settings.local.json \
   skills \
@@ -172,6 +173,14 @@ if [[ -d "${ZDOTDIR:-$HOME}/.antidote" ]]; then
 else
   yecho "Installing antidote..."
   git clone --depth=1 https://github.com/mattmc3/antidote.git "${ZDOTDIR:-$HOME}/.antidote"
+fi
+
+# get TPM (tmux plugin manager)
+if [[ -d "$HOME/.tmux/plugins/tpm" ]]; then
+  gecho "tpm already installed..."
+else
+  yecho "Installing tpm (tmux plugin manager)..."
+  git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
 fi
 
 # create a global Git ignore file

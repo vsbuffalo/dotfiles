@@ -37,7 +37,13 @@ local plugins = {
 
     -- GitHub Copilot
     { "zbirenbaum/copilot.lua" },
-    { "zbirenbaum/copilot-cmp" },
+    {
+        "zbirenbaum/copilot-cmp",
+        dependencies = { "copilot.lua" },
+        config = function()
+            require('copilot_cmp').setup()
+        end,
+    },
     { "neovim/nvim-lspconfig" },
 
     -- Completion
@@ -50,19 +56,10 @@ local plugins = {
     { "williamboman/mason.nvim" },
     { "williamboman/mason-lspconfig.nvim" },
 
-    -- Copilot-cmp integration
-    {
-        "zbirenbaum/copilot-cmp",
-        dependencies = { "copilot.lua" },
-        config = function()
-            require('copilot_cmp').setup()
-        end,
-    },
-
     -- Telescope fuzzy finder
     {
         "nvim-telescope/telescope.nvim",
-        tag = "0.1.5",
+        branch = "0.1.x",
         dependencies = { "nvim-lua/plenary.nvim" }
     },
 
@@ -122,13 +119,15 @@ local plugins = {
     {
         "nvim-treesitter/nvim-treesitter",
         branch = "master",
+        lazy = false,
         build = ":TSUpdate",
         config = function()
+            require("nvim-treesitter.install").prefer_git = true
             require('nvim-treesitter.configs').setup {
                 ensure_installed = { "c", "lua", "vim", "vimdoc", "python", "r",
-                    "latex", "csv", "markdown", "rnoweb", "yaml", "ocaml" },
-                sync_install = false,
-                auto_install = true,
+                    "latex", "csv", "markdown", "markdown_inline", "rnoweb", "yaml", "ocaml" },
+                sync_install = true,
+                auto_install = false,
                 ignore_install = { "javascript" },
                 highlight = {
                     enable = true,
@@ -218,6 +217,16 @@ local plugins = {
     "rebelot/kanagawa.nvim",
 
     { "catppuccin/nvim", name = "catppuccin" },
+
+    -- REPL integration
+    { "Vigemus/iron.nvim" },
+
+    -- OCaml features beyond LSP (typed holes, construct, .ml/.mli switching)
+    {
+        "tarides/ocaml.nvim",
+        config = function() require("ocaml").setup() end,
+        ft = { "ocaml" },
+    },
 
     -- Debug Adapter Protocol
     { "mfussenegger/nvim-dap" },

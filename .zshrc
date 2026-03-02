@@ -1,7 +1,3 @@
-## ----------- antigen ----------- ##
-# source "$HOME/.antigen.zsh"
-# antigen init ~/.antigenrc
-
 ## ----------- antidote ----------- ##
 source ${ZDOTDIR:-~}/.antidote/antidote.zsh
 antidote load ${ZDOTDIR:-$HOME}/.zsh_plugins.txt
@@ -22,8 +18,8 @@ export PATH=$HOME/bin:/usr/local/bin:/opt/homebrew/bin/:~/.local/bin/:$PATH
 # add rust stuff
 export PATH=$HOME/.cargo/bin:$PATH
 
-# add LaTeX
-export PATH=$PATH:/usr/local/texlive/2016basic/bin/x86_64-darwin/:/usr/texbin
+# add LaTeX (MacTeX / texlive)
+export PATH=$PATH:/usr/local/texlive/2025/bin/universal-darwin
 
 # LLVM config (installed from homebrew)
 export LLVM_CONFIG="/opt/homebrew/opt/llvm/bin/llvm-config"
@@ -35,6 +31,9 @@ export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
 # Add my helper scripts
 export PATH=$HOME/projects/helpers/bin/:$PATH
 
+# Add dotfiles scripts
+export PATH=$HOME/dotfiles/scripts:$PATH
+
 export PATH="$HOME/.azure-helpers/bin:$PATH"
 
 # Initiate direnv
@@ -43,13 +42,10 @@ eval "$(direnv hook zsh)"
 
 ## ----------- custom aliases ----------- ##
 function cdp() {
-    cd ~/projects/$1
+    cd ~/projects/personal/$1
 }
 function cdw() {
     cd ~/projects/work/$1
-}
-function cdm() {
-    cd ~/projects/personal/$1
 }
 alias less="bat"
 alias la="eza  -la --icons --sort date"
@@ -86,8 +82,13 @@ function y() {
 	rm -f -- "$tmp"
 }
 
+dewey() {
+  local greet="On your first response, briefly introduce yourself as Dewey the dotfiles librarian and list your available slash commands. Keep it to 2-3 lines."
+  (cd ~/dotfiles && claude --append-system-prompt "$greet" "${*:-hi}")
+}
+
 alias mdfmt='dprint fmt --config-discovery=global'
-alias n=nvim
+alias nv=nvim
 export EDITOR=nvim
 
 # alias vim to neovim if possible, warn otherwise
@@ -120,11 +121,7 @@ alias darkmode=toggle_dark_mode
 ## ----------- weather stuff ----------- ##
 alias weather="curl wttr.in/Seattle?u"
 
-## ----------- making scp commands ----------- ##
-# if you want to get abs file path
-#
-
-## ----------- jupyter stuff ----------- ##
+## ----------- file openers ----------- ##
 excel() {
     if [[ $1 == *.csv || $1 == *.xlsx || $1 == *.xls || $1 == *.xlsm || $1 == *.xltx || $1 == *.xltm ]]; then
         open -a "/Applications/Microsoft Excel.app" "$1"
@@ -133,10 +130,6 @@ excel() {
     fi
 }
 
-#
-## ----------- jupyter stuff ----------- ##
-
-# look at a few stderr files in less
 cdnv() {
     cd ~/.config/nvim/
 }
@@ -145,54 +138,6 @@ cdnv() {
 # this is for opening up jupyter lab instances in chrome
 app() {
   /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app="$1"
-}
-
-## ----------- snakemake stuff ----------- ##
-# for snakemake-style log directories, e.g. logs/error logs/out,
-# get the most recent files
-#
-##
-
-get_error_logs() {
-  find logs/error/ -maxdepth 1 -name "*.err" -type f -printf '%f\t%s bytes\t%t\n'
-}
-
-get_out_logs() {
-  find logs/out/ -maxdepth 1 -name "*.out" -type f -printf '%f\t%s bytes\t%t\n'
-}
-
-NL=20
-logs() {
-  ((echo "-- error --"; (get_error_logs | tail -n $NL)); (echo "-- out --"; (get_out_logs | tail -n $NL)))
-}
-
-# look at the last stderr log in less
-lerr() {
-    less logs/error/$(ls -Art logs/error/ | tail -n 1)
-}
-
-# look at the last stdout log in less
-lout() {
-    less logs/out/$(ls -Art logs/out/ | tail -n 1)
-}
-
-# look at a few stderr files in less
-lserr() {
-	get_error_logs | cut -f1 | sed 's/^/logs\/error\//' | tail -n10 | xargs | xargs less
-}
-
-# look at a few stdout files in less
-lsout() {
-	get_out_logs | cut -f1 | sed 's/^/logs\/out\//' | tail -n10 | xargs | xargs less
-}
-
-## ----------- bioinformatics + lazy typing ----------- ##
-total_bp() {
-  bioawk -cbed 'BEGIN {a=0} { a+=$end-$start } END {print a}' $1
-}
-
-percent_genome() {
-    bioawk -cbed 'BEGIN{a=0} {a+=$end-$start} END{printf("%g.2%%\n", 100*a/3117275501)}' $1
 }
 
 ## ----------- history stuff ----------- ##

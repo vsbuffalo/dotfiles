@@ -2,23 +2,11 @@
 require("nvim-tree").setup({
     view = {
         width = 30,
-        side = "left",
-    },
-    renderer = {
-        icons = {
-            show = {
-                git = true,
-                folder = true,
-                file = true,
-                folder_arrow = true,
-            },
-        },
     },
     filters = {
         dotfiles = false,
     },
-    respect_buf_cwd = true,    -- makes nvim-tree use buffer's cwd
-    sync_root_with_cwd = true, -- newer recommended way
+    sync_root_with_cwd = true,
 })
 
 -- Keymaps
