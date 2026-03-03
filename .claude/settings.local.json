@@ -73,7 +73,9 @@
       "Bash(curl:*)",
       "Bash(tar xf:*)",
       "Bash(tmux show-options:*)",
-      "Bash(tmux display-message:*)"
+      "Bash(tmux display-message:*)",
+      "Bash(memory_pressure:*)",
+      "Bash(nvim:*)"
     ],
     "deny": [
       "Bash(*git add -A*)",
