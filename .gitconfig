@@ -7,7 +7,7 @@
 [includeIf "gitdir:/Users/vsb/projects/academic/**"]
     path = ~/.config/git/personal.gitconfig
 
-[includeIf "gitdir:/Users/vsb/dotfiles2/"]
+[includeIf "gitdir:/Users/vsb/dotfiles/"]
     path = ~/.config/git/personal.gitconfig
 
 [credential]
@@ -32,6 +32,11 @@
   lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
 	squash-all = "!f(){ git reset $(git commit-tree HEAD^{tree} -m \"${1:-A new start}\");};f"
 	staash = stash --all
+	# Worktree workflow — work on branches, land from main
+	wt = worktree list
+	wta = "!f(){ git worktree add -b \"$1\" \"$(git rev-parse --show-toplevel)/../$1\" main; };f"
+	wtrm = "!f(){ git worktree remove \"$1\"; };f"
+	land = "!f(){ branch=\"${1:?usage: git land <branch>}\"; git rebase main \"$branch\" && git checkout main && git merge --ff-only \"$branch\" && echo \"Landed $branch on main.\"; };f"
 [http]
 	postBuffer = 524288000
 [github]

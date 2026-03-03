@@ -126,7 +126,7 @@ local plugins = {
             require('nvim-treesitter.configs').setup {
                 ensure_installed = { "c", "lua", "vim", "vimdoc", "python", "r",
                     "latex", "csv", "markdown", "markdown_inline", "rnoweb", "yaml", "ocaml" },
-                sync_install = true,
+                sync_install = false,
                 auto_install = false,
                 ignore_install = { "javascript" },
                 highlight = {
