@@ -185,6 +185,9 @@ else
   git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
 fi
 
+# install TPM plugins headlessly
+"$HOME/.tmux/plugins/tpm/bin/install_plugins" && gecho "tmux plugins installed..." || wecho "tmux plugin install failed (tmux may not be running)"
+
 # create a global Git ignore file
 if [ ! -e ~/.global_ignore ]; then
     yecho "~/.global_ignore not found, curling from Github..." >&2

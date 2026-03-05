@@ -81,7 +81,9 @@
       "Bash(git check-ignore:*)",
       "Bash(/opt/homebrew/bin/gh:*)",
       "Bash(source:*)",
-      "Bash(tree-sitter:*)"
+      "Bash(tree-sitter:*)",
+      "Bash(bash:*)",
+      "Bash(tmux:*)"
     ],
     "deny": [
       "Bash(*git add -A*)",
