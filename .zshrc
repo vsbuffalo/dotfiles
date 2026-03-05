@@ -90,6 +90,8 @@ dewey() {
 alias mdfmt='dprint fmt --config-discovery=global'
 alias nv=nvim
 export EDITOR=nvim
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export BAT_PAGER="less -RF"
 
 # alias vim to neovim if possible, warn otherwise
 if (( $+commands[nvim] )); then

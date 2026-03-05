@@ -1,0 +1,21 @@
+default_profile = "sonnet"
+
+[profiles.sonnet]
+provider = "anthropic"
+model = "claude-sonnet-4-5-20250929"
+
+[profiles.opus]
+provider = "anthropic"
+model = "claude-sonnet-4-5-20250929"
+
+[profiles.local]
+provider = "ollama"
+model = "llama3.1"
+endpoint = "http://localhost:11434/v1"
+
+[profiles.openai]
+provider = "openai"
+model = "gpt-4o"
+
+[agent.ingest]
+profile = "opus"

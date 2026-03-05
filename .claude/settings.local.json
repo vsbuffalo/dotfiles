@@ -75,7 +75,13 @@
       "Bash(tmux show-options:*)",
       "Bash(tmux display-message:*)",
       "Bash(memory_pressure:*)",
-      "Bash(nvim:*)"
+      "Bash(nvim:*)",
+      "Bash(git fetch:*)",
+      "Bash(tmux show:*)",
+      "Bash(git check-ignore:*)",
+      "Bash(/opt/homebrew/bin/gh:*)",
+      "Bash(source:*)",
+      "Bash(tree-sitter:*)"
     ],
     "deny": [
       "Bash(*git add -A*)",

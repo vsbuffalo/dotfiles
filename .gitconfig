@@ -1,15 +1,6 @@
 [includeIf "gitdir:/Users/vsb/projects/work/**"]
     path = ~/.config/git/work.gitconfig
 
-[includeIf "gitdir:/Users/vsb/projects/personal/**"]
-    path = ~/.config/git/personal.gitconfig
-
-[includeIf "gitdir:/Users/vsb/projects/academic/**"]
-    path = ~/.config/git/personal.gitconfig
-
-[includeIf "gitdir:/Users/vsb/dotfiles/"]
-    path = ~/.config/git/personal.gitconfig
-
 [credential]
 	help = osxkeychain
 [push]
@@ -57,7 +48,8 @@
 	process = git-lfs filter-process
 	required = true
 [user]
-    useConfigOnly = true  # enforce identity per-repo
+    name = Vince Buffalo
+    email = vsbuffalo@gmail.com
 [interactive]
 	diffFilter = delta --color-only
 [delta]

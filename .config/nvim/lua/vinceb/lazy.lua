@@ -7,6 +7,7 @@ local plugins = {
     "nvim-tree/nvim-web-devicons",
     {
         "nvim-tree/nvim-tree.lua",
+        version = "~v1",
         dependencies = { "nvim-tree/nvim-web-devicons" },
     },
 
@@ -115,32 +116,24 @@ local plugins = {
         end
     },
 
-    -- Treesitter (use master branch for stable API)
+    -- Treesitter (main branch — new API, requires tree-sitter CLI)
     {
         "nvim-treesitter/nvim-treesitter",
-        branch = "master",
+        branch = "main",
         lazy = false,
         build = ":TSUpdate",
         config = function()
-            require("nvim-treesitter.install").prefer_git = true
-            require('nvim-treesitter.configs').setup {
-                ensure_installed = { "c", "lua", "vim", "vimdoc", "python", "r",
-                    "latex", "csv", "markdown", "markdown_inline", "rnoweb", "yaml", "ocaml" },
-                sync_install = false,
-                auto_install = false,
-                ignore_install = { "javascript" },
-                highlight = {
-                    enable = true,
-                    disable = function(lang, buf)
-                        local max_filesize = 100 * 1024 -- 100 KB
-                        local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
-                        if ok and stats and stats.size > max_filesize then
-                            return true
-                        end
-                    end,
-                    additional_vim_regex_highlighting = false,
-                },
-            }
+            require("nvim-treesitter").setup()
+
+            local ensure_installed = { "c", "lua", "vim", "vimdoc", "python", "r",
+                "latex", "csv", "markdown", "markdown_inline", "rnoweb", "yaml", "ocaml", "rust" }
+            local installed = require("nvim-treesitter.config").get_installed()
+            local to_install = vim.tbl_filter(function(p)
+                return not vim.tbl_contains(installed, p)
+            end, ensure_installed)
+            if #to_install > 0 then
+                require("nvim-treesitter").install(to_install)
+            end
         end,
     },
 
@@ -168,6 +161,29 @@ local plugins = {
         "mrcjkb/rustaceanvim",
         version = "^5",
         lazy = false,
+        init = function()
+            vim.g.rustaceanvim = {
+                server = {
+                    on_attach = function(client, bufnr)
+                        local opts = { buffer = bufnr, noremap = true, silent = true }
+                        vim.keymap.set("n", "gd", function() require('telescope.builtin').lsp_definitions() end, opts)
+                        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+                        vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+                        vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
+                        vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
+                        vim.keymap.set("n", "<leader>vd", function()
+                            vim.diagnostic.open_float(nil, { focus = false, scope = "line" })
+                        end, opts)
+                        vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end, opts)
+                        vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end, opts)
+                        vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
+                        vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
+                        vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
+                        vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+                    end,
+                },
+            }
+        end,
     },
 
     -- LaTeX support
