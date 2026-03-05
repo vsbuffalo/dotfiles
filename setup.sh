@@ -109,6 +109,8 @@ if [[ "$(uname)" == "Darwin" ]]; then
 	install_brew postgresql
 	install_brew tree
 	install_brew direnv
+	install_brew tailscale
+	install_brew cloudflared
     # Stuff needed for various R packages
     install_brew libgit2
     install_brew libomp
