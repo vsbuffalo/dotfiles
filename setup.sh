@@ -34,7 +34,7 @@ function install_brew {
   if brew list "$1" &>/dev/null; then
     gecho "$1 found..."
   else
-    yecho "$1 not found, installing via homebrew..." && brew install "$1"
+    yecho "$1 not found, installing via homebrew..." && brew install "$@"
   fi
 }
 
@@ -127,7 +127,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     install_brew jpeg
     install_brew pkg-config
     install_brew htop
-    install_brew font-hack-nerd-font
+    install_brew font-hack-nerd-font --force
     install_brew node
     install_brew dprint
 fi
