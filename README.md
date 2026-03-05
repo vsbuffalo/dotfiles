@@ -1,7 +1,7 @@
 ## Dotfiles
 
 Dotfiles for macOS — zsh, neovim, tmux, git — maintained by
-[**Dewey**](#dewey), a Claude Code agent that lives in the repo. It tracks
+[**Dewey**](#dewey-the-dotfiles-librarian), a Claude Code agent that lives in the repo. It tracks
 plugin health, keeps docs in sync with config, and runs parallel agent
 workflows via tmux. No custom runtime — just `CLAUDE.md`, skills, and
 project memory.
@@ -43,50 +43,7 @@ ssh-add --apple-use-keychain ~/.ssh/[your-private-key]
 
 ## Scripts
 
-### `scripts/sort-screenshots`
-
-Sorts macOS screenshots into `~/Pictures/Screenshots/YYYY/MM-Mon/` subfolders
-by parsing the date from the filename. Handles both old (`Screen Shot ...`) and
-new (`Screenshot ...`) naming formats, plus screen recordings.
-
-```bash
-# Preview what would happen
-sort-screenshots --dry-run
-
-# Sort screenshots already in ~/Pictures/Screenshots (default)
-sort-screenshots
-
-# Sort from a different source directory
-sort-screenshots ~/Desktop
-```
-
-### `scripts/start-agents`
-
-Launches parallel Claude Code agents in tmux. One agent per directory, or
-use `--worktree` mode to spin up git worktrees from a single repo.
-
-```bash
-# Three agents as tiled panes (default)
-start-agents --worktree ~/my-repo 3
-
-# Or separate windows
-start-agents --windows ~/project-a ~/project-b
-```
-
-See [docs/tmux.md](docs/tmux.md) for the full workflow.
-
-**Setup**: macOS screenshots are redirected to `~/Pictures/Screenshots/`:
-
-```bash
-defaults write com.apple.screencapture location ~/Pictures/Screenshots
-killall SystemUIServer
-```
-
-**Cron**: runs nightly at midnight to sort new screenshots into subfolders:
-
-```
-0 0 * * * /Users/vsb/dotfiles/scripts/sort-screenshots >> /tmp/sort-screenshots.log 2>&1
-```
+Automation scripts for screenshots and agent workflows — see [docs/scripts.md](docs/scripts.md).
 
 ## Dewey the Dotfiles Librarian
 
@@ -136,6 +93,7 @@ See [docs/dewey.md](docs/dewey.md) for the full technical breakdown.
 ## Docs
 
 - [Shell aliases & functions](docs/aliases.md) — quick reference for everything in `.zshrc`
+- [Scripts](docs/scripts.md) — sort-screenshots, start-agents
 - [NeoVim config](.config/nvim/README.md) — plugins, LSP, keybindings, REPL, DAP
 - [Cron jobs](docs/cron.md) — scheduled tasks, PATH gotchas, full crontab
 - [Claude Code settings](docs/claude-code.md) — permissions, symlink strategy, per-project overrides
