@@ -37,6 +37,7 @@ ssh-add --apple-use-keychain ~/.ssh/[your-private-key]
 | `.tmux.conf` | tmux config |
 | `.gitconfig` | Git config |
 | `.Rprofile`, `.R/`, `.condarc` | R and conda config |
+| `keyboards/moonlander/` | Moonlander QMK layout source ([docs](keyboards/moonlander/README.md)) |
 | `bootloaders/` | Boot loader configs |
 | `scripts/` | Automation scripts ([docs](docs/scripts.md)) |
 | `setup.sh` | Bootstrap installer |
