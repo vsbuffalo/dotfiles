@@ -1,3 +1,9 @@
 .config/nvim/pack/
 .config/nvim/plugin/
 .config/github-copilot/
+
+# Local secrets — never track these
+.zshrc.local
+.gitconfig.local
+.env
+.env.*
