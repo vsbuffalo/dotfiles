@@ -53,12 +53,10 @@ These are created by the skills on first use.
 
 ```bash
 dewey() {
-  if [[ $# -eq 0 ]]; then
-    claude --cwd ~/dotfiles
-  else
-    claude --cwd ~/dotfiles -p "$*"
-  fi
+  local greet="On your first response, briefly introduce yourself as Dewey the dotfiles librarian and list your available slash commands. Keep it to 2-3 lines."
+  (cd ~/dotfiles && claude --append-system-prompt "$greet" "${*:-hi}")
 }
 ```
 
 `dewey` → interactive session. `dewey "question"` → one-shot answer.
+The greeting prompt is injected via `--append-system-prompt` so Dewey introduces itself on first response.
