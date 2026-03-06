@@ -38,7 +38,7 @@ ssh-add --apple-use-keychain ~/.ssh/[your-private-key]
 | `.gitconfig` | Git config |
 | `.Rprofile`, `.R/`, `.condarc` | R and conda config |
 | `bootloaders/` | Boot loader configs |
-| `scripts/` | Automation scripts (see below) |
+| `scripts/` | Automation scripts ([docs](docs/scripts.md)) |
 | `setup.sh` | Bootstrap installer |
 
 ## Scripts

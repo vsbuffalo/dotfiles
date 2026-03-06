@@ -29,12 +29,13 @@ Prefix is `C-b` (default).
 | `C-b ,` | Rename window |
 | `C-b b` | Toggle status bar |
 
-### Splits
+### Splits & Pane Navigation
 
 | Key | Action |
 |-----|--------|
 | `C-b \|` | Split horizontal (keeps cwd) |
 | `C-b -` | Split vertical (keeps cwd) |
+| `C-b h/j/k/l` | Move to pane left/down/up/right (mirrors `<A-hjkl>` in neovim) |
 
 ### Copy Mode
 
@@ -147,8 +148,8 @@ After loading the config, install plugins with `prefix + I`.
 
 ### Installed Plugins
 
-- **[tmux-dotbar](https://github.com/vaaleyard/tmux-dotbar)** — minimal status
-  bar theme with dot-separated window names, prefix highlight, and Nerd Font icons.
+- **[tmux-ukiyo](https://github.com/Nybkox/tmux-ukiyo)** — status bar theme matching Neovim kanagawa/wave. Configured with a custom sysinfo segment (`scripts/tmux-sysinfo.sh`) and powerline separators.
+- **[extrakto](https://github.com/laktak/extrakto)** — fuzzy-extract text from terminal output (paths, URLs, words) into the command line or clipboard.
 
 ## Terminal Meta Key
 
