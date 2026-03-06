@@ -127,6 +127,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     install_brew jpeg
     install_brew pkg-config
     install_brew htop
+    install_brew psgrep
     install_brew font-hack-nerd-font --force
     install_brew node
     install_brew dprint

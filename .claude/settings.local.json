@@ -83,7 +83,14 @@
       "Bash(source:*)",
       "Bash(tree-sitter:*)",
       "Bash(bash:*)",
-      "Bash(tmux:*)"
+      "Bash(tmux:*)",
+      "Bash(sips:*)",
+      "Bash(magick:*)",
+      "Read(//private/tmp/**)",
+      "Read(//tmp/**)",
+      "Bash(cp:*)",
+      "Read(//Users/vsb/**)",
+      "Bash(claude:*)"
     ],
     "deny": [
       "Bash(*git add -A*)",

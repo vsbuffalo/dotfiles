@@ -163,6 +163,9 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 . "$HOME/.local/bin/env"
 
 
+# Local secrets (not tracked in dotfiles)
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
 # BEGIN opam configuration
 # This is useful if you're using opam as it adds:
 #   - the correct directories to the PATH
