@@ -39,6 +39,7 @@ ssh-add --apple-use-keychain ~/.ssh/[your-private-key]
 | `.Rprofile`, `.R/`, `.condarc` | R and conda config |
 | `keyboards/moonlander/` | Moonlander QMK layout source ([docs](keyboards/moonlander/README.md)) |
 | `bootloaders/` | Boot loader configs |
+| `router/` | GL.iNet Flint2 network alerting ([docs](router/README.md)) |
 | `scripts/` | Automation scripts ([docs](docs/scripts.md)) |
 | `setup.sh` | Bootstrap installer |
 
@@ -98,6 +99,7 @@ See [docs/dewey.md](docs/dewey.md) for the full technical breakdown.
 - [NeoVim config](.config/nvim/README.md) — plugins, LSP, keybindings, REPL, DAP
 - [Cron jobs](docs/cron.md) — scheduled tasks, PATH gotchas, full crontab
 - [Claude Code settings](docs/claude-code.md) — permissions, symlink strategy, per-project overrides
+- [Infrastructure index](docs/infrastructure.md) — router, Tailscale, cron
 - [Tailscale setup](docs/tailscale.md) — mesh VPN and SSH between Macs
 - [Ergonomic desk setup](docs/ergonomics.md) — sit-stand desk heights and monitor positioning
 - [Tmux & agent workflow](docs/tmux.md) — session layout, keybindings, parallel agent launcher

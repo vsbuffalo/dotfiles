@@ -1,0 +1,19 @@
+# known_clients.txt — trusted device MAC addresses
+# One MAC per line, grep matched (case-insensitive)
+# Comments are fine as long as they don't contain MAC addresses
+
+# wired
+# 1C:1D:D3:E1:F2:77  thuja-ethernet
+# 8C:AE:4C:BD:04:0E  plugable-hub
+
+# phones (set to Fixed private address in iOS Wi-Fi settings)
+# C6:FB:CB:9A:0F:01  vinces-iphone
+# E2:21:E0:2C:EB:A4  mollys-iphone
+
+# work
+# 62:B9:73:F7:38:7F  bmgf-laptop
+
+# iot (on guest network "Tsuga heterophylla")
+# AA:BB:CC:DD:EE:FF  roku
+# AA:BB:CC:DD:EE:FF  wiim-pro
+# AA:BB:CC:DD:EE:FF  c120

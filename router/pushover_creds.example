@@ -1,0 +1,5 @@
+# Pushover credentials for network alerts
+# Copy to /root/.pushover_creds on router and fill in real values
+# chmod 600 /root/.pushover_creds
+PO_TOKEN="your_pushover_app_token_here"
+PO_USER="your_pushover_user_key_here"
