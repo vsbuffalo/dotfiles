@@ -1,3 +1,6 @@
+[vault]
+path = "/Users/vsb/Documents/Obsidian/arcana"
+
 default_profile = "sonnet"
 
 [profiles.sonnet]
