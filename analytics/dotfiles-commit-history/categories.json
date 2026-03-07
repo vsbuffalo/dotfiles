@@ -1,0 +1,149 @@
+{
+  "categories": {
+    "neovim": {
+      "description": "vim/neovim config, plugins, LSP, keybindings, snippets, spelling",
+      "color": "#4C72B0",
+      "path_patterns": [
+        ".config/nvim/",
+        "nvim/",
+        ".nvim/",
+        ".nvimrc",
+        ".vimrc",
+        ".vim/"
+      ]
+    },
+    "shell & terminal": {
+      "description": "zsh, tmux, aliases, prompt, terminal emulator",
+      "color": "#DD8452",
+      "path_patterns": [
+        ".zshrc",
+        ".zsh_plugins.txt",
+        ".antigenrc",
+        ".zpreztorc",
+        "prezto",
+        ".tmux.conf",
+        ".config/kitty/",
+        ".config/alacritty/",
+        ".config/starship/",
+        "scripts/tmux-sysinfo.sh",
+        "install_prezto.zsh",
+        ".zsh-completions/",
+        ".config/fish/"
+      ]
+    },
+    "dev tools": {
+      "description": "git, R, python, conda, rust, ocaml, snakemake, latex, gdb",
+      "color": "#55A868",
+      "path_patterns": [
+        ".gitconfig",
+        ".config/git/",
+        ".Rprofile",
+        ".R/",
+        "r_packages.R",
+        "install_rpkgs",
+        ".condarc",
+        ".pythonrc.py",
+        ".ptpython/",
+        "ipython-profile-",
+        ".config/snakemake/",
+        ".gdbinit",
+        ".latexmkrc",
+        ".noserc",
+        ".config/dprint/",
+        ".config/herbie/",
+        ".config/uv/",
+        ".config/btop/",
+        ".config/htop/"
+      ]
+    },
+    "infrastructure": {
+      "description": "setup.sh, brew, tailscale, router, bootloaders, keyboards, fonts",
+      "color": "#C44E52",
+      "path_patterns": [
+        "setup.sh",
+        "min_setup.sh",
+        "bootloaders/",
+        "router/",
+        "keyboards/",
+        "docs/tailscale.md",
+        "docs/infrastructure.md",
+        "docs/cron.md",
+        ".config/gh/",
+        "scripts/sort-screenshots",
+        "scripts/start-agents",
+        ".iterm2_shell_integration.zsh",
+        "savio.yml",
+        "tailscale.md"
+      ]
+    },
+    "AI tooling": {
+      "description": "claude code, dewey agent, skills, arcana",
+      "color": "#8172B3",
+      "path_patterns": [
+        ".claude/",
+        "CLAUDE.md",
+        ".config/nvim/CLAUDE.md",
+        ".config/nvim/.claude/",
+        ".config/.claude/",
+        ".config/arcana/",
+        "docs/dewey.md",
+        "docs/claude-code.md",
+        "docs/workflows.md",
+        "memory/"
+      ]
+    },
+    "chores & docs": {
+      "description": "READMEs, general docs, .gitignore, repo housekeeping",
+      "color": "#CCCCCC",
+      "path_patterns": [
+        "README.md",
+        ".gitignore",
+        ".gitmodules",
+        ".signature",
+        "docs/ergonomics.md",
+        "docs/aliases.md",
+        "docs/scripts.md",
+        "docs/tmux.md"
+      ],
+      "note": "Explicitly matched files only. Unmatched files get category 'other' (not a fallback — signals a gap in the schema)."
+    }
+  },
+  "exclude": {
+    "description": "Vendor/generated files excluded from analysis — not authored config",
+    "path_patterns": [
+      "autoload/plug.vim",
+      ".vim/colors/",
+      ".vim/plugin/",
+      ".vim/syntax/",
+      ".vim/ycm/",
+      "ipython-profile-",
+      ".config/kitty/kitty.conf",
+      ".config/kitty/kitty.app.icns",
+      ".gdbinit",
+      ".config/btop/btop.conf",
+      ".config/htop/htoprc",
+      ".ptpython/config.py",
+      ".iterm2_shell_integration.zsh"
+    ]
+  },
+  "classification_rules": {
+    "method": "Per commit, extract git --stat file paths and lines changed. Each file is classified by first matching path_patterns entry (checked in category order). Commit gets a weight vector across categories proportional to lines changed per category.",
+    "mixed_commits": "Weighted by lines added+removed per file, split across categories.",
+    "merge_commits": "Classified by files in the merge diff, or chores & docs if empty.",
+    "data_format": "See commits_classified.csv"
+  },
+  "data_format": {
+    "file": "data/file_changes.csv",
+    "grain": "(commit, file) tuple — one row per file changed per commit",
+    "columns": {
+      "hash": "short commit hash",
+      "date": "ISO 8601 timestamp",
+      "repo": "archived | current",
+      "file": "path of the changed file",
+      "added": "lines added",
+      "removed": "lines removed",
+      "category": "classified category name"
+    },
+    "notes": "Binary files get added=0, removed=0. Renames show the destination path. Aggregate by commit, month, category, etc. as needed for plots."
+  }
+}
