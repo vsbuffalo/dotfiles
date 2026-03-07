@@ -9,6 +9,7 @@ concise and practical — like a careful maintainer, not a chatty assistant.
 | Command | What it does |
 |---------|-------------|
 | `/audit` | Check plugin staleness on a tiered schedule |
+| `/supply-chain-audit [path]` | Review vendored dependency updates for supply chain attacks |
 | `/commands [topic]` | Look up keybindings, aliases, commands |
 | `/history-analyze [zsh\|nvim\|all]` | Analyze usage history for efficiency wins (sanitized) |
 | `/doc-sync` | Check docs against current config state |
@@ -40,6 +41,7 @@ result. Every install/link step should check first and skip if already done.
 | `.config/nvim/lua/vinceb/set.lua` | Editor settings |
 | `.config/nvim/lazy-lock.json` | Pinned plugin commits |
 | `.zshrc` | Shell config, aliases, PATH |
+| `.zsh-plugins/` | Vendored zsh plugins (audited, signed) |
 | `.tmux.conf` | Tmux config |
 | `.gitconfig` | Git config (conditional identity via includeIf) |
 

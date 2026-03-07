@@ -14,6 +14,7 @@ Launch it: `dewey` (alias for `claude --cwd ~/dotfiles`)
 | Command | What | Sensitive? |
 |---------|------|-----------|
 | `/audit` | Plugin staleness checker (tiered schedule) | Reads GitHub via web search |
+| `/supply-chain-audit [path]` | Review vendored deps for supply chain attacks | Reads vendor source/diffs |
 | `/commands [topic]` | Full keybinding/command reference | No |
 | `/history-analyze [zsh\|nvim\|all]` | Shell efficiency analysis | Yes — uses sanitizer trust boundary |
 | `/doc-sync` | Config-to-docs drift detection | No |
