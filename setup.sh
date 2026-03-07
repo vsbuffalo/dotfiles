@@ -144,7 +144,7 @@ linkdotfile .config
 
 # link manual zsh
 linkdotfile .zshrc
-linkdotfile .zsh_plugins.txt
+linkdotfile .zsh-plugins
 
 # link R stuff
 linkdotfile .Rprofile

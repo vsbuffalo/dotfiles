@@ -1,6 +1,19 @@
-## ----------- antidote ----------- ##
-source ${ZDOTDIR:-~}/.antidote/antidote.zsh
-antidote load ${ZDOTDIR:-$HOME}/.zsh_plugins.txt
+## ----------- vendored plugins ----------- ##
+# Sourced from dotfiles repo — no network dependency, auditable via git diff.
+# Update: make -C ~/.zsh-plugins update && make -C ~/.zsh-plugins audit
+ZPLUGIN_DIR="${ZDOTDIR:-$HOME}/.zsh-plugins/vendor"
+if [[ -d "$ZPLUGIN_DIR" ]] && ls "$ZPLUGIN_DIR"/*/*.plugin.zsh &>/dev/null; then
+    for _plugin_dir in "$ZPLUGIN_DIR"/*(N/); do
+        fpath+=("$_plugin_dir")
+        for _init in "$_plugin_dir"/*.plugin.zsh(N) "$_plugin_dir"/init.zsh(N); do
+            source "$_init"
+            break
+        done
+    done
+    unset _plugin_dir _init
+else
+    echo "[dotfiles] zsh plugins not cloned yet. Run: make -C ~/.zsh-plugins clone"
+fi
 
 ## ----------- basic stuff ----------- ##
 bindkey -e # emacs bindings

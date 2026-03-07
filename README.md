@@ -30,7 +30,7 @@ ssh-add --apple-use-keychain ~/.ssh/[your-private-key]
 
 | Path | What |
 |------|------|
-| `.zshrc`, `.zsh_plugins.txt` | Zsh config, antidote plugins |
+| `.zshrc`, `.zsh-plugins/` | Zsh config, vendored plugins with AI supply-chain auditing ([docs](.zsh-plugins/README.md)) |
 | `.config/nvim/` | NeoVim ([docs](https://github.com/vsbuffalo/dotfiles/tree/main/.config/nvim)) |
 | `.config/` | alacritty, starship, etc. |
 | `.claude/` | Claude Code settings & skills: audit, history-analyze, commands, doc-sync ([docs](docs/claude-code.md)) |
@@ -61,6 +61,7 @@ dewey "question"    # one-shot answer
 | Skill | What it does |
 |-------|-------------|
 | `/audit` | Tiered neovim plugin staleness checker (3/6/12-month cadence) |
+| `/supply-chain-audit [path]` | Review vendored dependency updates for supply chain attacks |
 | `/history-analyze [zsh\|nvim\|all]` | Analyze command history for missing aliases, repeated patterns, tool suggestions |
 | `/commands [topic]` | Full keybinding & command reference (neovim, zsh, tmux, git, cargo, opam, uv) |
 | `/doc-sync` | Diff config against docs and propose updates |

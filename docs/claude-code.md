@@ -10,7 +10,7 @@ portable configuration by selectively symlinking from the dotfiles repo:
   ├── settings.local.json         ← permissions: allow/deny lists, hooks
   ├── agents/                     ← custom agent definitions
   ├── commands/                   ← slash commands (/commit, /memory-*, etc.)
-  └── skills/                     ← custom skills
+  └── skills/                     ← custom skills (audit, supply-chain-audit, etc.)
 
 ~/.claude/                        ← runtime directory
   ├── settings.json           → symlink to dotfiles
