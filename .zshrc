@@ -96,6 +96,10 @@ function y() {
 	rm -f -- "$tmp"
 }
 
+## ----------- autocompletetion ----------- ##
+autoload -U compinit && compinit
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
 ## ----------- tmux project sessions ----------- ##
 tp() {
   local name dir
@@ -210,11 +214,6 @@ __history_archive_hook() {
 }
 autoload -Uz add-zsh-hook
 add-zsh-hook zshaddhistory __history_archive_hook
-
-## ----------- autocompletetion ----------- ##
-autoload -U compinit && compinit
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-
 
 . "$HOME/.local/bin/env"
 
