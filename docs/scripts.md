@@ -32,21 +32,6 @@ killall SystemUIServer
 0 0 * * * /Users/vsb/dotfiles/scripts/sort-screenshots >> /tmp/sort-screenshots.log 2>&1
 ```
 
-## `scripts/start-agents`
-
-Launches parallel Claude Code agents in tmux. One agent per directory, or
-use `--worktree` mode to spin up git worktrees from a single repo.
-
-```bash
-# Three agents as tiled panes (default)
-start-agents --worktree ~/my-repo 3
-
-# Or separate windows
-start-agents --windows ~/project-a ~/project-b
-```
-
-See [docs/tmux.md](tmux.md) for the full workflow.
-
 ## `scripts/tmux-sysinfo.sh`
 
 Prints a compact CPU/RAM status line for the tmux status bar. Used by

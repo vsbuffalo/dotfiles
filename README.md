@@ -96,7 +96,7 @@ See [docs/dewey.md](docs/dewey.md) for the full technical breakdown.
 ## Docs
 
 - [Shell aliases & functions](docs/aliases.md) — quick reference for everything in `.zshrc`
-- [Scripts](docs/scripts.md) — sort-screenshots, start-agents
+- [Scripts](docs/scripts.md) — sort-screenshots, tmux-sysinfo
 - [NeoVim config](.config/nvim/README.md) — plugins, LSP, keybindings, REPL, DAP
 - [Cron jobs](docs/cron.md) — scheduled tasks, PATH gotchas, full crontab
 - [Claude Code settings](docs/claude-code.md) — permissions, symlink strategy, per-project overrides

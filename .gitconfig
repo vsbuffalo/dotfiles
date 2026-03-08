@@ -27,7 +27,7 @@
 	wt = worktree list
 	wta = "!f(){ git worktree add -b \"$1\" \"$(git rev-parse --show-toplevel)/../$1\" main; };f"
 	wtrm = "!f(){ git worktree remove \"$1\"; };f"
-	land = "!f(){ branch=\"${1:?usage: git land <branch>}\"; git rebase main \"$branch\" && git checkout main && git merge --ff-only \"$branch\" && echo \"Landed $branch on main.\"; };f"
+	land = "!f(){ branch=\"${1:?usage: git land <branch>}\"; [ \"$(git symbolic-ref --short HEAD)\" = main ] || { echo \"error: not on main\" >&2; return 1; }; git rebase main \"$branch\" && git checkout main && git merge --ff-only \"$branch\" && echo \"Landed $branch on main.\"; };f"
 [http]
 	postBuffer = 524288000
 [github]
