@@ -17,21 +17,41 @@ ZSA Moonlander MkI layout source, exported from Oryx.
 
 ### Layer 0 — Base
 
-![Layer 0](images/layer-0.jpg)
+![Layer 0](images/layer-0.png)
 
 ### Layer 1 — Tmux
 
-Hold thumb key, then: `h/j/k/l` navigate panes · `H/J/K/L` resize panes · `n/p` next/prev window · `|/-` split · `-` split vertical
+Hold thumb key to activate. Each key sends `C-b` + the corresponding command.
 
-![Layer 1](images/layer-1.jpg)
+**Left hand:**
+
+| Key | Action |
+|-----|--------|
+| `w` | `C-b w` — window/session tree |
+| `S` | `C-b S` — sync panes toggle |
+| `x` | `C-b x` — kill pane |
+| `c` | `C-b c` — new window |
+| `[` | `C-b [` — copy mode |
+
+**Right hand:**
+
+| Key | Action |
+|-----|--------|
+| `h/j/k/l` | Navigate panes |
+| `H/J/K/L` | Resize panes |
+| `n/p` | Next/prev window |
+| `\|` | Split horizontal |
+| `-` | Split vertical |
+
+![Layer 1](images/layer-1.png)
 
 ### Layer 2 — Media / Mouse
 
-![Layer 2](images/layer-2.jpg)
+![Layer 2](images/layer-2.png)
 
 ### Layer 3 — Symbols / F-keys
 
-![Layer 3](images/layer-3.jpg)
+![Layer 3](images/layer-3.png)
 
 ## Updating
 

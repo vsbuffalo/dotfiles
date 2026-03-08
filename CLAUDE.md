@@ -61,4 +61,4 @@ Compact reference — always in context. Full reference via `/commands`.
 **Format**: `<leader>f` format buffer
 **Config**: `<leader>se` edit lazy.lua · `<leader>re` edit remap.lua · `<leader>pe` browse plugin configs
 **Nav**: `<leader>w` save · `<leader>q` quit · `<leader>bd` close buffer
-**Tmux**: `C-b c` new window · `C-b [0-9]` switch · `C-b [` copy mode · `|` split-h · `-` split-v · `S` sync-panes · `M-1`/`M-2`/`M-3` session jump
+**Tmux**: `C-b c` new window · `C-b [0-9]` switch · `M-1`…`M-5` window jump · `Tab`/`BTab` cycle · `C-b [` copy mode (`v` select, `y` yank) · `|` split-h · `-` split-v · `x` kill pane · `X` kill window · `S` sync-panes
