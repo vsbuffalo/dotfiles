@@ -73,6 +73,7 @@ alias df="df -h"
 alias du="du -h"
 alias grep="grep --color"
 alias today="date +%F"
+alias ip="ipconfig getifaddr en0"
 alias now="date -u +'%Y-%m-%dT%H:%M:%SZ'"
 alias gl="git pull --rebase"
 alias g=git
@@ -94,6 +95,39 @@ function y() {
 	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
 	rm -f -- "$tmp"
 }
+
+## ----------- tmux project sessions ----------- ##
+tp() {
+  local name dir
+  if [[ -n "$1" ]]; then
+    name="$1"
+    for base in ~/projects/personal ~/projects/work; do
+      [[ -d "$base/$name" ]] && { dir="$base/$name"; break; }
+    done
+    [[ -z "$dir" ]] && { echo "tp: project '$name' not found" >&2; return 1; }
+  else
+    dir=$(find ~/projects/personal ~/projects/work -mindepth 1 -maxdepth 1 -type d 2>/dev/null \
+      | fzf --prompt="project> " --preview 'ls {}') || return
+    name=$(basename "$dir")
+  fi
+
+  if tmux has-session -t "$name" 2>/dev/null; then
+    tmux attach-session -t "$name"
+    return
+  fi
+
+  tmux new-session -d -s "$name" -n main -c "$dir"
+  tmux split-window -h -t "$name:main" -c "$dir"
+  tmux select-pane -t "$name:main.1"
+  tmux attach-session -t "$name"
+}
+
+_tp() {
+  local dirs=()
+  for d in ~/projects/{personal,work}/*(N/); do dirs+=("${d:t}"); done
+  compadd -a dirs
+}
+compdef _tp tp
 
 dewey() {
   local greet="On your first response, briefly introduce yourself as Dewey the dotfiles librarian and list your available slash commands. Keep it to 2-3 lines."
@@ -156,9 +190,9 @@ app() {
 }
 
 ## ----------- history stuff ----------- ##
-HISTSIZE=10000
+HISTSIZE=100000
 HISTFILE=~/.zsh_history
-SAVEHIST=5000
+SAVEHIST=100000
 HISTDUP=erase
 setopt appendhistory
 setopt sharehistory
@@ -167,6 +201,15 @@ setopt hist_ignore_all_dups
 setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
+
+# Append-only archive with timestamps — preserves frequency data for analysis.
+# Not used by zsh for recall; just a log.
+HIST_ARCHIVE=~/.zsh_history_archive
+__history_archive_hook() {
+  echo "${(%):-%D{%Y-%m-%dT%H:%M:%S}} ${1}" >> "$HIST_ARCHIVE"
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook zshaddhistory __history_archive_hook
 
 ## ----------- autocompletetion ----------- ##
 autoload -U compinit && compinit

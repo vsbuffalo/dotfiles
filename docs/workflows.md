@@ -93,38 +93,16 @@ in between).
 **Rule**: `main` is only ever touched from one place — the main checkout.
 Worktree branches stay on their own branches until you're ready to integrate.
 
-## Claude Code Agents
+## Tmux Project Sessions
 
-Claude Code can spawn sub-agents for parallel or isolated work. Two ways
-to use them:
+The `tp` function (defined in `.zshrc`) creates or reattaches to a
+per-project tmux session.
 
-### In-session worktree agent
+```bash
+tp clasp          # attach or create session for ~/projects/{personal,work}/clasp
+tp                # fzf picker across all projects
+```
 
-Use `/worktree` (or the `EnterWorktree` tool) to isolate work in a
-throwaway branch. Claude creates a worktree under `.claude/worktrees/`,
-does the work there, and prompts you to keep or discard on exit.
-
-### Background agents (via `Agent` tool)
-
-Claude can launch sub-agents that run in the background with
-`run_in_background: true`. Useful for:
-
-- Running tests while continuing to code
-- Parallel research across multiple files
-- Isolated exploration that won't pollute the main context
-
-### Agent types
-
-| Type | Use for |
-|------|---------|
-| `Explore` | Codebase search and understanding |
-| `Plan` | Designing implementation before writing code |
-| `general-purpose` | Multi-step tasks, broad research |
-
-## Branching Conventions
-
-_Add your preferred branching patterns here._
-
-## PR Workflow
-
-_Add your PR creation and review workflow here._
+New sessions get a side-by-side split (two shells) with the first window
+named "main". Existing sessions reattach as-is. Tab completion works for
+project names.

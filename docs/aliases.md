@@ -42,7 +42,15 @@ Quick reference for everything defined in `.zshrc`.
 | `weather` | `curl wttr.in/Seattle?u` |
 | `darkmode` | toggle macOS dark/light mode |
 | `mdfmt` | `dprint fmt --config-discovery=global` |
+| `ip` | local IP address (`ipconfig getifaddr en0`) |
 | `git-whoami` | show git email + config source for current repo |
+
+## Tmux
+
+| Function | What |
+|----------|------|
+| `tp <project>` | attach or create tmux session for a project (tab-completable) |
+| `tp` | fzf picker across `~/projects/{personal,work}/` |
 
 ## File Openers
 
