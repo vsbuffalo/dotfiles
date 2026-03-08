@@ -1,14 +1,15 @@
 # Vendored Zsh Plugins
 
-Zsh plugins committed directly into the dotfiles repo instead of fetched at
-runtime by a plugin manager. Updates are reviewed by Claude Code for supply
-chain attacks before merging.
+Zsh plugins vendored locally instead of fetched at runtime by a plugin
+manager. `vendor/` is gitignored — reproduced via `make clone`, verified via
+content checksums in `.audit-signatures`. Updates are reviewed by Claude Code
+for supply chain attacks before merging.
 
 ## Why vendor?
 
 Zsh plugins run arbitrary code on every shell start with full user
 permissions. A compromised upstream push gets executed immediately. Vendoring
-means: nothing runs that isn't in this repo, auditable via `git diff`.
+means: nothing runs that hasn't been audited first.
 
 ## Plugins
 
@@ -29,7 +30,7 @@ First time:
   make clone ──→ make scan ──→ make sign
     │               │              │
     shallow          Claude         record audited
-    clone all        reviews        commit SHAs
+    clone all        reviews        content checksums
     plugins          ALL code
 
 Updates:
@@ -40,7 +41,7 @@ Updates:
     write diffs      diffs only
 
 Verify anytime:
-  make status     compare current commits against signed SHAs
+  make status     compare content checksums against signed values
   make diff       view pending diffs without AI
 ```
 
@@ -49,8 +50,8 @@ Verify anytime:
 | Path | Purpose |
 |------|---------|
 | `plugins.txt` | Plugin list (one GitHub repo per line) |
-| `vendor/` | Shallow clones — committed to dotfiles |
-| `.audit-signatures` | Signed commit SHAs after audit — committed |
+| `vendor/` | Shallow clones — gitignored, reproduced via `make clone` |
+| `.audit-signatures` | Content checksums after audit — committed |
 | `.diffs/` | Staged update diffs — gitignored, temporary |
 | `Makefile` | All workflow targets |
 
@@ -59,5 +60,5 @@ Verify anytime:
 1. Add `owner/repo` to `plugins.txt`
 2. `make clone` to fetch it
 3. `make scan` to audit full source
-4. `make sign` to record the audited commit
-5. Commit the vendor directory and signatures
+4. `make sign` to record the audited checksums
+5. Commit `plugins.txt` and `.audit-signatures`

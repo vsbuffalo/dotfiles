@@ -5,15 +5,8 @@ parallel Claude Code agent sessions.
 
 ## Session Layout
 
-By convention, three named sessions:
-
-| Session | Purpose |
-|---------|---------|
-| `main` | Day-to-day interactive work |
-| `agents` | Parallel Claude Code agents (created by `start-agents`) |
-| `scratch` | Throwaway experiments |
-
-Jump between them with `M-1`, `M-2`, `M-3` (requires terminal Meta key).
+Sessions are per-project. The `start-agents` script creates an `agents`
+session for parallel Claude Code work.
 
 ## Keybindings
 
@@ -25,9 +18,13 @@ Prefix is `C-b` (default).
 |-----|--------|
 | `C-b c` | New window |
 | `C-b [0-9]` | Switch to window N |
+| `M-1` … `M-5` | Jump to window 1–5 (no prefix needed) |
+| `Tab` / `BTab` | Next / previous window (repeatable) |
 | `C-b C-a` | Last window |
 | `C-b ,` | Rename window |
 | `C-b b` | Toggle status bar |
+| `C-b x` | Kill pane |
+| `C-b X` | Kill window |
 
 ### Splits & Pane Navigation
 
@@ -36,21 +33,21 @@ Prefix is `C-b` (default).
 | `C-b \|` | Split horizontal (keeps cwd) |
 | `C-b -` | Split vertical (keeps cwd) |
 | `C-b h/j/k/l` | Move to pane left/down/up/right (mirrors `<A-hjkl>` in neovim) |
+| `C-b H/J/K/L` | Resize pane by 5 (repeatable) |
 
 ### Copy Mode
 
 | Key | Action |
 |-----|--------|
 | `C-b [` | Enter copy mode (vi keys) |
+| `v` | Begin selection (in copy mode) |
+| `y` | Yank selection to system clipboard (in copy mode) |
 
 ### Agent / Multi-Pane
 
 | Key | Action |
 |-----|--------|
 | `C-b S` | Toggle sync panes (broadcast input) |
-| `M-1` | Jump to `main` session |
-| `M-2` | Jump to `agents` session |
-| `M-3` | Jump to `scratch` session |
 
 ### Config
 
@@ -153,7 +150,7 @@ After loading the config, install plugins with `prefix + I`.
 
 ## Terminal Meta Key
 
-`M-1`/`M-2`/`M-3` require your terminal to send Meta (not Esc-prefix):
+`M-1` … `M-5` require your terminal to send Meta (not Esc-prefix):
 
 - **iTerm2**: Preferences > Profiles > Keys > Left Option Key = `Esc+`
 - **Alacritty**: set `option_as_alt: Both` in config

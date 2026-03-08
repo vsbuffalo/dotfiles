@@ -46,3 +46,12 @@ start-agents --windows ~/project-a ~/project-b
 ```
 
 See [docs/tmux.md](tmux.md) for the full workflow.
+
+## `scripts/tmux-sysinfo.sh`
+
+Prints a compact CPU/RAM status line for the tmux status bar. Used by
+`.tmux.conf` to display system load.
+
+```
+⚡ CPU 12% · RAM 68%/16G
+```
