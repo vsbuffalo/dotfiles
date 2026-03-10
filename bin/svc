@@ -1,0 +1,261 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.12"
+# dependencies = ["defopt", "rich"]
+# ///
+"""svc — lightweight CLI for managing launchd services defined in manifest.toml."""
+
+import os
+import plistlib
+import subprocess
+import sys
+import tomllib
+import urllib.request
+from pathlib import Path
+
+from rich.console import Console
+from rich.table import Table
+from rich.text import Text
+
+MANIFEST_PATH = Path.home() / ".config" / "services" / "manifest.toml"
+UID = os.getuid()
+console = Console()
+err_console = Console(stderr=True)
+
+
+def _load_manifest() -> dict:
+    try:
+        return tomllib.loads(MANIFEST_PATH.read_text())
+    except FileNotFoundError:
+        err_console.print(f"[red]error:[/] manifest not found at {MANIFEST_PATH}")
+        sys.exit(1)
+
+
+def _resolve(name: str) -> dict:
+    manifest = _load_manifest()
+    if name not in manifest:
+        err_console.print(f"[red]error:[/] '{name}' not in manifest")
+        sys.exit(1)
+    return manifest[name]
+
+
+def _launchctl_print(label: str) -> tuple[bool, int | None]:
+    """Return (loaded, pid) by parsing launchctl print output."""
+    try:
+        out = subprocess.run(
+            ["launchctl", "print", f"gui/{UID}/{label}"],
+            capture_output=True, text=True,
+        )
+        if out.returncode != 0:
+            return False, None
+        pid = None
+        for line in out.stdout.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("pid = "):
+                try:
+                    pid = int(stripped.split("=")[1].strip())
+                except ValueError:
+                    pass
+        return True, pid
+    except Exception:
+        return False, None
+
+
+def _health_check(url: str, healthy_below: int = 400) -> str:
+    """Check if a URL responds with a status below healthy_below."""
+    try:
+        resp = urllib.request.urlopen(url, timeout=3)
+        return "healthy" if resp.status < healthy_below else "unhealthy"
+    except urllib.error.HTTPError as e:
+        return "healthy" if e.code < healthy_below else "unhealthy"
+    except Exception:
+        return "unreachable"
+
+
+def _loaded_labels() -> set[str]:
+    """Return set of user-managed launchd labels currently loaded.
+
+    Filters out Apple system services, transient application labels,
+    and other noise — only keeps labels that look like user LaunchAgents.
+    """
+    agents_dir = Path.home() / "Library" / "LaunchAgents"
+    plist_labels = set()
+    if agents_dir.is_dir():
+        for p in agents_dir.glob("*.plist"):
+            data = _parse_plist(p)
+            if label := data.get("Label"):
+                plist_labels.add(label)
+
+    out = subprocess.run(
+        ["launchctl", "list"], capture_output=True, text=True,
+    )
+    loaded = set()
+    for line in out.stdout.splitlines()[1:]:  # skip header
+        parts = line.split("\t")
+        if len(parts) >= 3:
+            label = parts[2]
+            if label in plist_labels:
+                loaded.add(label)
+    return loaded
+
+
+def _plist_path(entry: dict) -> Path:
+    return Path(entry["plist"]).expanduser()
+
+
+def _parse_plist(path: Path) -> dict:
+    try:
+        return plistlib.loads(path.read_bytes())
+    except Exception:
+        return {}
+
+
+def _health_style(h: str) -> str:
+    match h:
+        case "healthy":    return "[green]healthy[/]"
+        case "unhealthy":  return "[red]unhealthy[/]"
+        case "unreachable": return "[dim]unreachable[/]"
+        case _:            return "[dim]-[/]"
+
+
+# ── Subcommands ──────────────────────────────────────────────────────
+
+
+def ls():
+    """List services from manifest."""
+    manifest = _load_manifest()
+    table = Table(show_edge=False, pad_edge=False)
+    table.add_column("Name", style="bold cyan")
+    table.add_column("Port", justify="right", style="magenta")
+    table.add_column("Description")
+    for name, entry in manifest.items():
+        port = str(entry.get("port", "-"))
+        desc = entry.get("description", "")
+        table.add_row(name, port, desc)
+    console.print(table)
+
+
+def status():
+    """Show status of each service: loaded, PID, health."""
+    manifest = _load_manifest()
+    table = Table(show_edge=False, pad_edge=False)
+    table.add_column("Name", style="bold cyan")
+    table.add_column("Loaded", justify="center")
+    table.add_column("PID", justify="right")
+    table.add_column("Health")
+    table.add_column("Label", style="dim")
+    for name, entry in manifest.items():
+        label = entry["label"]
+        loaded, pid = _launchctl_print(label)
+        health_str = _health_style("-")
+        if "health" in entry:
+            healthy_below = entry.get("healthy_below", 400)
+            health_str = _health_style(_health_check(entry["health"], healthy_below))
+        loaded_str = "[green]yes[/]" if loaded else "[red]no[/]"
+        pid_str = str(pid) if pid else "[dim]-[/]"
+        table.add_row(name, loaded_str, pid_str, health_str, label)
+    console.print(table)
+
+
+def check():
+    """Drift detection: mismatches between manifest, plists on disk, and launchd state."""
+    manifest = _load_manifest()
+    loaded = _loaded_labels()
+    manifest_labels = {entry["label"] for entry in manifest.values()}
+    issues = []
+
+    for name, entry in manifest.items():
+        label = entry["label"]
+        plist = _plist_path(entry)
+
+        if not plist.exists():
+            issues.append(f"[bold]{name}[/]: plist not found at [dim]{plist}[/]")
+            continue
+
+        plist_data = _parse_plist(plist)
+        plist_label = plist_data.get("Label", "")
+        if plist_label and plist_label != label:
+            issues.append(
+                f"[bold]{name}[/]: label mismatch — manifest says "
+                f"[cyan]{label}[/], plist says [yellow]{plist_label}[/]"
+            )
+
+        if label not in loaded:
+            tracked = entry.get("tracked", True)
+            if tracked:
+                issues.append(f"[bold]{name}[/]: in manifest but not loaded")
+
+    for label in sorted(loaded - manifest_labels):
+        issues.append(f"[yellow]???[/]: [cyan]{label}[/] loaded but not in manifest")
+
+    if issues:
+        console.print("[bold red]drift detected:[/]")
+        for issue in issues:
+            console.print(f"  {issue}")
+        sys.exit(1)
+    else:
+        console.print("[bold green]no drift detected[/]")
+
+
+def start(name: str):
+    """Start a service by name."""
+    entry = _resolve(name)
+    label = entry["label"]
+    subprocess.run(["launchctl", "kickstart", f"gui/{UID}/{label}"], check=True)
+    console.print(f"[green]started[/] [bold]{name}[/]")
+
+
+def stop(name: str):
+    """Stop a service by name."""
+    entry = _resolve(name)
+    label = entry["label"]
+    subprocess.run(["launchctl", "kill", "SIGTERM", f"gui/{UID}/{label}"], check=True)
+    console.print(f"[yellow]stopped[/] [bold]{name}[/]")
+
+
+def restart(name: str):
+    """Restart a service by name."""
+    entry = _resolve(name)
+    label = entry["label"]
+    subprocess.run(["launchctl", "kickstart", "-k", f"gui/{UID}/{label}"], check=True)
+    console.print(f"[green]restarted[/] [bold]{name}[/]")
+
+
+def logs(name: str):
+    """Tail stdout and stderr logs for a service."""
+    entry = _resolve(name)
+    plist = _plist_path(entry)
+    plist_data = _parse_plist(plist)
+
+    paths = []
+    for key in ("StandardOutPath", "StandardErrorPath"):
+        p = plist_data.get(key)
+        if p:
+            paths.append(p)
+
+    if not paths:
+        err_console.print(f"[red]error:[/] no log paths found in [dim]{plist}[/]")
+        sys.exit(1)
+
+    try:
+        subprocess.run(["tail", "-f"] + paths)
+    except KeyboardInterrupt:
+        pass
+
+
+def cat():
+    """Pretty-print the manifest file."""
+    if not MANIFEST_PATH.exists():
+        err_console.print(f"[red]error:[/] manifest not found at {MANIFEST_PATH}")
+        sys.exit(1)
+    from rich.syntax import Syntax
+    console.print(Syntax(MANIFEST_PATH.read_text(), "toml", theme="monokai"))
+
+
+def main():
+    import defopt
+    defopt.run([ls, status, check, start, stop, restart, logs, cat])
+
+
+if __name__ == "__main__":
+    main()

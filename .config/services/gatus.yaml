@@ -1,0 +1,30 @@
+web:
+  port: 8080
+  address: 0.0.0.0
+
+storage:
+  type: sqlite
+  path: /Users/vsb/.local/share/gatus/data.db
+
+endpoints:
+  - name: Ollama
+    group: dev
+    url: "http://localhost:11434/"
+    interval: 30s
+    conditions:
+      - "[STATUS] == 200"
+
+  - name: Arcana
+    group: dev
+    url: "http://localhost:8787/sse"
+    interval: 30s
+    conditions:
+      - "[STATUS] == any(200, 401)"
+
+  - name: Arcana Tunnel
+    group: infra
+    url: "https://arcana-mcp.vincebuffalo.com/sse"
+    interval: 60s
+    conditions:
+      - "[STATUS] == any(200, 401)"
+      - "[CERTIFICATE_EXPIRATION] > 48h"

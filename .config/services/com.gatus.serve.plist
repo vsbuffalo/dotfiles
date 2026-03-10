@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.gatus.serve</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Users/vsb/.local/bin/gatus</string>
+	</array>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>GATUS_CONFIG_PATH</key>
+		<string>/Users/vsb/.config/services/gatus.yaml</string>
+	</dict>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>KeepAlive</key>
+	<true/>
+	<key>StandardOutPath</key>
+	<string>/Users/vsb/Library/Logs/gatus.log</string>
+	<key>StandardErrorPath</key>
+	<string>/Users/vsb/Library/Logs/gatus.err.log</string>
+</dict>
+</plist>

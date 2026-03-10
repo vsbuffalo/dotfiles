@@ -117,6 +117,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     install_brew harfbuzz
     install_brew fribidi
     install_brew freetype
+    install_brew age
     install_brew delta
     install_brew opam
     install_brew cairo
@@ -133,6 +134,19 @@ if [[ "$(uname)" == "Darwin" ]]; then
     install_brew dprint
 fi
 
+# Go-installed tools
+if command -v go > /dev/null; then
+  if [ -f "$HOME/.local/bin/gatus" ]; then
+    gecho "gatus found..."
+  else
+    yecho "gatus not found, installing via go..." && \
+      GOBIN="$HOME/.local/bin" go install github.com/TwiN/gatus/v5@latest
+  fi
+  mkdir -p "$HOME/.local/share/gatus"
+else
+  wecho "go not found, skipping Go tool installs"
+fi
+
 # link over git stuff
 linkdotfile .gitconfig
 
@@ -141,6 +155,16 @@ linkdotfile .tmux.conf
 
 # link config directory (including NeoVim settings)
 linkdotfile .config
+
+# link Ghostty config (macOS reads from Application Support, not .config)
+ghostty_target="$HOME/Library/Application Support/com.mitchellh.ghostty/config"
+ghostty_source="$HOME/dotfiles/.config/ghostty/config"
+if [ ! -L "$ghostty_target" ]; then
+  mkdir -p "$(dirname "$ghostty_target")"
+  [ -f "$ghostty_target" ] && mv "$ghostty_target" "$ghostty_target.bak"
+  ln -s "$ghostty_source" "$ghostty_target"
+  yecho "Linked Ghostty config"
+fi
 
 # link manual zsh
 linkdotfile .zshrc
@@ -157,6 +181,25 @@ link_into_dir ~/dotfiles/.claude ~/.claude \
   commands \
   agents
 
+# Link svc CLI
+mkdir -p "$HOME/.local/bin"
+svc_target="$HOME/.local/bin/svc"
+if [ ! -L "$svc_target" ]; then
+  ln -s "$HOME/dotfiles/bin/svc" "$svc_target"
+  yecho "Linked svc"
+else
+  gecho "svc already linked..."
+fi
+
+# Link gatus LaunchAgent
+gatus_plist="$HOME/Library/LaunchAgents/com.gatus.serve.plist"
+if [ ! -L "$gatus_plist" ]; then
+  ln -s "$HOME/.config/services/com.gatus.serve.plist" "$gatus_plist"
+  yecho "Linked gatus LaunchAgent"
+else
+  gecho "gatus plist already linked..."
+fi
+
 # Create ~/.R/Makevars with OpenMP flags — but only on macOS
 if [[ "$(uname)" == "Darwin" ]]; then
   makevars_path="$HOME/.R/Makevars"
@@ -168,14 +211,6 @@ if [[ "$(uname)" == "Darwin" ]]; then
   fi
 else
   yecho "Non-macOS system detected — skipping ~/.R/Makevars setup."
-fi
-
-# get antidote for zsh
-if [[ -d "${ZDOTDIR:-$HOME}/.antidote" ]]; then
-  gecho "antidote already installed..."
-else
-  yecho "Installing antidote..."
-  git clone --depth=1 https://github.com/mattmc3/antidote.git "${ZDOTDIR:-$HOME}/.antidote"
 fi
 
 # get TPM (tmux plugin manager)

@@ -1,0 +1,26 @@
+# Services Manifest
+# Canonical registry of launchd services on this machine.
+# Used by `svc` CLI and Gatus status page.
+
+[ollama]
+label = "homebrew.mxcl.ollama"
+plist = "~/Library/LaunchAgents/homebrew.mxcl.ollama.plist"
+port = 11434
+health = "http://localhost:11434/"
+description = "Local LLM inference server"
+
+[arcana]
+label = "com.arcana.serve"
+plist = "~/Library/LaunchAgents/com.arcana.serve.plist"
+port = 8787
+health = "http://localhost:8787/sse"
+healthy_below = 402
+description = "Obsidian vault MCP server"
+tracked = false
+
+[gatus]
+label = "com.gatus.serve"
+plist = "~/Library/LaunchAgents/com.gatus.serve.plist"
+port = 8080
+health = "http://localhost:8080/"
+description = "Service status page with uptime history (Tailnet-accessible)"
