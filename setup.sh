@@ -7,6 +7,11 @@ green=`tput setaf 2`
 yellow=`tput setaf 3`
 reset=`tput sgr0`
 
+MACHINE_HOST="$(hostname -s)"
+
+# Usage: on_host thuja
+function on_host { [[ "$MACHINE_HOST" == "$1" ]]; }
+
 ## printing functions ##
 function gecho {
   echo "${green}[message] $1${reset}"
@@ -109,8 +114,6 @@ if [[ "$(uname)" == "Darwin" ]]; then
 	install_brew postgresql
 	install_brew tree
 	install_brew direnv
-	install_brew tailscale
-	install_brew cloudflared
     # Stuff needed for various R packages
     install_brew libgit2
     install_brew libomp
@@ -134,17 +137,27 @@ if [[ "$(uname)" == "Darwin" ]]; then
     install_brew dprint
 fi
 
-# Go-installed tools
-if command -v go > /dev/null; then
-  if [ -f "$HOME/.local/bin/gatus" ]; then
-    gecho "gatus found..."
+# thuja-only tools (home server / personal network)
+if on_host thuja; then
+  install_brew tailscale
+  install_brew cloudflared
+fi
+
+# Go-installed tools (gatus: thuja only)
+if on_host thuja; then
+  if command -v go > /dev/null; then
+    if [ -f "$HOME/.local/bin/gatus" ]; then
+      gecho "gatus found..."
+    else
+      yecho "gatus not found, installing via go..." && \
+        GOBIN="$HOME/.local/bin" go install github.com/TwiN/gatus/v5@latest
+    fi
+    mkdir -p "$HOME/.local/share/gatus"
   else
-    yecho "gatus not found, installing via go..." && \
-      GOBIN="$HOME/.local/bin" go install github.com/TwiN/gatus/v5@latest
+    wecho "go not found, skipping Go tool installs"
   fi
-  mkdir -p "$HOME/.local/share/gatus"
 else
-  wecho "go not found, skipping Go tool installs"
+  wecho "skipping gatus install (thuja only)"
 fi
 
 # link over git stuff
@@ -191,13 +204,15 @@ else
   gecho "svc already linked..."
 fi
 
-# Link gatus LaunchAgent
-gatus_plist="$HOME/Library/LaunchAgents/com.gatus.serve.plist"
-if [ ! -L "$gatus_plist" ]; then
-  ln -s "$HOME/.config/services/com.gatus.serve.plist" "$gatus_plist"
-  yecho "Linked gatus LaunchAgent"
-else
-  gecho "gatus plist already linked..."
+# Link gatus LaunchAgent (thuja only)
+if on_host thuja; then
+  gatus_plist="$HOME/Library/LaunchAgents/com.gatus.serve.plist"
+  if [ ! -L "$gatus_plist" ]; then
+    ln -s "$HOME/.config/services/com.gatus.serve.plist" "$gatus_plist"
+    yecho "Linked gatus LaunchAgent"
+  else
+    gecho "gatus plist already linked..."
+  fi
 fi
 
 # Create ~/.R/Makevars with OpenMP flags — but only on macOS
