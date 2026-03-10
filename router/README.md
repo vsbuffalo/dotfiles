@@ -46,6 +46,38 @@ sh setup.sh
 /root/new-client-alert.sh add AA:BB:CC:DD:EE:FF 192.168.8.99 testdevice
 ```
 
+## Backup
+
+`backup.sh` pulls config from the router, deduplicates, and encrypts
+with `age`. Only creates a new archive if content has changed.
+
+What it captures:
+- **sysupgrade backup** — all UCI config, SSH keys, crontabs, custom
+  scripts listed in `/etc/sysupgrade.conf`
+- **AdGuardHome config** — `/etc/AdGuardHome/config.yaml`
+- **Installed packages** — `opkg list-installed` for reinstall after
+  firmware upgrades
+
+```bash
+# One-time setup
+brew install age
+age-keygen -o ~/.config/age/key.txt
+# Copy the public key line into the recipient file:
+grep 'public key' ~/.config/age/key.txt | awk '{print $NF}' > ~/.config/age/recipient.txt
+
+# Run backup
+./backup.sh
+
+# Decrypt a backup
+age -d -i ~/.config/age/key.txt flint2-2026-03-07-1500.tar.gz.age | tar xzf -
+```
+
+Backups go to `~/backups/router/`. Automate with cron:
+```bash
+# Weekly Sunday 3am
+0 3 * * 0  /path/to/dotfiles/router/backup.sh >> /tmp/router-backup.log 2>&1
+```
+
 ## Persistence
 
 `setup.sh` adds all files to `/etc/sysupgrade.conf` so they survive

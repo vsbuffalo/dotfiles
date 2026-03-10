@@ -10,7 +10,7 @@ FILE_CHANGES := $(DATA)/file_changes.csv
 
 .PHONY: all clean
 
-all: $(FIGS)/commit_history.png $(FIGS)/commit_sequence.png
+all: $(FIGS)/commit_history.png $(FIGS)/commit_sequence_annotated.png
 
 $(DATA) $(FIGS) $(TMP):
 	mkdir -p $@
@@ -30,8 +30,8 @@ $(FILE_CHANGES): extract.py categories.json $(ARCHIVED_DIR) | $(DATA)
 $(FIGS)/commit_history.png: plot.py $(CURRENT_LOG) $(ARCHIVED_LOG) | $(FIGS)
 	uv run --with matplotlib --with polars --with numpy $< $(CURRENT_LOG) $(ARCHIVED_LOG) $@
 
-$(FIGS)/commit_sequence.png: plot_sequence.py categories.json $(FILE_CHANGES) | $(FIGS)
-	uv run --with matplotlib --with polars --with numpy $< $(FILE_CHANGES) categories.json $@
+$(FIGS)/commit_sequence_annotated.png: plot_sequence.py categories.json $(FILE_CHANGES) | $(FIGS)
+	uv run --with matplotlib --with polars  --with numpy $< $(FILE_CHANGES) categories.json $@ --annotate
 
 clean:
 	rm -rf $(TMP) $(DATA) $(FIGS)

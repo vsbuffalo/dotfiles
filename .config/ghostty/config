@@ -1,0 +1,5 @@
+keybind = cmd+j=previous_tab
+keybind = cmd+k=next_tab
+macos-option-as-alt = true
+keybind = shift+enter=text:\n
+macos-titlebar-style = tabs

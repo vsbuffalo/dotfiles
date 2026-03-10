@@ -7,3 +7,4 @@
 .gitconfig.local
 .env
 .env.*
+.config/age/

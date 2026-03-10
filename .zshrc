@@ -15,6 +15,12 @@ else
     echo "[dotfiles] zsh plugins not cloned yet. Run: make -C ~/.zsh-plugins clone"
 fi
 
+## ----------- terminal ----------- ##
+# Ghostty sets TERM=xterm-ghostty; fall back if remote host lacks the terminfo
+if ! infocmp "$TERM" &>/dev/null; then
+  export TERM=xterm-256color
+fi
+
 ## ----------- basic stuff ----------- ##
 bindkey -e # emacs bindings
 
@@ -101,17 +107,27 @@ autoload -U compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 ## ----------- tmux project sessions ----------- ##
+# Standalone projects outside ~/projects/
+typeset -A tp_extras=(
+  dotfiles  ~/dotfiles
+)
+
 tp() {
   local name dir
   if [[ -n "$1" ]]; then
     name="$1"
-    for base in ~/projects/personal ~/projects/work; do
-      [[ -d "$base/$name" ]] && { dir="$base/$name"; break; }
-    done
+    if [[ -n "${tp_extras[$name]}" ]]; then
+      dir="${tp_extras[$name]}"
+    else
+      for base in ~/projects/personal ~/projects/work; do
+        [[ -d "$base/$name" ]] && { dir="$base/$name"; break; }
+      done
+    fi
     [[ -z "$dir" ]] && { echo "tp: project '$name' not found" >&2; return 1; }
   else
-    dir=$(find ~/projects/personal ~/projects/work -mindepth 1 -maxdepth 1 -type d 2>/dev/null \
-      | fzf --prompt="project> " --preview 'ls {}') || return
+    dir=$( { for d in ${(v)tp_extras}; do echo "$d"; done
+             find ~/projects/personal ~/projects/work -mindepth 1 -maxdepth 1 -type d 2>/dev/null
+           } | fzf --prompt="project> " --preview 'ls {}') || return
     name=$(basename "$dir")
   fi
 
@@ -128,6 +144,7 @@ tp() {
 
 _tp() {
   local dirs=()
+  dirs+=(${(k)tp_extras})
   for d in ~/projects/{personal,work}/*(N/); do dirs+=("${d:t}"); done
   compadd -a dirs
 }
@@ -138,6 +155,8 @@ dewey() {
   (cd ~/dotfiles && claude --append-system-prompt "$greet" "${*:-hi}")
 }
 
+alias cdo='cd ~/Documents/Obsidian'
+alias cda='cd ~/Documents/Obsidian/arcana'
 alias mdfmt='dprint fmt --config-discovery=global'
 alias nv=nvim
 export EDITOR=nvim

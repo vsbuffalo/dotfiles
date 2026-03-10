@@ -27,7 +27,7 @@ Tufte style: no gridlines, no spines, no chart junk. Direct labels.
 import argparse
 import json
 import sys
-from datetime import datetime
+from datetime import datetime, date
 
 import numpy as np
 import polars as pl
@@ -36,7 +36,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import matplotlib.ticker as mticker
-from matplotlib.patches import ConnectionPatch
+from matplotlib.patches import ConnectionPatch, FancyBboxPatch
 
 
 def load_schema(path):
@@ -121,12 +121,12 @@ def plot(data_path, schema_path, out_path, annotate=False):
 
     # =====================================================================
     # FIGURE LAYOUT
-    # Two subplots stacked vertically: bars (4x height) and timeline (1x).
+    # Two subplots stacked vertically: bars (4x height) and timeline (1.4x).
     # hspace=0.30 leaves room for the connecting lines between them.
     # =====================================================================
     fig, (ax_bars, ax_time) = plt.subplots(
-        2, 1, figsize=(12, 4.8),
-        gridspec_kw={"height_ratios": [4, 1], "hspace": 0.30},
+        2, 1, figsize=(12, 5.4),
+        gridspec_kw={"height_ratios": [4, 1.4], "hspace": 0.30},
         sharex=False,
     )
 
@@ -159,7 +159,7 @@ def plot(data_path, schema_path, out_path, annotate=False):
                      style="italic")
 
     # right-side padding so the last bar isn't jammed against the edge
-    ax_bars.set_xlim(-0.5, n + 1.5)
+    ax_bars.set_xlim(-0.5, n + 0.5)
     ax_bars.yaxis.set_major_locator(mticker.MaxNLocator(integer=True, nbins=5))
     ax_bars.set_xticks([])
     for spine in ax_bars.spines.values():
@@ -215,12 +215,54 @@ def plot(data_path, schema_path, out_path, annotate=False):
         ax_time.text(tx, -0.2, str(yr), ha="center", va="top",
                      fontsize=7.5, color="#444444")
 
-    ax_time.set_xlim(-0.5, n + 1.5)
-    ax_time.set_ylim(-0.9, 0.6)
+    ax_time.set_xlim(-0.5, n + 0.5)
+    ax_time.set_ylim(-1.6, 0.6)
     ax_time.set_xticks([])
     ax_time.set_yticks([])
     for spine in ax_time.spines.values():
         spine.set_visible(False)
+
+    # =====================================================================
+    # CAREER TIMELINE (Gantt bars below the year-tick line)
+    # Two rows: "role" (employment) and "education", using t_to_x mapping.
+    # =====================================================================
+    # career phases: (label, start, end, color)
+    # colors: muted blue-grey for staff roles, green for PhD, warm for postdocs
+    CAREER = [
+        ("UCD Genome Center",   date(2009, 9, 1),  date(2012, 6, 1),  "#A8B8CC"),
+        ("bioinfo",             date(2012, 6, 1),  date(2014, 9, 1),  "#A8B8CC"),
+        ("PhD",                date(2014, 9, 1),  date(2019, 9, 1),  "#B5C9A1"),
+        ("Postdoc (Oregon)",   date(2019, 9, 1),  date(2022, 10, 1), "#D4BAA0"),
+        ("Postdoc (Berkeley)", date(2022, 11, 1), date(2025, 3, 1),  "#D4BAA0"),
+        ("IDM",                date(2025, 3, 1),  date(2026, 3, 1),  "#C0B8D4"),
+    ]
+
+    bar_h = 0.28
+    career_y = -0.68  # y-center for career row
+    # visible time range for clipping
+    vis_left = tl_left - tl_pad
+    vis_right = tl_right + tl_pad
+
+    for label, d_start, d_end, color in CAREER:
+        x0 = t_to_x(datetime(d_start.year, d_start.month, d_start.day).timestamp())
+        x1 = t_to_x(datetime(d_end.year, d_end.month, d_end.day).timestamp())
+        # clip to visible timeline range
+        x0_vis = max(x0, vis_left)
+        x1_vis = min(x1, vis_right)
+        if x1_vis <= x0_vis:
+            continue
+        w = x1_vis - x0_vis
+        ax_time.add_patch(FancyBboxPatch(
+            (x0_vis, career_y - bar_h / 2), w, bar_h,
+            boxstyle="round,pad=0.02",
+            facecolor=color, edgecolor="white", linewidth=0.8,
+            zorder=5,
+        ))
+        # label centered in the visible portion of the bar
+        mid_x = (x0_vis + x1_vis) / 2
+        ax_time.text(mid_x, career_y, label, ha="center", va="center",
+                     fontsize=5.5, color="#444444", zorder=6,
+                     clip_on=True)
 
     # =====================================================================
     # CONNECTING LINES (bar positions → timeline positions)
@@ -264,9 +306,10 @@ def plot(data_path, schema_path, out_path, annotate=False):
             )
 
     # subtle attribution for blog use
-    fig.text(0.98, 0.01, "github.com/vsbuffalo/dotfiles", fontsize=6.5,
-             color="#AAAAAA", ha="right", va="bottom")
-
+    fig.text(0.98, 0.05, "github.com/vsbuffalo/dotfiles", fontsize=6.5,
+             color="#AAAAAA", ha="right", va="bottom",
+             transform=ax_time.transAxes)
+    
     fig.savefig(out_path, dpi=200, facecolor="white",
                 bbox_inches="tight", pad_inches=0.15)
     print(f"wrote {out_path}")
