@@ -82,7 +82,6 @@
       "Bash(/opt/homebrew/bin/gh:*)",
       "Bash(source:*)",
       "Bash(tree-sitter:*)",
-      "Bash(bash:*)",
       "Bash(tmux:*)",
       "Bash(sips:*)",
       "Bash(magick:*)",
@@ -92,7 +91,6 @@
       "Read(//Users/vsb/**)",
       "Bash(claude:*)",
       "Bash(fc:*)",
-      "Bash(git:*)",
       "mcp__arcana__vault_search",
       "mcp__arcana__vault_read",
       "Bash(./backup.sh:*)",
@@ -111,7 +109,6 @@
       "Read(//Users/vsb/dotfiles/$HOME/.local/bin/**)",
       "Bash(\"$HOME/.local/bin/gatus\" version)",
       "Bash(pgrep:*)",
-      "Bash(cloudflared tunnel:*)"
     ],
     "deny": [
       "Bash(*git add -A*)",
