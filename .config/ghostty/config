@@ -1,5 +1,7 @@
 keybind = cmd+j=previous_tab
 keybind = cmd+k=next_tab
+keybind = cmd+shift+j=move_tab:-1
+keybind = cmd+shift+k=move_tab:1
 macos-option-as-alt = true
 keybind = shift+enter=text:\n
 macos-titlebar-style = tabs
