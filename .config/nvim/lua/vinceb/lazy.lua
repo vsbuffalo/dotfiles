@@ -258,6 +258,10 @@ local plugins = {
 -- Setup lazy.nvim
 require("lazy").setup(plugins, {
     -- Lazy.nvim configuration options
+    git = {
+        -- disable partial/blobless clones; avoids submodule fetch failures
+        filter = false,
+    },
     install = {
         -- install missing plugins on startup
         missing = true,
