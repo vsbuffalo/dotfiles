@@ -106,9 +106,9 @@
       "Bash(gh api:*)",
       "Bash(brew install:*)",
       "Bash(GOBIN=\"$HOME/.local/bin\" go install:*)",
-      "Read(//Users/vsb/dotfiles/$HOME/.local/bin/**)",
-      "Bash(\"$HOME/.local/bin/gatus\" version)",
-      "Bash(pgrep:*)",
+      "Read(/Users/vsb/.local/bin/**)",
+      "Bash(/Users/vsb/.local/bin/gatus:*)",
+      "Bash(pgrep:*)"
     ],
     "deny": [
       "Bash(*git add -A*)",
