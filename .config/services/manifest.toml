@@ -18,6 +18,11 @@ healthy_below = 402
 description = "Obsidian vault MCP server"
 tracked = false
 
+[clasp-sync]
+label = "com.clasp.sync"
+plist = "~/Library/LaunchAgents/com.clasp.sync.plist"
+description = "CLASP data sync daemon (Gmail, plugins, vault derivation)"
+
 [gatus]
 label = "com.gatus.serve"
 plist = "~/Library/LaunchAgents/com.gatus.serve.plist"

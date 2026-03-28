@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.clasp.sync</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Users/vsb/.cargo/bin/clasp-sync</string>
+		<string>run</string>
+	</array>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>CLASP_CONFIG</key>
+		<string>/Users/vsb/projects/personal/clasp/dev/clasp.toml</string>
+		<key>RUST_LOG</key>
+		<string>clasp=info</string>
+	</dict>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>KeepAlive</key>
+	<true/>
+	<key>StandardOutPath</key>
+	<string>/Users/vsb/Library/Logs/clasp-sync.log</string>
+	<key>StandardErrorPath</key>
+	<string>/Users/vsb/Library/Logs/clasp-sync.err.log</string>
+</dict>
+</plist>
