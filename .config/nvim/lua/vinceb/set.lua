@@ -25,6 +25,28 @@ vim.opt.relativenumber = true
 vim.opt.spell = true
 vim.opt.spelllang = "en_us"
 
+-- Built-in autocompletion (Neovim 0.12+).
+-- Triggers the ins-completion popup as you type. Sources controlled by 'complete'.
+-- LSP completion is enabled per-buffer in after/plugin/lsp.lua via vim.lsp.completion.enable.
+vim.o.autocomplete = true
+vim.o.completeopt = "menu,menuone,noinsert,popup,fuzzy"
+-- '.' current buffer · 'w' other windows · 'b' loaded buffers · 'u' unloaded buffers
+-- 't' tags · 'F{func}' user func (LSP via vim.lsp.completion plugs in here)
+vim.o.complete = ".,w,b,u,t"
+
+
+-- OSC 52 clipboard — works over SSH + tmux to reach the local terminal
+vim.g.clipboard = {
+  name = 'OSC 52',
+  copy = {
+    ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+    ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+  },
+  paste = {
+    ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+    ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+  },
+}
 
 -- Netrw settings
 -- Tell netrw to use SSH config file (hosts, keys, settings in ~/.ssh/config)

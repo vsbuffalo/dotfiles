@@ -38,20 +38,25 @@ local plugins = {
 
     -- GitHub Copilot
     { "zbirenbaum/copilot.lua" },
-    {
-        "zbirenbaum/copilot-cmp",
-        dependencies = { "copilot.lua" },
-        config = function()
-            require('copilot_cmp').setup()
-        end,
-    },
-    { "neovim/nvim-lspconfig" },
+    -- copilot-cmp removed: requires nvim-cmp. Using copilot ghost text (or disabled) instead.
+    -- {
+    --     "zbirenbaum/copilot-cmp",
+    --     dependencies = { "copilot.lua" },
+    --     config = function()
+    --         require('copilot_cmp').setup()
+    --     end,
+    -- },
 
-    -- Completion
-    { "hrsh7th/nvim-cmp" },
-    { "hrsh7th/cmp-nvim-lsp" },
+    -- nvim-lspconfig removed: native vim.lsp.config / vim.lsp.enable (Neovim 0.11+)
+    -- handles configuration in after/plugin/lsp.lua.
+    -- { "neovim/nvim-lspconfig" },
+
+    -- Completion: switched to built-in (Neovim 0.12 'autocomplete' + vim.lsp.completion).
+    -- LuaSnip kept for snippet expansion via <C-j> (see after/plugin/luasnip.lua).
+    -- { "hrsh7th/nvim-cmp" },
+    -- { "hrsh7th/cmp-nvim-lsp" },
     { "L3MON4D3/LuaSnip" },
-    { "saadparwaiz1/cmp_luasnip" },
+    -- { "saadparwaiz1/cmp_luasnip" },
 
     -- Mason LSP installer
     { "williamboman/mason.nvim" },

@@ -36,8 +36,18 @@ local function my_on_attach(client, bufnr)
     vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 
+    -- Enable built-in LSP completion (Neovim 0.11+).
+    -- Feeds LSP results into the standard ins-completion popup.
+    -- Combined with vim.o.autocomplete (set in set.lua) this gives an
+    -- automatic dropdown without nvim-cmp.
+    if client:supports_method('textDocument/completion') then
+        vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
+    end
+
     if client.name == "ruff" then
-        print("✅ Ruff attached with config from: " .. client.config.root_dir)
+        local root = (client.workspace_folders and client.workspace_folders[1]
+            and client.workspace_folders[1].name) or client.root_dir or "?"
+        print("✅ Ruff attached with config from: " .. root)
     end
 end
 
@@ -158,27 +168,12 @@ vim.lsp.config('ocamllsp', {
 -- Enable all configured LSP servers
 vim.lsp.enable({ 'pyright', 'ruff', 'clangd', 'texlab', 'ocamllsp' })
 
--- Autocompletion with nvim-cmp
-local cmp = require('cmp')
-local cmp_select = { behavior = cmp.SelectBehavior.Select }
-
-cmp.setup({
-    preselect = 'none',
-    completion = {
-        completeopt = 'menu,menuone,noinsert,noselect'
-    },
-    mapping = cmp.mapping.preset.insert({
-        ['<CR>'] = cmp.mapping.confirm({ select = false }),
-        ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-        ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-        ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-        ['<C-Space>'] = cmp.mapping.complete(),
-    }),
-    sources = {
-        { name = 'copilot' },
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-        { name = 'path' },
-        { name = 'buffer' },
-    }
-})
+-- Autocompletion: migrated to Neovim 0.12 built-in.
+-- See vim.o.autocomplete in lua/vinceb/set.lua and vim.lsp.completion.enable in on_attach above.
+-- Standard ins-completion keys: <C-n>/<C-p> navigate, <C-y> confirm, <C-e> dismiss.
+-- The 'complete' option (set.lua) controls non-LSP sources (buffer, path, etc.).
+--
+-- Notes:
+--  - Copilot menu source removed (no copilot-cmp equivalent for built-in completion).
+--    Copilot ghost text remains available via copilot.lua (currently disabled).
+--  - LuaSnip snippet expansion via <C-j> is unchanged (after/plugin/luasnip.lua).
