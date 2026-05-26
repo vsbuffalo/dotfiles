@@ -108,7 +108,19 @@
       "Bash(GOBIN=\"$HOME/.local/bin\" go install:*)",
       "Read(/Users/vsb/.local/bin/**)",
       "Bash(/Users/vsb/.local/bin/gatus:*)",
-      "Bash(pgrep:*)"
+      "Bash(pgrep:*)",
+      "Bash(cloudflared tunnel:*)",
+      "Read(//Library/LaunchAgents/**)",
+      "Read(//Library/LaunchDaemons/**)",
+      "Bash(security list-keychains:*)",
+      "Bash(security show-keychain-info:*)",
+      "Bash(csrutil status:*)",
+      "Bash(/usr/libexec/ApplicationFirewall/socketfilterfw --getglobalstate)",
+      "Read(//etc/cloudflared/**)",
+      "Bash(last reboot *)",
+      "Bash(ps -Ao pid,rss,pcpu,comm -r)",
+      "Bash(ps -Ao pid,rss,pcpu,comm -m)",
+      "Bash(vm_stat)"
     ],
     "deny": [
       "Bash(*git add -A*)",

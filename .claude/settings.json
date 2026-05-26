@@ -5,5 +5,11 @@
     "swift-lsp@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true
   },
-  "skipDangerousModePermissionPrompt": true
+  "effortLevel": "xhigh",
+  "skipDangerousModePermissionPrompt": true,
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true,
+  "permissions": {
+    "defaultMode": "auto"
+  }
 }

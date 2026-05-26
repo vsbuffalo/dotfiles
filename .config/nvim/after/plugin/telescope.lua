@@ -21,6 +21,16 @@ require('telescope').setup{
   }
 }
 
+-- Disable Neovim 0.12 built-in 'autocomplete' inside Telescope's prompt buffer
+-- (it pops the completion menu over the fuzzy-finder picker — distracting).
+vim.api.nvim_create_autocmd("FileType", {
+    group = vim.api.nvim_create_augroup("vinceb-telescope-noac", { clear = true }),
+    pattern = "TelescopePrompt",
+    callback = function(args)
+        vim.bo[args.buf].autocomplete = false
+    end,
+})
+
 vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
 vim.keymap.set('n', '<leader>ff', builtin.git_files, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
