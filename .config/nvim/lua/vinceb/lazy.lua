@@ -142,6 +142,29 @@ local plugins = {
         end,
     },
 
+    -- camdl DSL — local tree-sitter grammar lives in the camdl repo at
+    -- ~/projects/work/camdl/tree-sitter. `build` compiles parser.c to
+    -- ~/.local/share/nvim/site/parser/camdl.so and copies the highlight
+    -- queries into ~/.config/nvim/queries/camdl/. Re-run with
+    -- `:Lazy build tree-sitter-camdl` after pulling DSL changes.
+    {
+        dir = "/Users/vsb/projects/work/camdl/tree-sitter",
+        name = "tree-sitter-camdl",
+        ft = "camdl",
+        build = function()
+            local parser_dir = vim.fn.stdpath("data") .. "/site/parser"
+            local query_dir  = vim.fn.stdpath("config") .. "/queries/camdl"
+            vim.fn.mkdir(parser_dir, "p")
+            vim.fn.mkdir(query_dir, "p")
+            vim.fn.system({ "tree-sitter", "build", "-o", parser_dir .. "/camdl.so" })
+            vim.fn.system({ "cp", "queries/highlights.scm", query_dir .. "/highlights.scm" })
+            vim.fn.system({ "cp", "queries/locals.scm",     query_dir .. "/locals.scm" })
+        end,
+        init = function()
+            vim.filetype.add({ extension = { camdl = "camdl" } })
+        end,
+    },
+
     -- Git signs
     {
         "lewis6991/gitsigns.nvim",

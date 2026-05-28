@@ -95,3 +95,16 @@ vim.keymap.set("n", "<leader>ce", ":vs<CR>:e $HOME/.config/nvim/after/plugin/col
 vim.keymap.set("n", "<leader>f", function()
     require("conform").format({ async = true })
 end, { desc = "Format with Ruff (via conform)" })
+
+vim.keymap.set("n", "<leader>fa", function()
+    local file = vim.fn.expand("%:p")
+    vim.fn.jobstart({ "zsh", "-i", "-c", "dprint fmt --config-discovery=global " .. vim.fn.shellescape(file) }, {
+        on_exit = function(_, code)
+            if code == 0 then
+                vim.schedule(function() vim.cmd("e") end)
+            else
+                vim.notify("mdfmt failed (exit " .. code .. ")", vim.log.levels.ERROR)
+            end
+        end,
+    })
+end, { desc = "Format markdown with dprint (mdfmt)" })
