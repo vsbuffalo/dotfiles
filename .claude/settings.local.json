@@ -120,7 +120,8 @@
       "Bash(last reboot *)",
       "Bash(ps -Ao pid,rss,pcpu,comm -r)",
       "Bash(ps -Ao pid,rss,pcpu,comm -m)",
-      "Bash(vm_stat)"
+      "Bash(vm_stat)",
+      "Bash(grep -rn \"\\\\.ssh\\\\|\\\\.aws\\\\|\\\\.gnupg\\\\|GITHUB_TOKEN\\\\|AWS_\\\\|api_key\\\\|secret\\\\|password\\\\|credential\" /Users/vsb/dotfiles/.zsh-plugins/vendor/ --include=*.zsh --include=*.plugin.zsh --include=*.sh -l)"
     ],
     "deny": [
       "Bash(*git add -A*)",
