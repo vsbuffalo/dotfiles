@@ -1,0 +1,10 @@
+{
+  "markdown": {
+    "lineWidth": 80,
+    "textWrap": "always"
+  },
+  "includes": ["**/*.md"],
+  "plugins": [
+    "https://plugins.dprint.dev/markdown-0.17.8.wasm"
+  ]
+}

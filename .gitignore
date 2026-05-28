@@ -5,6 +5,25 @@
 # Local secrets — never track these
 .zshrc.local
 .gitconfig.local
+.gitconfig.old
 .env
 .env.*
 .config/age/
+.config/containers/
+
+# Personal identity / work-specific
+.config/jj/
+.config/modelops/
+
+# Tool state, caches, runtime sockets
+.config/configstore/
+.config/dask/
+.config/iterm2/
+.config/raycast/
+.config/rstudio/
+.config/gh-dash/
+.config/fish/
+
+# Generated tree-sitter parser queries (built from source repos)
+.config/nvim/queries/
+.config/nvim/after/queries/
