@@ -125,6 +125,7 @@ git worktree remove .worktrees/YYYYMMDD-N
 | `automatic-rename` | `off` | Agents keep their window labels |
 | `allow-rename` | `off` | Prevents escape sequences from renaming |
 | `mouse` | `on` | Click to select panes/windows, scroll |
+| `focus-events` | `on` | Forward terminal focus in/out to inner programs (Neovim `autoread`, Claude Code refresh-on-focus) |
 | `mode-keys` | `vi` | Vi keys in copy mode |
 | `monitor-bell` | `on` | Agent completion notifications |
 | `bell-action` | `any` | Bell visible from any session |
