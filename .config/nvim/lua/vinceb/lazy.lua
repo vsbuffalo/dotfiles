@@ -142,23 +142,32 @@ local plugins = {
         end,
     },
 
-    -- camdl DSL — local tree-sitter grammar lives in the camdl repo at
-    -- ~/projects/work/camdl/tree-sitter. `build` compiles parser.c to
-    -- ~/.local/share/nvim/site/parser/camdl.so and copies the highlight
-    -- queries into ~/.config/nvim/queries/camdl/. Re-run with
-    -- `:Lazy build tree-sitter-camdl` after pulling DSL changes.
+    -- camdl DSL tree-sitter grammar — lives in the tree-sitter/ subdir of
+    -- the camdl repo. lazy clones vsbuffalo/camdl; `build` compiles the
+    -- committed tree-sitter/src/parser.c with cc (no tree-sitter CLI needed)
+    -- to ~/.local/share/nvim/site/parser/camdl.so and copies the queries to
+    -- ~/.config/nvim/queries/camdl/. Re-run with
+    -- `:Lazy build tree-sitter-camdl` after the grammar changes upstream.
     {
-        dir = "/Users/vsb/projects/work/camdl/tree-sitter",
+        "vsbuffalo/camdl",
         name = "tree-sitter-camdl",
         ft = "camdl",
-        build = function()
+        build = function(plugin)
+            local src        = plugin.dir .. "/tree-sitter/src"
+            local queries    = plugin.dir .. "/tree-sitter/queries"
             local parser_dir = vim.fn.stdpath("data") .. "/site/parser"
             local query_dir  = vim.fn.stdpath("config") .. "/queries/camdl"
             vim.fn.mkdir(parser_dir, "p")
             vim.fn.mkdir(query_dir, "p")
-            vim.fn.system({ "tree-sitter", "build", "-o", parser_dir .. "/camdl.so" })
-            vim.fn.system({ "cp", "queries/highlights.scm", query_dir .. "/highlights.scm" })
-            vim.fn.system({ "cp", "queries/locals.scm",     query_dir .. "/locals.scm" })
+            -- parser.c is committed; compile it straight to a loadable .so
+            local out = vim.fn.system({ "cc", "-o", parser_dir .. "/camdl.so",
+                "-shared", "-fPIC", "-O2", "-I", src, src .. "/parser.c" })
+            if vim.v.shell_error ~= 0 then
+                error("tree-sitter-camdl: cc build failed:\n" .. out)
+            end
+            for _, q in ipairs({ "highlights.scm", "locals.scm" }) do
+                vim.fn.system({ "cp", queries .. "/" .. q, query_dir .. "/" .. q })
+            end
         end,
         init = function()
             vim.filetype.add({ extension = { camdl = "camdl" } })
